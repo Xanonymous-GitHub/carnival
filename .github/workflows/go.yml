@@ -23,3 +23,9 @@ jobs:
 
     - name: DB server Test
       run: cd db && go test -v ./...
+
+    - name: DB server Build
+      run: cd server && go build -v ./...
+
+    - name: DB server Test
+      run: cd server && go test -v ./...
