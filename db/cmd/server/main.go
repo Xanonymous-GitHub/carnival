@@ -6,24 +6,32 @@ import (
 	"fmt"
 	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent"
 	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/proto/entpb"
+	"github.com/Xanonymous-GitHub/carnival/db/pkg/vp"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 	"log"
 	"net"
+	"strconv"
 )
+
+var cvp *viper.Viper
+
+func init() {
+	cvp = vp.InitViper()
+}
 
 func main() {
 	const sqlType = dialect.MySQL
 
-	// TODO(TU): use viper.
-	const (
-		dbUserName = "root"
-		dbPassword = "root"
-		dbHost     = "localhost"
-		dbPort     = "3306"
+	var (
+		dbUserName = cvp.GetString("dbUserName")
+		dbPassword = cvp.GetString("dbPassword")
+		dbHost     = cvp.GetString("dbHost")
+		dbPort     = cvp.GetInt("dbPort")
 	)
 
-	const serverAddress = ":5431"
+	serverAddress := ":" + strconv.Itoa(cvp.GetInt("dbServerPort"))
 
 	dataSourceName := fmt.Sprintf("%v:%v@tcp(%v:%v)/carnival", dbUserName, dbPassword, dbHost, dbPort)
 
