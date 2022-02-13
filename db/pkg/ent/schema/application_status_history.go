@@ -22,10 +22,10 @@ func (ApplicationStatusHistory) Fields() []ent.Field {
 			Annotations(entproto.Field(2)),
 
 		field.Enum("status").
-			Values(ApplicationStatus("").Values()...).
+			Values(new(ApplicationStatus).Values()...).
 			Annotations(
 				entproto.Field(3),
-				entproto.Enum(ApplicationStatus("").ToMap()),
+				entproto.Enum(new(ApplicationStatus).ToMap()),
 			),
 
 		field.Time("created_time").

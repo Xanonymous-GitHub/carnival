@@ -64,10 +64,10 @@ func (Attachment) Fields() []ent.Field {
 			Annotations(entproto.Field(3)),
 
 		field.Enum("a_type").
-			Values(AType("").Values()...).
+			Values(new(AType).Values()...).
 			Annotations(
 				entproto.Field(4),
-				entproto.Enum(AType("").ToMap()),
+				entproto.Enum(new(AType).ToMap()),
 			),
 
 		field.String("obs_oid").

@@ -55,10 +55,10 @@ func (Reviewer) Fields() []ent.Field {
 			Annotations(entproto.Field(2)),
 
 		field.Enum("iims_role").
-			Values(IIMSRole("").Values()...).
+			Values(new(IIMSRole).Values()...).
 			Annotations(
 				entproto.Field(3),
-				entproto.Enum(IIMSRole("").ToMap()),
+				entproto.Enum(new(IIMSRole).ToMap()),
 			),
 
 		field.Time("created_dtime").

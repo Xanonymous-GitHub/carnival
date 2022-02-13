@@ -57,10 +57,10 @@ func (Ticket) Fields() []ent.Field {
 			Annotations(entproto.Field(2)),
 
 		field.Enum("status").
-			Values(TicketStatus("").Values()...).
+			Values(new(TicketStatus).Values()...).
 			Annotations(
 				entproto.Field(3),
-				entproto.Enum(TicketStatus("").ToMap()),
+				entproto.Enum(new(TicketStatus).ToMap()),
 			),
 
 		field.String("creator").

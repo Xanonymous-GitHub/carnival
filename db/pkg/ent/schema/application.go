@@ -140,10 +140,10 @@ func (Application) Fields() []ent.Field {
 			Annotations(entproto.Field(5)),
 
 		field.Enum("bot_active_status").
-			Values(BotActiveStatus("").Values()...).
+			Values(new(BotActiveStatus).Values()...).
 			Annotations(
 				entproto.Field(6),
-				entproto.Enum(BotActiveStatus("").ToMap()),
+				entproto.Enum(new(BotActiveStatus).ToMap()),
 			),
 
 		field.String("applicant_name").
@@ -164,20 +164,20 @@ func (Application) Fields() []ent.Field {
 			Annotations(entproto.Field(10)),
 
 		field.Enum("store_type").
-			Values(StoreType("").Values()...).
+			Values(new(StoreType).Values()...).
 			Annotations(
 				entproto.Field(11),
-				entproto.Enum(StoreType("").ToMap()),
+				entproto.Enum(new(StoreType).ToMap()),
 			),
 
 		field.Text("website_url").
 			Annotations(entproto.Field(12)),
 
 		field.Enum("application_status").
-			Values(ApplicationStatus("").Values()...).
+			Values(new(ApplicationStatus).Values()...).
 			Annotations(
 				entproto.Field(13),
-				entproto.Enum(ApplicationStatus("").ToMap()),
+				entproto.Enum(new(ApplicationStatus).ToMap()),
 			),
 
 		field.String("review_comment").
