@@ -1,0 +1,9 @@
+debug: true
+
+dbServerPort: 5431
+dbUserName: root
+dbPassword: root
+dbHost: localhost
+dbPort: 3306
+
+apiServerPort: 8888
