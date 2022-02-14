@@ -35,7 +35,7 @@ func NewRouter() *gin.Engine {
 	applicationApiHandlers := api.NewApplicationHandler()
 	applicationApiGroup := r.Group(applicationApiPath)
 	{
-		applicationApiGroup.POST("/", applicationApiHandlers.Create)
+		applicationApiGroup.POST("", applicationApiHandlers.Create)
 	}
 
 	return r

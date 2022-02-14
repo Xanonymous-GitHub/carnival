@@ -21,12 +21,5 @@ func init() {
 		log.Fatalf("can not init grpc client!\n%v", err)
 	}
 
-	defer func(dial *grpc.ClientConn) {
-		err := dial.Close()
-		if err != nil {
-			log.Fatalln(err)
-		}
-	}(dial)
-
 	ApplicationSvcClient = entpb.NewApplicationServiceClient(dial)
 }

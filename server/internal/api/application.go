@@ -23,12 +23,17 @@ func NewApplicationHandler() ApplicationHandler {
 func (h *applicationHandler) Create(c *gin.Context) {
 	var applicationData *entpb.Application
 
-	err := c.ShouldBindJSON(applicationData)
+	err := c.ShouldBindJSON(&applicationData)
 	if err != nil {
 		log.Println(err)
 		c.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	ctx := context.Background()
-	service.CreateApplication(ctx, grpcsvc.ApplicationSvcClient, applicationData)
+	if err := service.CreateApplication(ctx, grpcsvc.ApplicationSvcClient, applicationData); err != nil {
+		log.Println(err)
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
 }
