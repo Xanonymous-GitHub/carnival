@@ -36,7 +36,6 @@ func main() {
 	dataSourceName := fmt.Sprintf("%v:%v@tcp(%v:%v)/carnival", dbUserName, dbPassword, dbHost, dbPort)
 
 	// Initialize an ent client.
-	// TODO(TU): specify the dataSourceName.
 	client, err := ent.Open(sqlType, dataSourceName)
 	if err != nil {
 		log.Fatalf("failed opening connection to %v: %v", sqlType, err)
@@ -55,7 +54,7 @@ func main() {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
-	// Initialize the generated User service.
+	// Initialize the generated services.
 	var (
 		applicationSvc                  = entpb.NewApplicationService(client)
 		applicationAssignmentHistorySvc = entpb.NewApplicationAssignmentHistoryService(client)
@@ -68,7 +67,7 @@ func main() {
 	// Create a new gRPC server.
 	server := grpc.NewServer()
 
-	// Register the User service with the server.
+	// Register service with server.
 	entpb.RegisterApplicationServiceServer(server, applicationSvc)
 	entpb.RegisterApplicationAssignmentHistoryServiceServer(server, applicationAssignmentHistorySvc)
 	entpb.RegisterApplicationStatusHistoryServiceServer(server, applicationStatusHistorySvc)
@@ -76,7 +75,7 @@ func main() {
 	entpb.RegisterReviewerServiceServer(server, reviewerSvc)
 	entpb.RegisterTicketServiceServer(server, ticketSvc)
 
-	// Open port 5000 for listening to traffic.
+	// Open port for listening to traffic.
 	lis, err := net.Listen("tcp", serverAddress)
 	if err != nil {
 		log.Fatalf("failed listening: %s", err)
