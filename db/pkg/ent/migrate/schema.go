@@ -114,6 +114,7 @@ var (
 	}
 	// ReviewersColumns holds the columns for the "reviewers" table.
 	ReviewersColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
 		{Name: "reviewer_id", Type: field.TypeString, Size: 10},
 		{Name: "reviewer_name", Type: field.TypeString, Size: 32},
 		{Name: "iims_role", Type: field.TypeEnum, Enums: []string{"oav_admin", "oav_reviewer"}},

@@ -20,6 +20,12 @@ type ReviewerCreate struct {
 	hooks    []Hook
 }
 
+// SetReviewerID sets the "reviewer_id" field.
+func (rc *ReviewerCreate) SetReviewerID(s string) *ReviewerCreate {
+	rc.mutation.SetReviewerID(s)
+	return rc
+}
+
 // SetReviewerName sets the "reviewer_name" field.
 func (rc *ReviewerCreate) SetReviewerName(s string) *ReviewerCreate {
 	rc.mutation.SetReviewerName(s)
@@ -43,12 +49,6 @@ func (rc *ReviewerCreate) SetNillableCreatedDtime(t *time.Time) *ReviewerCreate 
 	if t != nil {
 		rc.SetCreatedDtime(*t)
 	}
-	return rc
-}
-
-// SetID sets the "id" field.
-func (rc *ReviewerCreate) SetID(s string) *ReviewerCreate {
-	rc.mutation.SetID(s)
 	return rc
 }
 
@@ -131,6 +131,14 @@ func (rc *ReviewerCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (rc *ReviewerCreate) check() error {
+	if _, ok := rc.mutation.ReviewerID(); !ok {
+		return &ValidationError{Name: "reviewer_id", err: errors.New(`ent: missing required field "Reviewer.reviewer_id"`)}
+	}
+	if v, ok := rc.mutation.ReviewerID(); ok {
+		if err := reviewer.ReviewerIDValidator(v); err != nil {
+			return &ValidationError{Name: "reviewer_id", err: fmt.Errorf(`ent: validator failed for field "Reviewer.reviewer_id": %w`, err)}
+		}
+	}
 	if _, ok := rc.mutation.ReviewerName(); !ok {
 		return &ValidationError{Name: "reviewer_name", err: errors.New(`ent: missing required field "Reviewer.reviewer_name"`)}
 	}
@@ -150,11 +158,6 @@ func (rc *ReviewerCreate) check() error {
 	if _, ok := rc.mutation.CreatedDtime(); !ok {
 		return &ValidationError{Name: "created_dtime", err: errors.New(`ent: missing required field "Reviewer.created_dtime"`)}
 	}
-	if v, ok := rc.mutation.ID(); ok {
-		if err := reviewer.IDValidator(v); err != nil {
-			return &ValidationError{Name: "id", err: fmt.Errorf(`ent: validator failed for field "Reviewer.id": %w`, err)}
-		}
-	}
 	return nil
 }
 
@@ -166,13 +169,8 @@ func (rc *ReviewerCreate) sqlSave(ctx context.Context) (*Reviewer, error) {
 		}
 		return nil, err
 	}
-	if _spec.ID.Value != nil {
-		if id, ok := _spec.ID.Value.(string); ok {
-			_node.ID = id
-		} else {
-			return nil, fmt.Errorf("unexpected Reviewer.ID type: %T", _spec.ID.Value)
-		}
-	}
+	id := _spec.ID.Value.(int64)
+	_node.ID = int(id)
 	return _node, nil
 }
 
@@ -182,14 +180,18 @@ func (rc *ReviewerCreate) createSpec() (*Reviewer, *sqlgraph.CreateSpec) {
 		_spec = &sqlgraph.CreateSpec{
 			Table: reviewer.Table,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
+				Type:   field.TypeInt,
 				Column: reviewer.FieldID,
 			},
 		}
 	)
-	if id, ok := rc.mutation.ID(); ok {
-		_node.ID = id
-		_spec.ID.Value = id
+	if value, ok := rc.mutation.ReviewerID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: reviewer.FieldReviewerID,
+		})
+		_node.ReviewerID = value
 	}
 	if value, ok := rc.mutation.ReviewerName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -260,6 +262,10 @@ func (rcb *ReviewerCreateBulk) Save(ctx context.Context) ([]*Reviewer, error) {
 				}
 				mutation.id = &nodes[i].ID
 				mutation.done = true
+				if specs[i].ID.Value != nil {
+					id := specs[i].ID.Value.(int64)
+					nodes[i].ID = int(id)
+				}
 				return nodes[i], nil
 			})
 			for i := len(builder.hooks) - 1; i >= 0; i-- {

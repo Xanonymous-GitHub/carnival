@@ -370,13 +370,15 @@ message ListAttachmentResponse {
 }
 
 message Reviewer {
-  string id = 1;
+  int32 id = 1;
 
-  string reviewer_name = 2;
+  string reviewer_id = 2;
 
-  IimsRole iims_role = 3;
+  string reviewer_name = 3;
 
-  google.protobuf.Timestamp created_dtime = 4;
+  IimsRole iims_role = 4;
+
+  google.protobuf.Timestamp created_dtime = 5;
 
   enum IimsRole {
     IIMS_ROLE_UNSPECIFIED = 0;
@@ -392,7 +394,7 @@ message CreateReviewerRequest {
 }
 
 message GetReviewerRequest {
-  string id = 1;
+  int32 id = 1;
 
   View view = 2;
 
@@ -410,7 +412,7 @@ message UpdateReviewerRequest {
 }
 
 message DeleteReviewerRequest {
-  string id = 1;
+  int32 id = 1;
 }
 
 message ListReviewerRequest {

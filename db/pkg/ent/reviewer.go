@@ -15,7 +15,9 @@ import (
 type Reviewer struct {
 	config `json:"-"`
 	// ID of the ent.
-	ID string `json:"id,omitempty"`
+	ID int `json:"id,omitempty"`
+	// ReviewerID holds the value of the "reviewer_id" field.
+	ReviewerID string `json:"reviewer_id,omitempty"`
 	// ReviewerName holds the value of the "reviewer_name" field.
 	ReviewerName string `json:"reviewer_name,omitempty"`
 	// IimsRole holds the value of the "iims_role" field.
@@ -29,7 +31,9 @@ func (*Reviewer) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case reviewer.FieldID, reviewer.FieldReviewerName, reviewer.FieldIimsRole:
+		case reviewer.FieldID:
+			values[i] = new(sql.NullInt64)
+		case reviewer.FieldReviewerID, reviewer.FieldReviewerName, reviewer.FieldIimsRole:
 			values[i] = new(sql.NullString)
 		case reviewer.FieldCreatedDtime:
 			values[i] = new(sql.NullTime)
@@ -49,10 +53,16 @@ func (r *Reviewer) assignValues(columns []string, values []interface{}) error {
 	for i := range columns {
 		switch columns[i] {
 		case reviewer.FieldID:
+			value, ok := values[i].(*sql.NullInt64)
+			if !ok {
+				return fmt.Errorf("unexpected type %T for field id", value)
+			}
+			r.ID = int(value.Int64)
+		case reviewer.FieldReviewerID:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field id", values[i])
+				return fmt.Errorf("unexpected type %T for field reviewer_id", values[i])
 			} else if value.Valid {
-				r.ID = value.String
+				r.ReviewerID = value.String
 			}
 		case reviewer.FieldReviewerName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -100,6 +110,8 @@ func (r *Reviewer) String() string {
 	var builder strings.Builder
 	builder.WriteString("Reviewer(")
 	builder.WriteString(fmt.Sprintf("id=%v", r.ID))
+	builder.WriteString(", reviewer_id=")
+	builder.WriteString(r.ReviewerID)
 	builder.WriteString(", reviewer_name=")
 	builder.WriteString(r.ReviewerName)
 	builder.WriteString(", iims_role=")

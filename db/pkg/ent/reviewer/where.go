@@ -10,28 +10,28 @@ import (
 )
 
 // ID filters vertices based on their ID field.
-func ID(id string) predicate.Reviewer {
+func ID(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDEQ applies the EQ predicate on the ID field.
-func IDEQ(id string) predicate.Reviewer {
+func IDEQ(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldID), id))
 	})
 }
 
 // IDNEQ applies the NEQ predicate on the ID field.
-func IDNEQ(id string) predicate.Reviewer {
+func IDNEQ(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldID), id))
 	})
 }
 
 // IDIn applies the In predicate on the ID field.
-func IDIn(ids ...string) predicate.Reviewer {
+func IDIn(ids ...int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
@@ -48,7 +48,7 @@ func IDIn(ids ...string) predicate.Reviewer {
 }
 
 // IDNotIn applies the NotIn predicate on the ID field.
-func IDNotIn(ids ...string) predicate.Reviewer {
+func IDNotIn(ids ...int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		// if not arguments were provided, append the FALSE constants,
 		// since we can't apply "IN ()". This will make this predicate falsy.
@@ -65,30 +65,37 @@ func IDNotIn(ids ...string) predicate.Reviewer {
 }
 
 // IDGT applies the GT predicate on the ID field.
-func IDGT(id string) predicate.Reviewer {
+func IDGT(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.GT(s.C(FieldID), id))
 	})
 }
 
 // IDGTE applies the GTE predicate on the ID field.
-func IDGTE(id string) predicate.Reviewer {
+func IDGTE(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.GTE(s.C(FieldID), id))
 	})
 }
 
 // IDLT applies the LT predicate on the ID field.
-func IDLT(id string) predicate.Reviewer {
+func IDLT(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.LT(s.C(FieldID), id))
 	})
 }
 
 // IDLTE applies the LTE predicate on the ID field.
-func IDLTE(id string) predicate.Reviewer {
+func IDLTE(id int) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.LTE(s.C(FieldID), id))
+	})
+}
+
+// ReviewerID applies equality check predicate on the "reviewer_id" field. It's identical to ReviewerIDEQ.
+func ReviewerID(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldReviewerID), v))
 	})
 }
 
@@ -103,6 +110,117 @@ func ReviewerName(v string) predicate.Reviewer {
 func CreatedDtime(v time.Time) predicate.Reviewer {
 	return predicate.Reviewer(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldCreatedDtime), v))
+	})
+}
+
+// ReviewerIDEQ applies the EQ predicate on the "reviewer_id" field.
+func ReviewerIDEQ(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDNEQ applies the NEQ predicate on the "reviewer_id" field.
+func ReviewerIDNEQ(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDIn applies the In predicate on the "reviewer_id" field.
+func ReviewerIDIn(vs ...string) predicate.Reviewer {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Reviewer(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldReviewerID), v...))
+	})
+}
+
+// ReviewerIDNotIn applies the NotIn predicate on the "reviewer_id" field.
+func ReviewerIDNotIn(vs ...string) predicate.Reviewer {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Reviewer(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldReviewerID), v...))
+	})
+}
+
+// ReviewerIDGT applies the GT predicate on the "reviewer_id" field.
+func ReviewerIDGT(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDGTE applies the GTE predicate on the "reviewer_id" field.
+func ReviewerIDGTE(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDLT applies the LT predicate on the "reviewer_id" field.
+func ReviewerIDLT(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDLTE applies the LTE predicate on the "reviewer_id" field.
+func ReviewerIDLTE(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDContains applies the Contains predicate on the "reviewer_id" field.
+func ReviewerIDContains(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDHasPrefix applies the HasPrefix predicate on the "reviewer_id" field.
+func ReviewerIDHasPrefix(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDHasSuffix applies the HasSuffix predicate on the "reviewer_id" field.
+func ReviewerIDHasSuffix(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDEqualFold applies the EqualFold predicate on the "reviewer_id" field.
+func ReviewerIDEqualFold(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldReviewerID), v))
+	})
+}
+
+// ReviewerIDContainsFold applies the ContainsFold predicate on the "reviewer_id" field.
+func ReviewerIDContainsFold(v string) predicate.Reviewer {
+	return predicate.Reviewer(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldReviewerID), v))
 	})
 }
 

@@ -687,7 +687,7 @@ func (c *ReviewerClient) UpdateOne(r *Reviewer) *ReviewerUpdateOne {
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *ReviewerClient) UpdateOneID(id string) *ReviewerUpdateOne {
+func (c *ReviewerClient) UpdateOneID(id int) *ReviewerUpdateOne {
 	mutation := newReviewerMutation(c.config, OpUpdateOne, withReviewerID(id))
 	return &ReviewerUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
@@ -704,7 +704,7 @@ func (c *ReviewerClient) DeleteOne(r *Reviewer) *ReviewerDeleteOne {
 }
 
 // DeleteOneID returns a delete builder for the given id.
-func (c *ReviewerClient) DeleteOneID(id string) *ReviewerDeleteOne {
+func (c *ReviewerClient) DeleteOneID(id int) *ReviewerDeleteOne {
 	builder := c.Delete().Where(reviewer.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
@@ -719,12 +719,12 @@ func (c *ReviewerClient) Query() *ReviewerQuery {
 }
 
 // Get returns a Reviewer entity by its id.
-func (c *ReviewerClient) Get(ctx context.Context, id string) (*Reviewer, error) {
+func (c *ReviewerClient) Get(ctx context.Context, id int) (*Reviewer, error) {
 	return c.Query().Where(reviewer.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *ReviewerClient) GetX(ctx context.Context, id string) *Reviewer {
+func (c *ReviewerClient) GetX(ctx context.Context, id int) *Reviewer {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)

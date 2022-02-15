@@ -11,7 +11,9 @@ const (
 	// Label holds the string label denoting the reviewer type in the database.
 	Label = "reviewer"
 	// FieldID holds the string denoting the id field in the database.
-	FieldID = "reviewer_id"
+	FieldID = "id"
+	// FieldReviewerID holds the string denoting the reviewer_id field in the database.
+	FieldReviewerID = "reviewer_id"
 	// FieldReviewerName holds the string denoting the reviewer_name field in the database.
 	FieldReviewerName = "reviewer_name"
 	// FieldIimsRole holds the string denoting the iims_role field in the database.
@@ -25,6 +27,7 @@ const (
 // Columns holds all SQL columns for reviewer fields.
 var Columns = []string{
 	FieldID,
+	FieldReviewerID,
 	FieldReviewerName,
 	FieldIimsRole,
 	FieldCreatedDtime,
@@ -41,12 +44,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// ReviewerIDValidator is a validator for the "reviewer_id" field. It is called by the builders before save.
+	ReviewerIDValidator func(string) error
 	// ReviewerNameValidator is a validator for the "reviewer_name" field. It is called by the builders before save.
 	ReviewerNameValidator func(string) error
 	// DefaultCreatedDtime holds the default value on creation for the "created_dtime" field.
 	DefaultCreatedDtime func() time.Time
-	// IDValidator is a validator for the "id" field. It is called by the builders before save.
-	IDValidator func(string) error
 )
 
 // IimsRole defines the type for the "iims_role" enum field.

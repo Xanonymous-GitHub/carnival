@@ -14,6 +14,7 @@ import (
 	status "google.golang.org/grpc/status"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
+	strconv "strconv"
 	strings "strings"
 )
 
@@ -49,10 +50,12 @@ func toProtoReviewer(e *ent.Reviewer) (*Reviewer, error) {
 	v := &Reviewer{}
 	createddtime := timestamppb.New(e.CreatedDtime)
 	v.CreatedDtime = createddtime
-	id := e.ID
+	id := int32(e.ID)
 	v.Id = id
 	iimsrole := toProtoReviewer_IimsRole(e.IimsRole)
 	v.IimsRole = iimsrole
+	reviewerid := e.ReviewerID
+	v.ReviewerId = reviewerid
 	reviewername := e.ReviewerName
 	v.ReviewerName = reviewername
 	return v, nil
@@ -66,6 +69,8 @@ func (svc *ReviewerService) Create(ctx context.Context, req *CreateReviewerReque
 	m.SetCreatedDtime(reviewerCreatedDtime)
 	reviewerIimsRole := toEntReviewer_IimsRole(reviewer.GetIimsRole())
 	m.SetIimsRole(reviewerIimsRole)
+	reviewerReviewerID := reviewer.GetReviewerId()
+	m.SetReviewerID(reviewerReviewerID)
 	reviewerReviewerName := reviewer.GetReviewerName()
 	m.SetReviewerName(reviewerReviewerName)
 	res, err := m.Save(ctx)
@@ -92,7 +97,7 @@ func (svc *ReviewerService) Get(ctx context.Context, req *GetReviewerRequest) (*
 		err error
 		get *ent.Reviewer
 	)
-	id := req.GetId()
+	id := int(req.GetId())
 	switch req.GetView() {
 	case GetReviewerRequest_VIEW_UNSPECIFIED, GetReviewerRequest_BASIC:
 		get, err = svc.client.Reviewer.Get(ctx, id)
@@ -118,10 +123,12 @@ func (svc *ReviewerService) Get(ctx context.Context, req *GetReviewerRequest) (*
 // Update implements ReviewerServiceServer.Update
 func (svc *ReviewerService) Update(ctx context.Context, req *UpdateReviewerRequest) (*Reviewer, error) {
 	reviewer := req.GetReviewer()
-	reviewerID := reviewer.GetId()
+	reviewerID := int(reviewer.GetId())
 	m := svc.client.Reviewer.UpdateOneID(reviewerID)
 	reviewerIimsRole := toEntReviewer_IimsRole(reviewer.GetIimsRole())
 	m.SetIimsRole(reviewerIimsRole)
+	reviewerReviewerID := reviewer.GetReviewerId()
+	m.SetReviewerID(reviewerReviewerID)
 	reviewerReviewerName := reviewer.GetReviewerName()
 	m.SetReviewerName(reviewerReviewerName)
 	res, err := m.Save(ctx)
@@ -145,7 +152,7 @@ func (svc *ReviewerService) Update(ctx context.Context, req *UpdateReviewerReque
 // Delete implements ReviewerServiceServer.Delete
 func (svc *ReviewerService) Delete(ctx context.Context, req *DeleteReviewerRequest) (*emptypb.Empty, error) {
 	var err error
-	id := req.GetId()
+	id := int(req.GetId())
 	err = svc.client.Reviewer.DeleteOneID(id).Exec(ctx)
 	switch {
 	case err == nil:
@@ -180,7 +187,11 @@ func (svc *ReviewerService) List(ctx context.Context, req *ListReviewerRequest) 
 		if err != nil {
 			return nil, status.Errorf(codes.InvalidArgument, "page token is invalid")
 		}
-		pageToken := string(bytes)
+		token, err := strconv.ParseInt(string(bytes), 10, 32)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "page token is invalid")
+		}
+		pageToken := int(token)
 		listQuery = listQuery.
 			Where(reviewer.IDLTE(pageToken))
 	}

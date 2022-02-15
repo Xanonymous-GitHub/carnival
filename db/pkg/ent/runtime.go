@@ -109,6 +109,10 @@ func init() {
 	attachment.DefaultCreatedDtime = attachmentDescCreatedDtime.Default.(func() time.Time)
 	reviewerFields := schema.Reviewer{}.Fields()
 	_ = reviewerFields
+	// reviewerDescReviewerID is the schema descriptor for reviewer_id field.
+	reviewerDescReviewerID := reviewerFields[0].Descriptor()
+	// reviewer.ReviewerIDValidator is a validator for the "reviewer_id" field. It is called by the builders before save.
+	reviewer.ReviewerIDValidator = reviewerDescReviewerID.Validators[0].(func(string) error)
 	// reviewerDescReviewerName is the schema descriptor for reviewer_name field.
 	reviewerDescReviewerName := reviewerFields[1].Descriptor()
 	// reviewer.ReviewerNameValidator is a validator for the "reviewer_name" field. It is called by the builders before save.
@@ -117,10 +121,6 @@ func init() {
 	reviewerDescCreatedDtime := reviewerFields[3].Descriptor()
 	// reviewer.DefaultCreatedDtime holds the default value on creation for the created_dtime field.
 	reviewer.DefaultCreatedDtime = reviewerDescCreatedDtime.Default.(func() time.Time)
-	// reviewerDescID is the schema descriptor for id field.
-	reviewerDescID := reviewerFields[0].Descriptor()
-	// reviewer.IDValidator is a validator for the "id" field. It is called by the builders before save.
-	reviewer.IDValidator = reviewerDescID.Validators[0].(func(string) error)
 	ticketFields := schema.Ticket{}.Fields()
 	_ = ticketFields
 	// ticketDescCreator is the schema descriptor for creator field.

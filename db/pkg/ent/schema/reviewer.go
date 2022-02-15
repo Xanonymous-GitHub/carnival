@@ -45,26 +45,25 @@ func (Reviewer) Fields() []ent.Field {
 	)
 
 	return []ent.Field{
-		field.String("id").
-			StorageKey("reviewer_id").
+		field.String("reviewer_id").
 			MaxLen(reviewerIdSizeLimit).
-			Annotations(entproto.Field(1)),
+			Annotations(entproto.Field(2)),
 
 		field.String("reviewer_name").
 			MaxLen(reviewerNameSizeLimit).
-			Annotations(entproto.Field(2)),
+			Annotations(entproto.Field(3)),
 
 		field.Enum("iims_role").
 			Values(new(IIMSRole).Values()...).
 			Annotations(
-				entproto.Field(3),
+				entproto.Field(4),
 				entproto.Enum(new(IIMSRole).ToMap()),
 			),
 
 		field.Time("created_dtime").
 			Default(time.Now).
 			Immutable().
-			Annotations(entproto.Field(4)),
+			Annotations(entproto.Field(5)),
 	}
 }
 

@@ -84,8 +84,8 @@ func (rq *ReviewerQuery) FirstX(ctx context.Context) *Reviewer {
 
 // FirstID returns the first Reviewer ID from the query.
 // Returns a *NotFoundError when no Reviewer ID was found.
-func (rq *ReviewerQuery) FirstID(ctx context.Context) (id string, err error) {
-	var ids []string
+func (rq *ReviewerQuery) FirstID(ctx context.Context) (id int, err error) {
+	var ids []int
 	if ids, err = rq.Limit(1).IDs(ctx); err != nil {
 		return
 	}
@@ -97,7 +97,7 @@ func (rq *ReviewerQuery) FirstID(ctx context.Context) (id string, err error) {
 }
 
 // FirstIDX is like FirstID, but panics if an error occurs.
-func (rq *ReviewerQuery) FirstIDX(ctx context.Context) string {
+func (rq *ReviewerQuery) FirstIDX(ctx context.Context) int {
 	id, err := rq.FirstID(ctx)
 	if err != nil && !IsNotFound(err) {
 		panic(err)
@@ -135,8 +135,8 @@ func (rq *ReviewerQuery) OnlyX(ctx context.Context) *Reviewer {
 // OnlyID is like Only, but returns the only Reviewer ID in the query.
 // Returns a *NotSingularError when exactly one Reviewer ID is not found.
 // Returns a *NotFoundError when no entities are found.
-func (rq *ReviewerQuery) OnlyID(ctx context.Context) (id string, err error) {
-	var ids []string
+func (rq *ReviewerQuery) OnlyID(ctx context.Context) (id int, err error) {
+	var ids []int
 	if ids, err = rq.Limit(2).IDs(ctx); err != nil {
 		return
 	}
@@ -152,7 +152,7 @@ func (rq *ReviewerQuery) OnlyID(ctx context.Context) (id string, err error) {
 }
 
 // OnlyIDX is like OnlyID, but panics if an error occurs.
-func (rq *ReviewerQuery) OnlyIDX(ctx context.Context) string {
+func (rq *ReviewerQuery) OnlyIDX(ctx context.Context) int {
 	id, err := rq.OnlyID(ctx)
 	if err != nil {
 		panic(err)
@@ -178,8 +178,8 @@ func (rq *ReviewerQuery) AllX(ctx context.Context) []*Reviewer {
 }
 
 // IDs executes the query and returns a list of Reviewer IDs.
-func (rq *ReviewerQuery) IDs(ctx context.Context) ([]string, error) {
-	var ids []string
+func (rq *ReviewerQuery) IDs(ctx context.Context) ([]int, error) {
+	var ids []int
 	if err := rq.Select(reviewer.FieldID).Scan(ctx, &ids); err != nil {
 		return nil, err
 	}
@@ -187,7 +187,7 @@ func (rq *ReviewerQuery) IDs(ctx context.Context) ([]string, error) {
 }
 
 // IDsX is like IDs, but panics if an error occurs.
-func (rq *ReviewerQuery) IDsX(ctx context.Context) []string {
+func (rq *ReviewerQuery) IDsX(ctx context.Context) []int {
 	ids, err := rq.IDs(ctx)
 	if err != nil {
 		panic(err)
@@ -253,12 +253,12 @@ func (rq *ReviewerQuery) Clone() *ReviewerQuery {
 // Example:
 //
 //	var v []struct {
-//		ReviewerName string `json:"reviewer_name,omitempty"`
+//		ReviewerID string `json:"reviewer_id,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Reviewer.Query().
-//		GroupBy(reviewer.FieldReviewerName).
+//		GroupBy(reviewer.FieldReviewerID).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -280,11 +280,11 @@ func (rq *ReviewerQuery) GroupBy(field string, fields ...string) *ReviewerGroupB
 // Example:
 //
 //	var v []struct {
-//		ReviewerName string `json:"reviewer_name,omitempty"`
+//		ReviewerID string `json:"reviewer_id,omitempty"`
 //	}
 //
 //	client.Reviewer.Query().
-//		Select(reviewer.FieldReviewerName).
+//		Select(reviewer.FieldReviewerID).
 //		Scan(ctx, &v)
 //
 func (rq *ReviewerQuery) Select(fields ...string) *ReviewerSelect {
@@ -357,7 +357,7 @@ func (rq *ReviewerQuery) querySpec() *sqlgraph.QuerySpec {
 			Table:   reviewer.Table,
 			Columns: reviewer.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
+				Type:   field.TypeInt,
 				Column: reviewer.FieldID,
 			},
 		},

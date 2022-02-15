@@ -3340,7 +3340,8 @@ type ReviewerMutation struct {
 	config
 	op            Op
 	typ           string
-	id            *string
+	id            *int
+	reviewer_id   *string
 	reviewer_name *string
 	iims_role     *reviewer.IimsRole
 	created_dtime *time.Time
@@ -3370,7 +3371,7 @@ func newReviewerMutation(c config, op Op, opts ...reviewerOption) *ReviewerMutat
 }
 
 // withReviewerID sets the ID field of the mutation.
-func withReviewerID(id string) reviewerOption {
+func withReviewerID(id int) reviewerOption {
 	return func(m *ReviewerMutation) {
 		var (
 			err   error
@@ -3420,15 +3421,9 @@ func (m ReviewerMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
-// SetID sets the value of the id field. Note that this
-// operation is only accepted on creation of Reviewer entities.
-func (m *ReviewerMutation) SetID(id string) {
-	m.id = &id
-}
-
 // ID returns the ID value in the mutation. Note that the ID is only available
 // if it was provided to the builder or after it was returned from the database.
-func (m *ReviewerMutation) ID() (id string, exists bool) {
+func (m *ReviewerMutation) ID() (id int, exists bool) {
 	if m.id == nil {
 		return
 	}
@@ -3439,12 +3434,12 @@ func (m *ReviewerMutation) ID() (id string, exists bool) {
 // That means, if the mutation is applied within a transaction with an isolation level such
 // as sql.LevelSerializable, the returned ids match the ids of the rows that will be updated
 // or updated by the mutation.
-func (m *ReviewerMutation) IDs(ctx context.Context) ([]string, error) {
+func (m *ReviewerMutation) IDs(ctx context.Context) ([]int, error) {
 	switch {
 	case m.op.Is(OpUpdateOne | OpDeleteOne):
 		id, exists := m.ID()
 		if exists {
-			return []string{id}, nil
+			return []int{id}, nil
 		}
 		fallthrough
 	case m.op.Is(OpUpdate | OpDelete):
@@ -3452,6 +3447,42 @@ func (m *ReviewerMutation) IDs(ctx context.Context) ([]string, error) {
 	default:
 		return nil, fmt.Errorf("IDs is not allowed on %s operations", m.op)
 	}
+}
+
+// SetReviewerID sets the "reviewer_id" field.
+func (m *ReviewerMutation) SetReviewerID(s string) {
+	m.reviewer_id = &s
+}
+
+// ReviewerID returns the value of the "reviewer_id" field in the mutation.
+func (m *ReviewerMutation) ReviewerID() (r string, exists bool) {
+	v := m.reviewer_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldReviewerID returns the old "reviewer_id" field's value of the Reviewer entity.
+// If the Reviewer object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ReviewerMutation) OldReviewerID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldReviewerID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldReviewerID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldReviewerID: %w", err)
+	}
+	return oldValue.ReviewerID, nil
+}
+
+// ResetReviewerID resets all changes to the "reviewer_id" field.
+func (m *ReviewerMutation) ResetReviewerID() {
+	m.reviewer_id = nil
 }
 
 // SetReviewerName sets the "reviewer_name" field.
@@ -3581,7 +3612,10 @@ func (m *ReviewerMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ReviewerMutation) Fields() []string {
-	fields := make([]string, 0, 3)
+	fields := make([]string, 0, 4)
+	if m.reviewer_id != nil {
+		fields = append(fields, reviewer.FieldReviewerID)
+	}
 	if m.reviewer_name != nil {
 		fields = append(fields, reviewer.FieldReviewerName)
 	}
@@ -3599,6 +3633,8 @@ func (m *ReviewerMutation) Fields() []string {
 // schema.
 func (m *ReviewerMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case reviewer.FieldReviewerID:
+		return m.ReviewerID()
 	case reviewer.FieldReviewerName:
 		return m.ReviewerName()
 	case reviewer.FieldIimsRole:
@@ -3614,6 +3650,8 @@ func (m *ReviewerMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *ReviewerMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case reviewer.FieldReviewerID:
+		return m.OldReviewerID(ctx)
 	case reviewer.FieldReviewerName:
 		return m.OldReviewerName(ctx)
 	case reviewer.FieldIimsRole:
@@ -3629,6 +3667,13 @@ func (m *ReviewerMutation) OldField(ctx context.Context, name string) (ent.Value
 // type.
 func (m *ReviewerMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case reviewer.FieldReviewerID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetReviewerID(v)
+		return nil
 	case reviewer.FieldReviewerName:
 		v, ok := value.(string)
 		if !ok {
@@ -3699,6 +3744,9 @@ func (m *ReviewerMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *ReviewerMutation) ResetField(name string) error {
 	switch name {
+	case reviewer.FieldReviewerID:
+		m.ResetReviewerID()
+		return nil
 	case reviewer.FieldReviewerName:
 		m.ResetReviewerName()
 		return nil

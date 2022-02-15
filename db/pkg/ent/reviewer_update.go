@@ -27,6 +27,12 @@ func (ru *ReviewerUpdate) Where(ps ...predicate.Reviewer) *ReviewerUpdate {
 	return ru
 }
 
+// SetReviewerID sets the "reviewer_id" field.
+func (ru *ReviewerUpdate) SetReviewerID(s string) *ReviewerUpdate {
+	ru.mutation.SetReviewerID(s)
+	return ru
+}
+
 // SetReviewerName sets the "reviewer_name" field.
 func (ru *ReviewerUpdate) SetReviewerName(s string) *ReviewerUpdate {
 	ru.mutation.SetReviewerName(s)
@@ -106,6 +112,11 @@ func (ru *ReviewerUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (ru *ReviewerUpdate) check() error {
+	if v, ok := ru.mutation.ReviewerID(); ok {
+		if err := reviewer.ReviewerIDValidator(v); err != nil {
+			return &ValidationError{Name: "reviewer_id", err: fmt.Errorf(`ent: validator failed for field "Reviewer.reviewer_id": %w`, err)}
+		}
+	}
 	if v, ok := ru.mutation.ReviewerName(); ok {
 		if err := reviewer.ReviewerNameValidator(v); err != nil {
 			return &ValidationError{Name: "reviewer_name", err: fmt.Errorf(`ent: validator failed for field "Reviewer.reviewer_name": %w`, err)}
@@ -125,7 +136,7 @@ func (ru *ReviewerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Table:   reviewer.Table,
 			Columns: reviewer.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
+				Type:   field.TypeInt,
 				Column: reviewer.FieldID,
 			},
 		},
@@ -136,6 +147,13 @@ func (ru *ReviewerUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := ru.mutation.ReviewerID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: reviewer.FieldReviewerID,
+		})
 	}
 	if value, ok := ru.mutation.ReviewerName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -168,6 +186,12 @@ type ReviewerUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *ReviewerMutation
+}
+
+// SetReviewerID sets the "reviewer_id" field.
+func (ruo *ReviewerUpdateOne) SetReviewerID(s string) *ReviewerUpdateOne {
+	ruo.mutation.SetReviewerID(s)
+	return ruo
 }
 
 // SetReviewerName sets the "reviewer_name" field.
@@ -256,6 +280,11 @@ func (ruo *ReviewerUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (ruo *ReviewerUpdateOne) check() error {
+	if v, ok := ruo.mutation.ReviewerID(); ok {
+		if err := reviewer.ReviewerIDValidator(v); err != nil {
+			return &ValidationError{Name: "reviewer_id", err: fmt.Errorf(`ent: validator failed for field "Reviewer.reviewer_id": %w`, err)}
+		}
+	}
 	if v, ok := ruo.mutation.ReviewerName(); ok {
 		if err := reviewer.ReviewerNameValidator(v); err != nil {
 			return &ValidationError{Name: "reviewer_name", err: fmt.Errorf(`ent: validator failed for field "Reviewer.reviewer_name": %w`, err)}
@@ -275,7 +304,7 @@ func (ruo *ReviewerUpdateOne) sqlSave(ctx context.Context) (_node *Reviewer, err
 			Table:   reviewer.Table,
 			Columns: reviewer.Columns,
 			ID: &sqlgraph.FieldSpec{
-				Type:   field.TypeString,
+				Type:   field.TypeInt,
 				Column: reviewer.FieldID,
 			},
 		},
@@ -303,6 +332,13 @@ func (ruo *ReviewerUpdateOne) sqlSave(ctx context.Context) (_node *Reviewer, err
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := ruo.mutation.ReviewerID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: reviewer.FieldReviewerID,
+		})
 	}
 	if value, ok := ruo.mutation.ReviewerName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
