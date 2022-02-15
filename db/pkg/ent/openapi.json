@@ -1,0 +1,6312 @@
+{
+  "info": {
+    "title": "Ent Schema API",
+    "description": "This is an auto generated API description made out of an Ent schema definition",
+    "termsOfService": "",
+    "contact": {},
+    "license": {
+      "name": ""
+    },
+    "version": "0.0.0"
+  },
+  "paths": {
+    "/application-assignment-histories": {
+      "get": {
+        "summary": "List ApplicationAssignmentHistories",
+        "description": "List ApplicationAssignmentHistories.",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "listApplicationAssignmentHistory",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "what page to render",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "item count to render per page",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result ApplicationAssignmentHistory list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationAssignmentHistoryList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new ApplicationAssignmentHistory",
+        "description": "Creates a new ApplicationAssignmentHistory and persists it to storage.",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "createApplicationAssignmentHistory",
+        "requestBody": {
+          "description": "ApplicationAssignmentHistory to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "assignee",
+                  "assigner",
+                  "created_time"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "created_time": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApplicationAssignmentHistory created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationAssignmentHistoryCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/application-assignment-histories/{id}": {
+      "get": {
+        "summary": "Find a ApplicationAssignmentHistory by ID",
+        "description": "Finds the ApplicationAssignmentHistory with the requested ID and returns it.",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "readApplicationAssignmentHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationAssignmentHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ApplicationAssignmentHistory with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationAssignmentHistoryRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a ApplicationAssignmentHistory by ID",
+        "description": "Deletes the ApplicationAssignmentHistory with the requested ID.",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "deleteApplicationAssignmentHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationAssignmentHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "ApplicationAssignmentHistory with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a ApplicationAssignmentHistory",
+        "description": "Updates a ApplicationAssignmentHistory and persists changes to storage.",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "updateApplicationAssignmentHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationAssignmentHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "ApplicationAssignmentHistory properties to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "assignee",
+                  "assigner"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApplicationAssignmentHistory updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationAssignmentHistoryUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/application-assignment-histories/{id}/applications": {
+      "get": {
+        "summary": "Find the attached Application",
+        "description": "Find the attached Application of the ApplicationAssignmentHistory with the given ID",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "readApplicationAssignmentHistoryApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationAssignmentHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application attached to ApplicationAssignmentHistory with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationAssignmentHistory_ApplicationsRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Application and attach it to the ApplicationAssignmentHistory",
+        "description": "Creates a new Application and attaches it to the ApplicationAssignmentHistory",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "createApplicationAssignmentHistoryApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationAssignmentHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Application to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "applicant_email",
+                  "applicant_name",
+                  "application_mid",
+                  "application_status",
+                  "assignee",
+                  "assigner",
+                  "basic_id",
+                  "bot_active_status",
+                  "bot_display_name",
+                  "bot_mid",
+                  "created_dtime",
+                  "premium_id",
+                  "remark",
+                  "review_comment",
+                  "store_type",
+                  "update_dtime",
+                  "website_url"
+                ],
+                "properties": {
+                  "applicant_email": {
+                    "type": "string"
+                  },
+                  "applicant_name": {
+                    "type": "string"
+                  },
+                  "application_mid": {
+                    "type": "string"
+                  },
+                  "application_status": {
+                    "type": "string",
+                    "example": "wip"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "assignment_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "basic_id": {
+                    "type": "string"
+                  },
+                  "bot_active_status": {
+                    "type": "string",
+                    "example": "active"
+                  },
+                  "bot_display_name": {
+                    "type": "string"
+                  },
+                  "bot_mid": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "premium_id": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "review_comment": {
+                    "type": "string"
+                  },
+                  "status_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "store_type": {
+                    "type": "string",
+                    "example": "online_store"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "update_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "website_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application created and attached to the ApplicationAssignmentHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationAssignmentHistory_ApplicationsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the attached Applications",
+        "description": "Delete the attached Applications of the ApplicationAssignmentHistory with the given ID",
+        "tags": [
+          "ApplicationAssignmentHistory"
+        ],
+        "operationId": "deleteApplicationAssignmentHistoryApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationAssignmentHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Applications with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/application-status-histories": {
+      "get": {
+        "summary": "List ApplicationStatusHistories",
+        "description": "List ApplicationStatusHistories.",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "listApplicationStatusHistory",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "what page to render",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "item count to render per page",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result ApplicationStatusHistory list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationStatusHistoryList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new ApplicationStatusHistory",
+        "description": "Creates a new ApplicationStatusHistory and persists it to storage.",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "createApplicationStatusHistory",
+        "requestBody": {
+          "description": "ApplicationStatusHistory to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "created_time",
+                  "status"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "created_time": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "wip"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApplicationStatusHistory created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusHistoryCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/application-status-histories/{id}": {
+      "get": {
+        "summary": "Find a ApplicationStatusHistory by ID",
+        "description": "Finds the ApplicationStatusHistory with the requested ID and returns it.",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "readApplicationStatusHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationStatusHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ApplicationStatusHistory with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusHistoryRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a ApplicationStatusHistory by ID",
+        "description": "Deletes the ApplicationStatusHistory with the requested ID.",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "deleteApplicationStatusHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationStatusHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "ApplicationStatusHistory with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a ApplicationStatusHistory",
+        "description": "Updates a ApplicationStatusHistory and persists changes to storage.",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "updateApplicationStatusHistory",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationStatusHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "ApplicationStatusHistory properties to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "status"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "wip"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApplicationStatusHistory updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusHistoryUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/application-status-histories/{id}/applications": {
+      "get": {
+        "summary": "Find the attached Application",
+        "description": "Find the attached Application of the ApplicationStatusHistory with the given ID",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "readApplicationStatusHistoryApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationStatusHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application attached to ApplicationStatusHistory with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusHistory_ApplicationsRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Application and attach it to the ApplicationStatusHistory",
+        "description": "Creates a new Application and attaches it to the ApplicationStatusHistory",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "createApplicationStatusHistoryApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationStatusHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Application to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "applicant_email",
+                  "applicant_name",
+                  "application_mid",
+                  "application_status",
+                  "assignee",
+                  "assigner",
+                  "basic_id",
+                  "bot_active_status",
+                  "bot_display_name",
+                  "bot_mid",
+                  "created_dtime",
+                  "premium_id",
+                  "remark",
+                  "review_comment",
+                  "store_type",
+                  "update_dtime",
+                  "website_url"
+                ],
+                "properties": {
+                  "applicant_email": {
+                    "type": "string"
+                  },
+                  "applicant_name": {
+                    "type": "string"
+                  },
+                  "application_mid": {
+                    "type": "string"
+                  },
+                  "application_status": {
+                    "type": "string",
+                    "example": "wip"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "assignment_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "basic_id": {
+                    "type": "string"
+                  },
+                  "bot_active_status": {
+                    "type": "string",
+                    "example": "active"
+                  },
+                  "bot_display_name": {
+                    "type": "string"
+                  },
+                  "bot_mid": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "premium_id": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "review_comment": {
+                    "type": "string"
+                  },
+                  "status_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "store_type": {
+                    "type": "string",
+                    "example": "online_store"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "update_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "website_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application created and attached to the ApplicationStatusHistory",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationStatusHistory_ApplicationsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the attached Applications",
+        "description": "Delete the attached Applications of the ApplicationStatusHistory with the given ID",
+        "tags": [
+          "ApplicationStatusHistory"
+        ],
+        "operationId": "deleteApplicationStatusHistoryApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ApplicationStatusHistory",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Applications with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/applications": {
+      "get": {
+        "summary": "List Applications",
+        "description": "List Applications.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "listApplication",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "what page to render",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "item count to render per page",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Application list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ApplicationList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Application",
+        "description": "Creates a new Application and persists it to storage.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "createApplication",
+        "requestBody": {
+          "description": "Application to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "applicant_email",
+                  "applicant_name",
+                  "application_mid",
+                  "application_status",
+                  "assignee",
+                  "assigner",
+                  "basic_id",
+                  "bot_active_status",
+                  "bot_display_name",
+                  "bot_mid",
+                  "created_dtime",
+                  "premium_id",
+                  "remark",
+                  "review_comment",
+                  "store_type",
+                  "update_dtime",
+                  "website_url"
+                ],
+                "properties": {
+                  "applicant_email": {
+                    "type": "string"
+                  },
+                  "applicant_name": {
+                    "type": "string"
+                  },
+                  "application_mid": {
+                    "type": "string"
+                  },
+                  "application_status": {
+                    "type": "string",
+                    "example": "wip"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "assignment_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "basic_id": {
+                    "type": "string"
+                  },
+                  "bot_active_status": {
+                    "type": "string",
+                    "example": "active"
+                  },
+                  "bot_display_name": {
+                    "type": "string"
+                  },
+                  "bot_mid": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "premium_id": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "review_comment": {
+                    "type": "string"
+                  },
+                  "status_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "store_type": {
+                    "type": "string",
+                    "example": "online_store"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "update_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "website_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/applications/{id}": {
+      "get": {
+        "summary": "Find a Application by ID",
+        "description": "Finds the Application with the requested ID and returns it.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "readApplication",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a Application by ID",
+        "description": "Deletes the Application with the requested ID.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "deleteApplication",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Application with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a Application",
+        "description": "Updates a Application and persists changes to storage.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "updateApplication",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Application properties to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "applicant_email",
+                  "applicant_name",
+                  "application_mid",
+                  "application_status",
+                  "assignee",
+                  "assigner",
+                  "basic_id",
+                  "bot_active_status",
+                  "bot_display_name",
+                  "bot_mid",
+                  "premium_id",
+                  "remark",
+                  "review_comment",
+                  "store_type",
+                  "update_dtime",
+                  "website_url"
+                ],
+                "properties": {
+                  "applicant_email": {
+                    "type": "string"
+                  },
+                  "applicant_name": {
+                    "type": "string"
+                  },
+                  "application_mid": {
+                    "type": "string"
+                  },
+                  "application_status": {
+                    "type": "string",
+                    "example": "wip"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "assignment_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "basic_id": {
+                    "type": "string"
+                  },
+                  "bot_active_status": {
+                    "type": "string",
+                    "example": "active"
+                  },
+                  "bot_display_name": {
+                    "type": "string"
+                  },
+                  "bot_mid": {
+                    "type": "string"
+                  },
+                  "premium_id": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "review_comment": {
+                    "type": "string"
+                  },
+                  "status_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "store_type": {
+                    "type": "string",
+                    "example": "online_store"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "update_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "website_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/applications/{id}/assignment-histories": {
+      "get": {
+        "summary": "List attached AssignmentHistories",
+        "description": "List attached AssignmentHistories.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "listApplicationAssignmentHistories",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Applications list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Application_AssignmentHistoriesList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new ApplicationAssignmentHistory and attach it to the Application",
+        "description": "Creates a new ApplicationAssignmentHistory and attaches it to the Application",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "createApplicationAssignmentHistories",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "ApplicationAssignmentHistory to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "assignee",
+                  "assigner",
+                  "created_time"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "created_time": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApplicationAssignmentHistory created and attached to the Application",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Application_AssignmentHistoriesCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/applications/{id}/attachments": {
+      "get": {
+        "summary": "List attached Attachments",
+        "description": "List attached Attachments.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "listApplicationAttachments",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Applications list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Application_AttachmentsList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Attachment and attach it to the Application",
+        "description": "Creates a new Attachment and attaches it to the Application",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "createApplicationAttachments",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Attachment to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "a_type",
+                  "application_id",
+                  "applications",
+                  "created_dtime",
+                  "obs_hash",
+                  "obs_oid",
+                  "tickets"
+                ],
+                "properties": {
+                  "a_type": {
+                    "type": "string",
+                    "example": "biz_cert"
+                  },
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "obs_hash": {
+                    "type": "string"
+                  },
+                  "obs_oid": {
+                    "type": "string"
+                  },
+                  "ticket_id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attachment created and attached to the Application",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Application_AttachmentsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/applications/{id}/status-histories": {
+      "get": {
+        "summary": "List attached StatusHistories",
+        "description": "List attached StatusHistories.",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "listApplicationStatusHistories",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Applications list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Application_StatusHistoriesList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new ApplicationStatusHistory and attach it to the Application",
+        "description": "Creates a new ApplicationStatusHistory and attaches it to the Application",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "createApplicationStatusHistories",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "ApplicationStatusHistory to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "created_time",
+                  "status"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "created_time": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "wip"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ApplicationStatusHistory created and attached to the Application",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Application_StatusHistoriesCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/applications/{id}/tickets": {
+      "get": {
+        "summary": "Find the attached Ticket",
+        "description": "Find the attached Ticket of the Application with the given ID",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "readApplicationTickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket attached to Application with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Application_TicketsRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Ticket and attach it to the Application",
+        "description": "Creates a new Ticket and attaches it to the Application",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "createApplicationTickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ticket to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "content",
+                  "created_dtime",
+                  "creator",
+                  "replied_dtime",
+                  "replier",
+                  "reply",
+                  "review_remark",
+                  "reviewed_dtime",
+                  "reviewer",
+                  "status",
+                  "updated_dtime"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "creator": {
+                    "type": "string"
+                  },
+                  "replied_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "replier": {
+                    "type": "string"
+                  },
+                  "reply": {
+                    "type": "string"
+                  },
+                  "review_remark": {
+                    "type": "string"
+                  },
+                  "reviewed_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "reviewer": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "created"
+                  },
+                  "updated_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created and attached to the Application",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Application_TicketsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the attached Tickets",
+        "description": "Delete the attached Tickets of the Application with the given ID",
+        "tags": [
+          "Application"
+        ],
+        "operationId": "deleteApplicationTickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Application",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tickets with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/attachments": {
+      "get": {
+        "summary": "List Attachments",
+        "description": "List Attachments.",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "listAttachment",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "what page to render",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "item count to render per page",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Attachment list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AttachmentList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Attachment",
+        "description": "Creates a new Attachment and persists it to storage.",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "createAttachment",
+        "requestBody": {
+          "description": "Attachment to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "a_type",
+                  "application_id",
+                  "applications",
+                  "created_dtime",
+                  "obs_hash",
+                  "obs_oid",
+                  "tickets"
+                ],
+                "properties": {
+                  "a_type": {
+                    "type": "string",
+                    "example": "biz_cert"
+                  },
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "obs_hash": {
+                    "type": "string"
+                  },
+                  "obs_oid": {
+                    "type": "string"
+                  },
+                  "ticket_id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attachment created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/attachments/{id}": {
+      "get": {
+        "summary": "Find a Attachment by ID",
+        "description": "Finds the Attachment with the requested ID and returns it.",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "readAttachment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Attachment with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a Attachment by ID",
+        "description": "Deletes the Attachment with the requested ID.",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "deleteAttachment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Attachment with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a Attachment",
+        "description": "Updates a Attachment and persists changes to storage.",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "updateAttachment",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Attachment properties to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "a_type",
+                  "application_id",
+                  "applications",
+                  "obs_hash",
+                  "obs_oid",
+                  "tickets"
+                ],
+                "properties": {
+                  "a_type": {
+                    "type": "string",
+                    "example": "biz_cert"
+                  },
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "obs_hash": {
+                    "type": "string"
+                  },
+                  "obs_oid": {
+                    "type": "string"
+                  },
+                  "ticket_id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attachment updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/attachments/{id}/applications": {
+      "get": {
+        "summary": "Find the attached Application",
+        "description": "Find the attached Application of the Attachment with the given ID",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "readAttachmentApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application attached to Attachment with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment_ApplicationsRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Application and attach it to the Attachment",
+        "description": "Creates a new Application and attaches it to the Attachment",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "createAttachmentApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Application to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "applicant_email",
+                  "applicant_name",
+                  "application_mid",
+                  "application_status",
+                  "assignee",
+                  "assigner",
+                  "basic_id",
+                  "bot_active_status",
+                  "bot_display_name",
+                  "bot_mid",
+                  "created_dtime",
+                  "premium_id",
+                  "remark",
+                  "review_comment",
+                  "store_type",
+                  "update_dtime",
+                  "website_url"
+                ],
+                "properties": {
+                  "applicant_email": {
+                    "type": "string"
+                  },
+                  "applicant_name": {
+                    "type": "string"
+                  },
+                  "application_mid": {
+                    "type": "string"
+                  },
+                  "application_status": {
+                    "type": "string",
+                    "example": "wip"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "assignment_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "basic_id": {
+                    "type": "string"
+                  },
+                  "bot_active_status": {
+                    "type": "string",
+                    "example": "active"
+                  },
+                  "bot_display_name": {
+                    "type": "string"
+                  },
+                  "bot_mid": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "premium_id": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "review_comment": {
+                    "type": "string"
+                  },
+                  "status_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "store_type": {
+                    "type": "string",
+                    "example": "online_store"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "update_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "website_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application created and attached to the Attachment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment_ApplicationsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the attached Applications",
+        "description": "Delete the attached Applications of the Attachment with the given ID",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "deleteAttachmentApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Applications with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/attachments/{id}/tickets": {
+      "get": {
+        "summary": "Find the attached Ticket",
+        "description": "Find the attached Ticket of the Attachment with the given ID",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "readAttachmentTickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket attached to Attachment with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment_TicketsRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Ticket and attach it to the Attachment",
+        "description": "Creates a new Ticket and attaches it to the Attachment",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "createAttachmentTickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ticket to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "content",
+                  "created_dtime",
+                  "creator",
+                  "replied_dtime",
+                  "replier",
+                  "reply",
+                  "review_remark",
+                  "reviewed_dtime",
+                  "reviewer",
+                  "status",
+                  "updated_dtime"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "creator": {
+                    "type": "string"
+                  },
+                  "replied_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "replier": {
+                    "type": "string"
+                  },
+                  "reply": {
+                    "type": "string"
+                  },
+                  "review_remark": {
+                    "type": "string"
+                  },
+                  "reviewed_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "reviewer": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "created"
+                  },
+                  "updated_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created and attached to the Attachment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attachment_TicketsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the attached Tickets",
+        "description": "Delete the attached Tickets of the Attachment with the given ID",
+        "tags": [
+          "Attachment"
+        ],
+        "operationId": "deleteAttachmentTickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Attachment",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tickets with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/reviewers": {
+      "get": {
+        "summary": "List Reviewers",
+        "description": "List Reviewers.",
+        "tags": [
+          "Reviewer"
+        ],
+        "operationId": "listReviewer",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "what page to render",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "item count to render per page",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Reviewer list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReviewerList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Reviewer",
+        "description": "Creates a new Reviewer and persists it to storage.",
+        "tags": [
+          "Reviewer"
+        ],
+        "operationId": "createReviewer",
+        "requestBody": {
+          "description": "Reviewer to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "created_dtime",
+                  "iims_role",
+                  "reviewer_id",
+                  "reviewer_name"
+                ],
+                "properties": {
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "iims_role": {
+                    "type": "string",
+                    "example": "oav_admin"
+                  },
+                  "reviewer_id": {
+                    "type": "string"
+                  },
+                  "reviewer_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reviewer created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewerCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/reviewers/{id}": {
+      "get": {
+        "summary": "Find a Reviewer by ID",
+        "description": "Finds the Reviewer with the requested ID and returns it.",
+        "tags": [
+          "Reviewer"
+        ],
+        "operationId": "readReviewer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Reviewer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reviewer with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewerRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a Reviewer by ID",
+        "description": "Deletes the Reviewer with the requested ID.",
+        "tags": [
+          "Reviewer"
+        ],
+        "operationId": "deleteReviewer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Reviewer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Reviewer with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a Reviewer",
+        "description": "Updates a Reviewer and persists changes to storage.",
+        "tags": [
+          "Reviewer"
+        ],
+        "operationId": "updateReviewer",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Reviewer",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Reviewer properties to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "iims_role",
+                  "reviewer_id",
+                  "reviewer_name"
+                ],
+                "properties": {
+                  "iims_role": {
+                    "type": "string",
+                    "example": "oav_admin"
+                  },
+                  "reviewer_id": {
+                    "type": "string"
+                  },
+                  "reviewer_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Reviewer updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewerUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/tickets": {
+      "get": {
+        "summary": "List Tickets",
+        "description": "List Tickets.",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "listTicket",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "what page to render",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "item count to render per page",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Ticket list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Ticket",
+        "description": "Creates a new Ticket and persists it to storage.",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "createTicket",
+        "requestBody": {
+          "description": "Ticket to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "content",
+                  "created_dtime",
+                  "creator",
+                  "replied_dtime",
+                  "replier",
+                  "reply",
+                  "review_remark",
+                  "reviewed_dtime",
+                  "reviewer",
+                  "status",
+                  "updated_dtime"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "creator": {
+                    "type": "string"
+                  },
+                  "replied_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "replier": {
+                    "type": "string"
+                  },
+                  "reply": {
+                    "type": "string"
+                  },
+                  "review_remark": {
+                    "type": "string"
+                  },
+                  "reviewed_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "reviewer": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "created"
+                  },
+                  "updated_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/tickets/{id}": {
+      "get": {
+        "summary": "Find a Ticket by ID",
+        "description": "Finds the Ticket with the requested ID and returns it.",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "readTicket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a Ticket by ID",
+        "description": "Deletes the Ticket with the requested ID.",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "deleteTicket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ticket with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Updates a Ticket",
+        "description": "Updates a Ticket and persists changes to storage.",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "updateTicket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ticket properties to update",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "application_id",
+                  "applications",
+                  "content",
+                  "creator",
+                  "replied_dtime",
+                  "replier",
+                  "reply",
+                  "review_remark",
+                  "reviewed_dtime",
+                  "reviewer",
+                  "status",
+                  "updated_dtime"
+                ],
+                "properties": {
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "creator": {
+                    "type": "string"
+                  },
+                  "replied_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "replier": {
+                    "type": "string"
+                  },
+                  "reply": {
+                    "type": "string"
+                  },
+                  "review_remark": {
+                    "type": "string"
+                  },
+                  "reviewed_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "reviewer": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "example": "created"
+                  },
+                  "updated_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketUpdate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/tickets/{id}/applications": {
+      "get": {
+        "summary": "Find the attached Application",
+        "description": "Find the attached Application of the Ticket with the given ID",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "readTicketApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application attached to Ticket with requested ID was found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket_ApplicationsRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Application and attach it to the Ticket",
+        "description": "Creates a new Application and attaches it to the Ticket",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "createTicketApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Application to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "applicant_email",
+                  "applicant_name",
+                  "application_mid",
+                  "application_status",
+                  "assignee",
+                  "assigner",
+                  "basic_id",
+                  "bot_active_status",
+                  "bot_display_name",
+                  "bot_mid",
+                  "created_dtime",
+                  "premium_id",
+                  "remark",
+                  "review_comment",
+                  "store_type",
+                  "update_dtime",
+                  "website_url"
+                ],
+                "properties": {
+                  "applicant_email": {
+                    "type": "string"
+                  },
+                  "applicant_name": {
+                    "type": "string"
+                  },
+                  "application_mid": {
+                    "type": "string"
+                  },
+                  "application_status": {
+                    "type": "string",
+                    "example": "wip"
+                  },
+                  "assignee": {
+                    "type": "string"
+                  },
+                  "assigner": {
+                    "type": "string"
+                  },
+                  "assignment_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "attachments": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "basic_id": {
+                    "type": "string"
+                  },
+                  "bot_active_status": {
+                    "type": "string",
+                    "example": "active"
+                  },
+                  "bot_display_name": {
+                    "type": "string"
+                  },
+                  "bot_mid": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "premium_id": {
+                    "type": "string"
+                  },
+                  "remark": {
+                    "type": "string"
+                  },
+                  "review_comment": {
+                    "type": "string"
+                  },
+                  "status_histories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "store_type": {
+                    "type": "string",
+                    "example": "online_store"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "update_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "website_url": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Application created and attached to the Ticket",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket_ApplicationsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the attached Applications",
+        "description": "Delete the attached Applications of the Ticket with the given ID",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "deleteTicketApplications",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Applications with requested ID was deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/tickets/{id}/attachments": {
+      "get": {
+        "summary": "List attached Attachments",
+        "description": "List attached Attachments.",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "listTicketAttachments",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "result Tickets list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Ticket_AttachmentsList"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new Attachment and attach it to the Ticket",
+        "description": "Creates a new Attachment and attaches it to the Ticket",
+        "tags": [
+          "Ticket"
+        ],
+        "operationId": "createTicketAttachments",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Attachment to create",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "a_type",
+                  "application_id",
+                  "applications",
+                  "created_dtime",
+                  "obs_hash",
+                  "obs_oid",
+                  "tickets"
+                ],
+                "properties": {
+                  "a_type": {
+                    "type": "string",
+                    "example": "biz_cert"
+                  },
+                  "application_id": {
+                    "type": "string"
+                  },
+                  "applications": {
+                    "type": "string"
+                  },
+                  "created_dtime": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "obs_hash": {
+                    "type": "string"
+                  },
+                  "obs_oid": {
+                    "type": "string"
+                  },
+                  "ticket_id": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "tickets": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attachment created and attached to the Ticket",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ticket_AttachmentsCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Application": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_mid",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_mid": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "assignment_histories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationAssignmentHistory"
+            }
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attachment"
+            }
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "status_histories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationStatusHistory"
+            }
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "tickets": {
+            "$ref": "#/components/schemas/Ticket"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationAssignmentHistory": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "applications": {
+            "$ref": "#/components/schemas/Application"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApplicationAssignmentHistoryCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApplicationAssignmentHistoryList": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApplicationAssignmentHistoryRead": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApplicationAssignmentHistoryUpdate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ApplicationAssignmentHistory_ApplicationsCreate": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationAssignmentHistory_ApplicationsRead": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationCreate": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationList": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationRead": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationStatusHistory": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "applications": {
+            "$ref": "#/components/schemas/Application"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "ApplicationStatusHistoryCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "ApplicationStatusHistoryList": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "ApplicationStatusHistoryRead": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "ApplicationStatusHistoryUpdate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "ApplicationStatusHistory_ApplicationsCreate": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationStatusHistory_ApplicationsRead": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "ApplicationUpdate": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "Application_AssignmentHistoriesCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Application_AssignmentHistoriesList": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "assignee",
+          "assigner",
+          "created_time",
+          "id"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Application_AttachmentsCreate": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Application_AttachmentsList": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Application_StatusHistoriesCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "Application_StatusHistoriesList": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "created_time",
+          "id",
+          "status"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "created_time": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string",
+            "example": "wip"
+          }
+        }
+      },
+      "Application_TicketsCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Application_TicketsRead": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Attachment": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "applications": {
+            "$ref": "#/components/schemas/Application"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tickets": {
+            "$ref": "#/components/schemas/Ticket"
+          }
+        }
+      },
+      "AttachmentCreate": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AttachmentList": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AttachmentRead": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AttachmentUpdate": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Attachment_ApplicationsCreate": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "Attachment_ApplicationsRead": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "Attachment_TicketsCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Attachment_TicketsRead": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Reviewer": {
+        "type": "object",
+        "required": [
+          "created_dtime",
+          "id",
+          "iims_role",
+          "reviewer_id",
+          "reviewer_name"
+        ],
+        "properties": {
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "iims_role": {
+            "type": "string",
+            "example": "oav_admin"
+          },
+          "reviewer_id": {
+            "type": "string"
+          },
+          "reviewer_name": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewerCreate": {
+        "type": "object",
+        "required": [
+          "created_dtime",
+          "id",
+          "iims_role",
+          "reviewer_id",
+          "reviewer_name"
+        ],
+        "properties": {
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "iims_role": {
+            "type": "string",
+            "example": "oav_admin"
+          },
+          "reviewer_id": {
+            "type": "string"
+          },
+          "reviewer_name": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewerList": {
+        "type": "object",
+        "required": [
+          "created_dtime",
+          "id",
+          "iims_role",
+          "reviewer_id",
+          "reviewer_name"
+        ],
+        "properties": {
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "iims_role": {
+            "type": "string",
+            "example": "oav_admin"
+          },
+          "reviewer_id": {
+            "type": "string"
+          },
+          "reviewer_name": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewerRead": {
+        "type": "object",
+        "required": [
+          "created_dtime",
+          "id",
+          "iims_role",
+          "reviewer_id",
+          "reviewer_name"
+        ],
+        "properties": {
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "iims_role": {
+            "type": "string",
+            "example": "oav_admin"
+          },
+          "reviewer_id": {
+            "type": "string"
+          },
+          "reviewer_name": {
+            "type": "string"
+          }
+        }
+      },
+      "ReviewerUpdate": {
+        "type": "object",
+        "required": [
+          "created_dtime",
+          "id",
+          "iims_role",
+          "reviewer_id",
+          "reviewer_name"
+        ],
+        "properties": {
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "iims_role": {
+            "type": "string",
+            "example": "oav_admin"
+          },
+          "reviewer_id": {
+            "type": "string"
+          },
+          "reviewer_name": {
+            "type": "string"
+          }
+        }
+      },
+      "Ticket": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "applications": {
+            "$ref": "#/components/schemas/Application"
+          },
+          "attachments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Attachment"
+            }
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TicketCreate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TicketList": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TicketRead": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "TicketUpdate": {
+        "type": "object",
+        "required": [
+          "application_id",
+          "content",
+          "created_dtime",
+          "creator",
+          "id",
+          "replied_dtime",
+          "replier",
+          "reply",
+          "review_remark",
+          "reviewed_dtime",
+          "reviewer",
+          "status",
+          "updated_dtime"
+        ],
+        "properties": {
+          "application_id": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creator": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "replied_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "replier": {
+            "type": "string"
+          },
+          "reply": {
+            "type": "string"
+          },
+          "review_remark": {
+            "type": "string"
+          },
+          "reviewed_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "reviewer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "example": "created"
+          },
+          "updated_dtime": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Ticket_ApplicationsCreate": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "Ticket_ApplicationsRead": {
+        "type": "object",
+        "required": [
+          "applicant_email",
+          "applicant_name",
+          "application_status",
+          "assignee",
+          "assigner",
+          "basic_id",
+          "bot_active_status",
+          "bot_display_name",
+          "bot_mid",
+          "created_dtime",
+          "id",
+          "premium_id",
+          "remark",
+          "review_comment",
+          "store_type",
+          "update_dtime",
+          "website_url"
+        ],
+        "properties": {
+          "applicant_email": {
+            "type": "string"
+          },
+          "applicant_name": {
+            "type": "string"
+          },
+          "application_status": {
+            "type": "string",
+            "example": "wip"
+          },
+          "assignee": {
+            "type": "string"
+          },
+          "assigner": {
+            "type": "string"
+          },
+          "basic_id": {
+            "type": "string"
+          },
+          "bot_active_status": {
+            "type": "string",
+            "example": "active"
+          },
+          "bot_display_name": {
+            "type": "string"
+          },
+          "bot_mid": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string"
+          },
+          "premium_id": {
+            "type": "string"
+          },
+          "remark": {
+            "type": "string"
+          },
+          "review_comment": {
+            "type": "string"
+          },
+          "store_type": {
+            "type": "string",
+            "example": "online_store"
+          },
+          "update_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "website_url": {
+            "type": "string"
+          }
+        }
+      },
+      "Ticket_AttachmentsCreate": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Ticket_AttachmentsList": {
+        "type": "object",
+        "required": [
+          "a_type",
+          "application_id",
+          "created_dtime",
+          "id",
+          "obs_hash",
+          "obs_oid"
+        ],
+        "properties": {
+          "a_type": {
+            "type": "string",
+            "example": "biz_cert"
+          },
+          "application_id": {
+            "type": "string"
+          },
+          "created_dtime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "obs_hash": {
+            "type": "string"
+          },
+          "obs_oid": {
+            "type": "string"
+          },
+          "ticket_id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "invalid input, data invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 400
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Bad Request"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "insufficient permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 403
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Forbidden"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 404
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Not Found"
+                }
+              }
+            }
+          }
+        }
+      },
+      "409": {
+        "description": "conflicting resources",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 409
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Conflict"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "unexpected error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "format": "int32",
+                  "example": 500
+                },
+                "errors": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "status": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {}
+  },
+  "openapi": "3.0.3"
+}
