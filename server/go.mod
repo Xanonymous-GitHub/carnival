@@ -3,7 +3,7 @@ module github.com/Xanonymous-GitHub/carnival/server
 go 1.17
 
 require (
-	github.com/Xanonymous-GitHub/carnival/db v0.0.0-20220214095000-ab3ebdad5658
+	github.com/Xanonymous-GitHub/carnival/db v0.0.0-20220215041508-832346407a4e
 	github.com/gin-gonic/gin v1.7.7
 	github.com/spf13/viper v1.10.1
 	google.golang.org/grpc v1.44.0
