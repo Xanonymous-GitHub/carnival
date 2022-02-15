@@ -3,8 +3,10 @@ package main
 import (
 	"context"
 	"entgo.io/ent/dialect"
+	"entgo.io/ent/dialect/sql/schema"
 	"fmt"
 	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent"
+	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/migrate"
 	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/proto/entpb"
 	"github.com/Xanonymous-GitHub/carnival/db/pkg/vp"
 	_ "github.com/go-sql-driver/mysql"
@@ -49,8 +51,16 @@ func main() {
 		}
 	}(client)
 
-	// Run the migration tool (creating tables, etc).
-	if err := client.Schema.Create(context.Background()); err != nil {
+	// Run the migration tool.
+	ctx := context.Background()
+	err = client.Schema.Create(
+		ctx,
+		schema.WithAtlas(true),
+		migrate.WithDropIndex(true),
+		migrate.WithDropColumn(true),
+		migrate.WithGlobalUniqueID(true),
+	)
+	if err != nil {
 		log.Fatalf("failed creating schema resources: %v", err)
 	}
 
