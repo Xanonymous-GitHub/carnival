@@ -47,6 +47,7 @@ func (Reviewer) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("reviewer_id").
 			MaxLen(reviewerIdSizeLimit).
+			Unique().
 			Annotations(entproto.Field(2)),
 
 		field.String("reviewer_name").
