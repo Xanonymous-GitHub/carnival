@@ -62,7 +62,8 @@ type ApplicationMutation struct {
 	created_dtime               *time.Time
 	update_dtime                *time.Time
 	clearedFields               map[string]struct{}
-	tickets                     *int
+	tickets                     map[int]struct{}
+	removedtickets              map[int]struct{}
 	clearedtickets              bool
 	assignment_histories        map[int]struct{}
 	removedassignment_histories map[int]struct{}
@@ -794,9 +795,14 @@ func (m *ApplicationMutation) ResetUpdateDtime() {
 	m.update_dtime = nil
 }
 
-// SetTicketsID sets the "tickets" edge to the Ticket entity by id.
-func (m *ApplicationMutation) SetTicketsID(id int) {
-	m.tickets = &id
+// AddTicketIDs adds the "tickets" edge to the Ticket entity by ids.
+func (m *ApplicationMutation) AddTicketIDs(ids ...int) {
+	if m.tickets == nil {
+		m.tickets = make(map[int]struct{})
+	}
+	for i := range ids {
+		m.tickets[ids[i]] = struct{}{}
+	}
 }
 
 // ClearTickets clears the "tickets" edge to the Ticket entity.
@@ -809,20 +815,29 @@ func (m *ApplicationMutation) TicketsCleared() bool {
 	return m.clearedtickets
 }
 
-// TicketsID returns the "tickets" edge ID in the mutation.
-func (m *ApplicationMutation) TicketsID() (id int, exists bool) {
-	if m.tickets != nil {
-		return *m.tickets, true
+// RemoveTicketIDs removes the "tickets" edge to the Ticket entity by IDs.
+func (m *ApplicationMutation) RemoveTicketIDs(ids ...int) {
+	if m.removedtickets == nil {
+		m.removedtickets = make(map[int]struct{})
+	}
+	for i := range ids {
+		delete(m.tickets, ids[i])
+		m.removedtickets[ids[i]] = struct{}{}
+	}
+}
+
+// RemovedTickets returns the removed IDs of the "tickets" edge to the Ticket entity.
+func (m *ApplicationMutation) RemovedTicketsIDs() (ids []int) {
+	for id := range m.removedtickets {
+		ids = append(ids, id)
 	}
 	return
 }
 
 // TicketsIDs returns the "tickets" edge IDs in the mutation.
-// Note that IDs always returns len(IDs) <= 1 for unique edges, and you should use
-// TicketsID instead. It exists only for internal usage by the builders.
 func (m *ApplicationMutation) TicketsIDs() (ids []int) {
-	if id := m.tickets; id != nil {
-		ids = append(ids, *id)
+	for id := range m.tickets {
+		ids = append(ids, id)
 	}
 	return
 }
@@ -831,6 +846,7 @@ func (m *ApplicationMutation) TicketsIDs() (ids []int) {
 func (m *ApplicationMutation) ResetTickets() {
 	m.tickets = nil
 	m.clearedtickets = false
+	m.removedtickets = nil
 }
 
 // AddAssignmentHistoryIDs adds the "assignment_histories" edge to the ApplicationAssignmentHistory entity by ids.
@@ -1406,9 +1422,11 @@ func (m *ApplicationMutation) AddedEdges() []string {
 func (m *ApplicationMutation) AddedIDs(name string) []ent.Value {
 	switch name {
 	case application.EdgeTickets:
-		if id := m.tickets; id != nil {
-			return []ent.Value{*id}
+		ids := make([]ent.Value, 0, len(m.tickets))
+		for id := range m.tickets {
+			ids = append(ids, id)
 		}
+		return ids
 	case application.EdgeAssignmentHistories:
 		ids := make([]ent.Value, 0, len(m.assignment_histories))
 		for id := range m.assignment_histories {
@@ -1434,6 +1452,9 @@ func (m *ApplicationMutation) AddedIDs(name string) []ent.Value {
 // RemovedEdges returns all edge names that were removed in this mutation.
 func (m *ApplicationMutation) RemovedEdges() []string {
 	edges := make([]string, 0, 4)
+	if m.removedtickets != nil {
+		edges = append(edges, application.EdgeTickets)
+	}
 	if m.removedassignment_histories != nil {
 		edges = append(edges, application.EdgeAssignmentHistories)
 	}
@@ -1450,6 +1471,12 @@ func (m *ApplicationMutation) RemovedEdges() []string {
 // the given name in this mutation.
 func (m *ApplicationMutation) RemovedIDs(name string) []ent.Value {
 	switch name {
+	case application.EdgeTickets:
+		ids := make([]ent.Value, 0, len(m.removedtickets))
+		for id := range m.removedtickets {
+			ids = append(ids, id)
+		}
+		return ids
 	case application.EdgeAssignmentHistories:
 		ids := make([]ent.Value, 0, len(m.removedassignment_histories))
 		for id := range m.removedassignment_histories {
@@ -1510,9 +1537,6 @@ func (m *ApplicationMutation) EdgeCleared(name string) bool {
 // if that edge is not defined in the schema.
 func (m *ApplicationMutation) ClearEdge(name string) error {
 	switch name {
-	case application.EdgeTickets:
-		m.ClearTickets()
-		return nil
 	}
 	return fmt.Errorf("unknown Application unique edge %s", name)
 }
@@ -1543,7 +1567,6 @@ type ApplicationAssignmentHistoryMutation struct {
 	op                  Op
 	typ                 string
 	id                  *int
-	application_id      *uuid.UUID
 	assigner            *string
 	assignee            *string
 	created_time        *time.Time
@@ -1655,12 +1678,12 @@ func (m *ApplicationAssignmentHistoryMutation) IDs(ctx context.Context) ([]int, 
 
 // SetApplicationID sets the "application_id" field.
 func (m *ApplicationAssignmentHistoryMutation) SetApplicationID(u uuid.UUID) {
-	m.application_id = &u
+	m.applications = &u
 }
 
 // ApplicationID returns the value of the "application_id" field in the mutation.
 func (m *ApplicationAssignmentHistoryMutation) ApplicationID() (r uuid.UUID, exists bool) {
-	v := m.application_id
+	v := m.applications
 	if v == nil {
 		return
 	}
@@ -1686,7 +1709,7 @@ func (m *ApplicationAssignmentHistoryMutation) OldApplicationID(ctx context.Cont
 
 // ResetApplicationID resets all changes to the "application_id" field.
 func (m *ApplicationAssignmentHistoryMutation) ResetApplicationID() {
-	m.application_id = nil
+	m.applications = nil
 }
 
 // SetAssigner sets the "assigner" field.
@@ -1856,7 +1879,7 @@ func (m *ApplicationAssignmentHistoryMutation) Type() string {
 // AddedFields().
 func (m *ApplicationAssignmentHistoryMutation) Fields() []string {
 	fields := make([]string, 0, 4)
-	if m.application_id != nil {
+	if m.applications != nil {
 		fields = append(fields, applicationassignmenthistory.FieldApplicationID)
 	}
 	if m.assigner != nil {
@@ -2085,7 +2108,6 @@ type ApplicationStatusHistoryMutation struct {
 	op                  Op
 	typ                 string
 	id                  *int
-	application_id      *uuid.UUID
 	status              *applicationstatushistory.Status
 	created_time        *time.Time
 	clearedFields       map[string]struct{}
@@ -2196,12 +2218,12 @@ func (m *ApplicationStatusHistoryMutation) IDs(ctx context.Context) ([]int, erro
 
 // SetApplicationID sets the "application_id" field.
 func (m *ApplicationStatusHistoryMutation) SetApplicationID(u uuid.UUID) {
-	m.application_id = &u
+	m.applications = &u
 }
 
 // ApplicationID returns the value of the "application_id" field in the mutation.
 func (m *ApplicationStatusHistoryMutation) ApplicationID() (r uuid.UUID, exists bool) {
-	v := m.application_id
+	v := m.applications
 	if v == nil {
 		return
 	}
@@ -2227,7 +2249,7 @@ func (m *ApplicationStatusHistoryMutation) OldApplicationID(ctx context.Context)
 
 // ResetApplicationID resets all changes to the "application_id" field.
 func (m *ApplicationStatusHistoryMutation) ResetApplicationID() {
-	m.application_id = nil
+	m.applications = nil
 }
 
 // SetStatus sets the "status" field.
@@ -2361,7 +2383,7 @@ func (m *ApplicationStatusHistoryMutation) Type() string {
 // AddedFields().
 func (m *ApplicationStatusHistoryMutation) Fields() []string {
 	fields := make([]string, 0, 3)
-	if m.application_id != nil {
+	if m.applications != nil {
 		fields = append(fields, applicationstatushistory.FieldApplicationID)
 	}
 	if m.status != nil {
@@ -2573,9 +2595,6 @@ type AttachmentMutation struct {
 	op                  Op
 	typ                 string
 	id                  *int
-	application_id      *uuid.UUID
-	ticket_id           *int32
-	addticket_id        *int32
 	a_type              *attachment.AType
 	obs_oid             *string
 	obs_hash            *string
@@ -2690,12 +2709,12 @@ func (m *AttachmentMutation) IDs(ctx context.Context) ([]int, error) {
 
 // SetApplicationID sets the "application_id" field.
 func (m *AttachmentMutation) SetApplicationID(u uuid.UUID) {
-	m.application_id = &u
+	m.applications = &u
 }
 
 // ApplicationID returns the value of the "application_id" field in the mutation.
 func (m *AttachmentMutation) ApplicationID() (r uuid.UUID, exists bool) {
-	v := m.application_id
+	v := m.applications
 	if v == nil {
 		return
 	}
@@ -2721,18 +2740,17 @@ func (m *AttachmentMutation) OldApplicationID(ctx context.Context) (v uuid.UUID,
 
 // ResetApplicationID resets all changes to the "application_id" field.
 func (m *AttachmentMutation) ResetApplicationID() {
-	m.application_id = nil
+	m.applications = nil
 }
 
 // SetTicketID sets the "ticket_id" field.
-func (m *AttachmentMutation) SetTicketID(i int32) {
-	m.ticket_id = &i
-	m.addticket_id = nil
+func (m *AttachmentMutation) SetTicketID(i int) {
+	m.tickets = &i
 }
 
 // TicketID returns the value of the "ticket_id" field in the mutation.
-func (m *AttachmentMutation) TicketID() (r int32, exists bool) {
-	v := m.ticket_id
+func (m *AttachmentMutation) TicketID() (r int, exists bool) {
+	v := m.tickets
 	if v == nil {
 		return
 	}
@@ -2742,7 +2760,7 @@ func (m *AttachmentMutation) TicketID() (r int32, exists bool) {
 // OldTicketID returns the old "ticket_id" field's value of the Attachment entity.
 // If the Attachment object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AttachmentMutation) OldTicketID(ctx context.Context) (v *int32, err error) {
+func (m *AttachmentMutation) OldTicketID(ctx context.Context) (v *int, err error) {
 	if !m.op.Is(OpUpdateOne) {
 		return v, errors.New("OldTicketID is only allowed on UpdateOne operations")
 	}
@@ -2756,28 +2774,9 @@ func (m *AttachmentMutation) OldTicketID(ctx context.Context) (v *int32, err err
 	return oldValue.TicketID, nil
 }
 
-// AddTicketID adds i to the "ticket_id" field.
-func (m *AttachmentMutation) AddTicketID(i int32) {
-	if m.addticket_id != nil {
-		*m.addticket_id += i
-	} else {
-		m.addticket_id = &i
-	}
-}
-
-// AddedTicketID returns the value that was added to the "ticket_id" field in this mutation.
-func (m *AttachmentMutation) AddedTicketID() (r int32, exists bool) {
-	v := m.addticket_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
 // ClearTicketID clears the value of the "ticket_id" field.
 func (m *AttachmentMutation) ClearTicketID() {
-	m.ticket_id = nil
-	m.addticket_id = nil
+	m.tickets = nil
 	m.clearedFields[attachment.FieldTicketID] = struct{}{}
 }
 
@@ -2789,8 +2788,7 @@ func (m *AttachmentMutation) TicketIDCleared() bool {
 
 // ResetTicketID resets all changes to the "ticket_id" field.
 func (m *AttachmentMutation) ResetTicketID() {
-	m.ticket_id = nil
-	m.addticket_id = nil
+	m.tickets = nil
 	delete(m.clearedFields, attachment.FieldTicketID)
 }
 
@@ -2989,7 +2987,7 @@ func (m *AttachmentMutation) ClearTickets() {
 
 // TicketsCleared reports if the "tickets" edge to the Ticket entity was cleared.
 func (m *AttachmentMutation) TicketsCleared() bool {
-	return m.clearedtickets
+	return m.TicketIDCleared() || m.clearedtickets
 }
 
 // TicketsID returns the "tickets" edge ID in the mutation.
@@ -3036,10 +3034,10 @@ func (m *AttachmentMutation) Type() string {
 // AddedFields().
 func (m *AttachmentMutation) Fields() []string {
 	fields := make([]string, 0, 6)
-	if m.application_id != nil {
+	if m.applications != nil {
 		fields = append(fields, attachment.FieldApplicationID)
 	}
-	if m.ticket_id != nil {
+	if m.tickets != nil {
 		fields = append(fields, attachment.FieldTicketID)
 	}
 	if m.a_type != nil {
@@ -3112,7 +3110,7 @@ func (m *AttachmentMutation) SetField(name string, value ent.Value) error {
 		m.SetApplicationID(v)
 		return nil
 	case attachment.FieldTicketID:
-		v, ok := value.(int32)
+		v, ok := value.(int)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
@@ -3154,9 +3152,6 @@ func (m *AttachmentMutation) SetField(name string, value ent.Value) error {
 // this mutation.
 func (m *AttachmentMutation) AddedFields() []string {
 	var fields []string
-	if m.addticket_id != nil {
-		fields = append(fields, attachment.FieldTicketID)
-	}
 	return fields
 }
 
@@ -3165,8 +3160,6 @@ func (m *AttachmentMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *AttachmentMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case attachment.FieldTicketID:
-		return m.AddedTicketID()
 	}
 	return nil, false
 }
@@ -3176,13 +3169,6 @@ func (m *AttachmentMutation) AddedField(name string) (ent.Value, bool) {
 // type.
 func (m *AttachmentMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case attachment.FieldTicketID:
-		v, ok := value.(int32)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddTicketID(v)
-		return nil
 	}
 	return fmt.Errorf("unknown Attachment numeric field %s", name)
 }
@@ -3814,7 +3800,6 @@ type TicketMutation struct {
 	op                  Op
 	typ                 string
 	id                  *int
-	application_id      *uuid.UUID
 	status              *ticket.Status
 	creator             *string
 	content             *string
@@ -3943,12 +3928,12 @@ func (m *TicketMutation) IDs(ctx context.Context) ([]int, error) {
 
 // SetApplicationID sets the "application_id" field.
 func (m *TicketMutation) SetApplicationID(u uuid.UUID) {
-	m.application_id = &u
+	m.applications = &u
 }
 
 // ApplicationID returns the value of the "application_id" field in the mutation.
 func (m *TicketMutation) ApplicationID() (r uuid.UUID, exists bool) {
-	v := m.application_id
+	v := m.applications
 	if v == nil {
 		return
 	}
@@ -3974,7 +3959,7 @@ func (m *TicketMutation) OldApplicationID(ctx context.Context) (v uuid.UUID, err
 
 // ResetApplicationID resets all changes to the "application_id" field.
 func (m *TicketMutation) ResetApplicationID() {
-	m.application_id = nil
+	m.applications = nil
 }
 
 // SetStatus sets the "status" field.
@@ -4486,7 +4471,7 @@ func (m *TicketMutation) Type() string {
 // AddedFields().
 func (m *TicketMutation) Fields() []string {
 	fields := make([]string, 0, 12)
-	if m.application_id != nil {
+	if m.applications != nil {
 		fields = append(fields, ticket.FieldApplicationID)
 	}
 	if m.status != nil {

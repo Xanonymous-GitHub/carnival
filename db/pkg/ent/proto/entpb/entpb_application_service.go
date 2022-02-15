@@ -137,11 +137,11 @@ func toProtoApplication(e *ent.Application) (*Application, error) {
 			Id: id,
 		})
 	}
-	if edg := e.Edges.Tickets; edg != nil {
+	for _, edg := range e.Edges.Tickets {
 		id := int32(edg.ID)
-		v.Tickets = &Ticket{
+		v.Tickets = append(v.Tickets, &Ticket{
 			Id: id,
-		}
+		})
 	}
 	return v, nil
 }
@@ -196,8 +196,10 @@ func (svc *ApplicationService) Create(ctx context.Context, req *CreateApplicatio
 		statushistories := int(item.GetId())
 		m.AddStatusHistoryIDs(statushistories)
 	}
-	applicationTickets := int(application.GetTickets().GetId())
-	m.SetTicketsID(applicationTickets)
+	for _, item := range application.GetTickets() {
+		tickets := int(item.GetId())
+		m.AddTicketIDs(tickets)
+	}
 	res, err := m.Save(ctx)
 	switch {
 	case err == nil:
@@ -312,8 +314,10 @@ func (svc *ApplicationService) Update(ctx context.Context, req *UpdateApplicatio
 		statushistories := int(item.GetId())
 		m.AddStatusHistoryIDs(statushistories)
 	}
-	applicationTickets := int(application.GetTickets().GetId())
-	m.SetTicketsID(applicationTickets)
+	for _, item := range application.GetTickets() {
+		tickets := int(item.GetId())
+		m.AddTicketIDs(tickets)
+	}
 	res, err := m.Save(ctx)
 	switch {
 	case err == nil:

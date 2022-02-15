@@ -44,8 +44,7 @@ type Ticket struct {
 	UpdatedDtime time.Time `json:"updated_dtime,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the TicketQuery when eager-loading is set.
-	Edges               TicketEdges `json:"edges"`
-	application_tickets *uuid.UUID
+	Edges TicketEdges `json:"edges"`
 }
 
 // TicketEdges holds the relations/edges for other nodes in the graph.
@@ -95,8 +94,6 @@ func (*Ticket) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullTime)
 		case ticket.FieldApplicationID:
 			values[i] = new(uuid.UUID)
-		case ticket.ForeignKeys[0]: // application_tickets
-			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Ticket", columns[i])
 		}
@@ -189,13 +186,6 @@ func (t *Ticket) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field updated_dtime", values[i])
 			} else if value.Valid {
 				t.UpdatedDtime = value.Time
-			}
-		case ticket.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullScanner); !ok {
-				return fmt.Errorf("unexpected type %T for field application_tickets", values[i])
-			} else if value.Valid {
-				t.application_tickets = new(uuid.UUID)
-				*t.application_tickets = *value.S.(*uuid.UUID)
 			}
 		}
 	}

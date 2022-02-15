@@ -9,7 +9,6 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/application"
-	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/ticket"
 	"github.com/google/uuid"
 )
 
@@ -60,7 +59,7 @@ type Application struct {
 // ApplicationEdges holds the relations/edges for other nodes in the graph.
 type ApplicationEdges struct {
 	// Tickets holds the value of the tickets edge.
-	Tickets *Ticket `json:"tickets,omitempty"`
+	Tickets []*Ticket `json:"tickets,omitempty"`
 	// AssignmentHistories holds the value of the assignment_histories edge.
 	AssignmentHistories []*ApplicationAssignmentHistory `json:"assignment_histories,omitempty"`
 	// StatusHistories holds the value of the status_histories edge.
@@ -73,14 +72,9 @@ type ApplicationEdges struct {
 }
 
 // TicketsOrErr returns the Tickets value or an error if the edge
-// was not loaded in eager-loading, or loaded but was not found.
-func (e ApplicationEdges) TicketsOrErr() (*Ticket, error) {
+// was not loaded in eager-loading.
+func (e ApplicationEdges) TicketsOrErr() ([]*Ticket, error) {
 	if e.loadedTypes[0] {
-		if e.Tickets == nil {
-			// The edge tickets was loaded in eager-loading,
-			// but was not found.
-			return nil, &NotFoundError{label: ticket.Label}
-		}
 		return e.Tickets, nil
 	}
 	return nil, &NotLoadedError{edge: "tickets"}

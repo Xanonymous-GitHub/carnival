@@ -28,8 +28,7 @@ type ApplicationAssignmentHistory struct {
 	CreatedTime time.Time `json:"created_time,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ApplicationAssignmentHistoryQuery when eager-loading is set.
-	Edges                            ApplicationAssignmentHistoryEdges `json:"edges"`
-	application_assignment_histories *uuid.UUID
+	Edges ApplicationAssignmentHistoryEdges `json:"edges"`
 }
 
 // ApplicationAssignmentHistoryEdges holds the relations/edges for other nodes in the graph.
@@ -68,8 +67,6 @@ func (*ApplicationAssignmentHistory) scanValues(columns []string) ([]interface{}
 			values[i] = new(sql.NullTime)
 		case applicationassignmenthistory.FieldApplicationID:
 			values[i] = new(uuid.UUID)
-		case applicationassignmenthistory.ForeignKeys[0]: // application_assignment_histories
-			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type ApplicationAssignmentHistory", columns[i])
 		}
@@ -114,13 +111,6 @@ func (aah *ApplicationAssignmentHistory) assignValues(columns []string, values [
 				return fmt.Errorf("unexpected type %T for field created_time", values[i])
 			} else if value.Valid {
 				aah.CreatedTime = value.Time
-			}
-		case applicationassignmenthistory.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullScanner); !ok {
-				return fmt.Errorf("unexpected type %T for field application_assignment_histories", values[i])
-			} else if value.Valid {
-				aah.application_assignment_histories = new(uuid.UUID)
-				*aah.application_assignment_histories = *value.S.(*uuid.UUID)
 			}
 		}
 	}

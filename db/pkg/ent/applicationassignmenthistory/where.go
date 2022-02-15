@@ -170,34 +170,6 @@ func ApplicationIDNotIn(vs ...uuid.UUID) predicate.ApplicationAssignmentHistory 
 	})
 }
 
-// ApplicationIDGT applies the GT predicate on the "application_id" field.
-func ApplicationIDGT(v uuid.UUID) predicate.ApplicationAssignmentHistory {
-	return predicate.ApplicationAssignmentHistory(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDGTE applies the GTE predicate on the "application_id" field.
-func ApplicationIDGTE(v uuid.UUID) predicate.ApplicationAssignmentHistory {
-	return predicate.ApplicationAssignmentHistory(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLT applies the LT predicate on the "application_id" field.
-func ApplicationIDLT(v uuid.UUID) predicate.ApplicationAssignmentHistory {
-	return predicate.ApplicationAssignmentHistory(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLTE applies the LTE predicate on the "application_id" field.
-func ApplicationIDLTE(v uuid.UUID) predicate.ApplicationAssignmentHistory {
-	return predicate.ApplicationAssignmentHistory(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldApplicationID), v))
-	})
-}
-
 // AssignerEQ applies the EQ predicate on the "assigner" field.
 func AssignerEQ(v string) predicate.ApplicationAssignmentHistory {
 	return predicate.ApplicationAssignmentHistory(func(s *sql.Selector) {

@@ -72,28 +72,28 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "ticket" package.
 	TicketsInverseTable = "tickets"
 	// TicketsColumn is the table column denoting the tickets relation/edge.
-	TicketsColumn = "application_tickets"
+	TicketsColumn = "application_id"
 	// AssignmentHistoriesTable is the table that holds the assignment_histories relation/edge.
 	AssignmentHistoriesTable = "application_assignment_histories"
 	// AssignmentHistoriesInverseTable is the table name for the ApplicationAssignmentHistory entity.
 	// It exists in this package in order to avoid circular dependency with the "applicationassignmenthistory" package.
 	AssignmentHistoriesInverseTable = "application_assignment_histories"
 	// AssignmentHistoriesColumn is the table column denoting the assignment_histories relation/edge.
-	AssignmentHistoriesColumn = "application_assignment_histories"
+	AssignmentHistoriesColumn = "application_id"
 	// StatusHistoriesTable is the table that holds the status_histories relation/edge.
 	StatusHistoriesTable = "application_status_histories"
 	// StatusHistoriesInverseTable is the table name for the ApplicationStatusHistory entity.
 	// It exists in this package in order to avoid circular dependency with the "applicationstatushistory" package.
 	StatusHistoriesInverseTable = "application_status_histories"
 	// StatusHistoriesColumn is the table column denoting the status_histories relation/edge.
-	StatusHistoriesColumn = "application_status_histories"
+	StatusHistoriesColumn = "application_id"
 	// AttachmentsTable is the table that holds the attachments relation/edge.
 	AttachmentsTable = "attachments"
 	// AttachmentsInverseTable is the table name for the Attachment entity.
 	// It exists in this package in order to avoid circular dependency with the "attachment" package.
 	AttachmentsInverseTable = "attachments"
 	// AttachmentsColumn is the table column denoting the attachments relation/edge.
-	AttachmentsColumn = "application_attachments"
+	AttachmentsColumn = "application_id"
 )
 
 // Columns holds all SQL columns for application fields.

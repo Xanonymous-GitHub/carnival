@@ -22,7 +22,7 @@ type Attachment struct {
 	// ApplicationID holds the value of the "application_id" field.
 	ApplicationID uuid.UUID `json:"application_id,omitempty"`
 	// TicketID holds the value of the "ticket_id" field.
-	TicketID *int32 `json:"ticket_id,omitempty"`
+	TicketID *int `json:"ticket_id,omitempty"`
 	// AType holds the value of the "a_type" field.
 	AType attachment.AType `json:"a_type,omitempty"`
 	// ObsOid holds the value of the "obs_oid" field.
@@ -33,9 +33,7 @@ type Attachment struct {
 	CreatedDtime time.Time `json:"created_dtime,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the AttachmentQuery when eager-loading is set.
-	Edges                   AttachmentEdges `json:"edges"`
-	application_attachments *uuid.UUID
-	ticket_attachments      *int
+	Edges AttachmentEdges `json:"edges"`
 }
 
 // AttachmentEdges holds the relations/edges for other nodes in the graph.
@@ -90,10 +88,6 @@ func (*Attachment) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullTime)
 		case attachment.FieldApplicationID:
 			values[i] = new(uuid.UUID)
-		case attachment.ForeignKeys[0]: // application_attachments
-			values[i] = &sql.NullScanner{S: new(uuid.UUID)}
-		case attachment.ForeignKeys[1]: // ticket_attachments
-			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Attachment", columns[i])
 		}
@@ -125,8 +119,8 @@ func (a *Attachment) assignValues(columns []string, values []interface{}) error 
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field ticket_id", values[i])
 			} else if value.Valid {
-				a.TicketID = new(int32)
-				*a.TicketID = int32(value.Int64)
+				a.TicketID = new(int)
+				*a.TicketID = int(value.Int64)
 			}
 		case attachment.FieldAType:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -151,20 +145,6 @@ func (a *Attachment) assignValues(columns []string, values []interface{}) error 
 				return fmt.Errorf("unexpected type %T for field created_dtime", values[i])
 			} else if value.Valid {
 				a.CreatedDtime = value.Time
-			}
-		case attachment.ForeignKeys[0]:
-			if value, ok := values[i].(*sql.NullScanner); !ok {
-				return fmt.Errorf("unexpected type %T for field application_attachments", values[i])
-			} else if value.Valid {
-				a.application_attachments = new(uuid.UUID)
-				*a.application_attachments = *value.S.(*uuid.UUID)
-			}
-		case attachment.ForeignKeys[1]:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for edge-field ticket_attachments", value)
-			} else if value.Valid {
-				a.ticket_attachments = new(int)
-				*a.ticket_attachments = int(value.Int64)
 			}
 		}
 	}

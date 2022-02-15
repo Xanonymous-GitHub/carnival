@@ -156,34 +156,6 @@ func ApplicationIDNotIn(vs ...uuid.UUID) predicate.ApplicationStatusHistory {
 	})
 }
 
-// ApplicationIDGT applies the GT predicate on the "application_id" field.
-func ApplicationIDGT(v uuid.UUID) predicate.ApplicationStatusHistory {
-	return predicate.ApplicationStatusHistory(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDGTE applies the GTE predicate on the "application_id" field.
-func ApplicationIDGTE(v uuid.UUID) predicate.ApplicationStatusHistory {
-	return predicate.ApplicationStatusHistory(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLT applies the LT predicate on the "application_id" field.
-func ApplicationIDLT(v uuid.UUID) predicate.ApplicationStatusHistory {
-	return predicate.ApplicationStatusHistory(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLTE applies the LTE predicate on the "application_id" field.
-func ApplicationIDLTE(v uuid.UUID) predicate.ApplicationStatusHistory {
-	return predicate.ApplicationStatusHistory(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldApplicationID), v))
-	})
-}
-
 // StatusEQ applies the EQ predicate on the "status" field.
 func StatusEQ(v Status) predicate.ApplicationStatusHistory {
 	return predicate.ApplicationStatusHistory(func(s *sql.Selector) {

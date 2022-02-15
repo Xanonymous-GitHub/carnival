@@ -31,7 +31,6 @@ type TicketQuery struct {
 	// eager-loading edges.
 	withApplications *ApplicationQuery
 	withAttachments  *AttachmentQuery
-	withFKs          bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -82,7 +81,7 @@ func (tq *TicketQuery) QueryApplications() *ApplicationQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(ticket.Table, ticket.FieldID, selector),
 			sqlgraph.To(application.Table, application.FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, ticket.ApplicationsTable, ticket.ApplicationsColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, ticket.ApplicationsTable, ticket.ApplicationsColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(tq.driver.Dialect(), step)
 		return fromU, nil
@@ -387,19 +386,12 @@ func (tq *TicketQuery) prepareQuery(ctx context.Context) error {
 func (tq *TicketQuery) sqlAll(ctx context.Context) ([]*Ticket, error) {
 	var (
 		nodes       = []*Ticket{}
-		withFKs     = tq.withFKs
 		_spec       = tq.querySpec()
 		loadedTypes = [2]bool{
 			tq.withApplications != nil,
 			tq.withAttachments != nil,
 		}
 	)
-	if tq.withApplications != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, ticket.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &Ticket{config: tq.config}
 		nodes = append(nodes, node)
@@ -424,10 +416,7 @@ func (tq *TicketQuery) sqlAll(ctx context.Context) ([]*Ticket, error) {
 		ids := make([]uuid.UUID, 0, len(nodes))
 		nodeids := make(map[uuid.UUID][]*Ticket)
 		for i := range nodes {
-			if nodes[i].application_tickets == nil {
-				continue
-			}
-			fk := *nodes[i].application_tickets
+			fk := nodes[i].ApplicationID
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -441,7 +430,7 @@ func (tq *TicketQuery) sqlAll(ctx context.Context) ([]*Ticket, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_tickets" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Applications = n
@@ -457,7 +446,6 @@ func (tq *TicketQuery) sqlAll(ctx context.Context) ([]*Ticket, error) {
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Attachments = []*Attachment{}
 		}
-		query.withFKs = true
 		query.Where(predicate.Attachment(func(s *sql.Selector) {
 			s.Where(sql.InValues(ticket.AttachmentsColumn, fks...))
 		}))
@@ -466,13 +454,13 @@ func (tq *TicketQuery) sqlAll(ctx context.Context) ([]*Ticket, error) {
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.ticket_attachments
+			fk := n.TicketID
 			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "ticket_attachments" is nil for node %v`, n.ID)
+				return nil, fmt.Errorf(`foreign-key "ticket_id" is nil for node %v`, n.ID)
 			}
 			node, ok := nodeids[*fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "ticket_attachments" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "ticket_id" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.Attachments = append(node.Edges.Attachments, n)
 		}

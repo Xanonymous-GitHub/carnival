@@ -30,7 +30,6 @@ type AttachmentQuery struct {
 	// eager-loading edges.
 	withApplications *ApplicationQuery
 	withTickets      *TicketQuery
-	withFKs          bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -386,19 +385,12 @@ func (aq *AttachmentQuery) prepareQuery(ctx context.Context) error {
 func (aq *AttachmentQuery) sqlAll(ctx context.Context) ([]*Attachment, error) {
 	var (
 		nodes       = []*Attachment{}
-		withFKs     = aq.withFKs
 		_spec       = aq.querySpec()
 		loadedTypes = [2]bool{
 			aq.withApplications != nil,
 			aq.withTickets != nil,
 		}
 	)
-	if aq.withApplications != nil || aq.withTickets != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, attachment.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &Attachment{config: aq.config}
 		nodes = append(nodes, node)
@@ -423,10 +415,7 @@ func (aq *AttachmentQuery) sqlAll(ctx context.Context) ([]*Attachment, error) {
 		ids := make([]uuid.UUID, 0, len(nodes))
 		nodeids := make(map[uuid.UUID][]*Attachment)
 		for i := range nodes {
-			if nodes[i].application_attachments == nil {
-				continue
-			}
-			fk := *nodes[i].application_attachments
+			fk := nodes[i].ApplicationID
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -440,7 +429,7 @@ func (aq *AttachmentQuery) sqlAll(ctx context.Context) ([]*Attachment, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_attachments" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Applications = n
@@ -452,10 +441,10 @@ func (aq *AttachmentQuery) sqlAll(ctx context.Context) ([]*Attachment, error) {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*Attachment)
 		for i := range nodes {
-			if nodes[i].ticket_attachments == nil {
+			if nodes[i].TicketID == nil {
 				continue
 			}
-			fk := *nodes[i].ticket_attachments
+			fk := *nodes[i].TicketID
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -469,7 +458,7 @@ func (aq *AttachmentQuery) sqlAll(ctx context.Context) ([]*Attachment, error) {
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "ticket_attachments" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "ticket_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Tickets = n

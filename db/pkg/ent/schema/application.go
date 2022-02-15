@@ -206,7 +206,6 @@ func (Application) Fields() []ent.Field {
 func (Application) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.To("tickets", Ticket.Type).
-			Unique().
 			Annotations(entproto.Field(19)),
 
 		edge.To("assignment_histories", ApplicationAssignmentHistory.Type).

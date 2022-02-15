@@ -252,7 +252,7 @@ func (c *ApplicationClient) QueryTickets(a *Application) *TicketQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(application.Table, application.FieldID, id),
 			sqlgraph.To(ticket.Table, ticket.FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, false, application.TicketsTable, application.TicketsColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, application.TicketsTable, application.TicketsColumn),
 		)
 		fromV = sqlgraph.Neighbors(a.driver.Dialect(), step)
 		return fromV, nil
@@ -830,7 +830,7 @@ func (c *TicketClient) QueryApplications(t *Ticket) *ApplicationQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(ticket.Table, ticket.FieldID, id),
 			sqlgraph.To(application.Table, application.FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, ticket.ApplicationsTable, ticket.ApplicationsColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, ticket.ApplicationsTable, ticket.ApplicationsColumn),
 		)
 		fromV = sqlgraph.Neighbors(t.driver.Dialect(), step)
 		return fromV, nil

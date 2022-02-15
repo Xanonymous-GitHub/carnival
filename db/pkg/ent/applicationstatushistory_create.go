@@ -182,14 +182,6 @@ func (ashc *ApplicationStatusHistoryCreate) createSpec() (*ApplicationStatusHist
 			},
 		}
 	)
-	if value, ok := ashc.mutation.ApplicationID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: applicationstatushistory.FieldApplicationID,
-		})
-		_node.ApplicationID = value
-	}
 	if value, ok := ashc.mutation.Status(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
@@ -223,7 +215,7 @@ func (ashc *ApplicationStatusHistoryCreate) createSpec() (*ApplicationStatusHist
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.application_status_histories = &nodes[0]
+		_node.ApplicationID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

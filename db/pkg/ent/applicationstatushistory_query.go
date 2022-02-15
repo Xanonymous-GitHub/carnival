@@ -28,7 +28,6 @@ type ApplicationStatusHistoryQuery struct {
 	predicates []predicate.ApplicationStatusHistory
 	// eager-loading edges.
 	withApplications *ApplicationQuery
-	withFKs          bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -350,18 +349,11 @@ func (ashq *ApplicationStatusHistoryQuery) prepareQuery(ctx context.Context) err
 func (ashq *ApplicationStatusHistoryQuery) sqlAll(ctx context.Context) ([]*ApplicationStatusHistory, error) {
 	var (
 		nodes       = []*ApplicationStatusHistory{}
-		withFKs     = ashq.withFKs
 		_spec       = ashq.querySpec()
 		loadedTypes = [1]bool{
 			ashq.withApplications != nil,
 		}
 	)
-	if ashq.withApplications != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, applicationstatushistory.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &ApplicationStatusHistory{config: ashq.config}
 		nodes = append(nodes, node)
@@ -386,10 +378,7 @@ func (ashq *ApplicationStatusHistoryQuery) sqlAll(ctx context.Context) ([]*Appli
 		ids := make([]uuid.UUID, 0, len(nodes))
 		nodeids := make(map[uuid.UUID][]*ApplicationStatusHistory)
 		for i := range nodes {
-			if nodes[i].application_status_histories == nil {
-				continue
-			}
-			fk := *nodes[i].application_status_histories
+			fk := nodes[i].ApplicationID
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -403,7 +392,7 @@ func (ashq *ApplicationStatusHistoryQuery) sqlAll(ctx context.Context) ([]*Appli
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_status_histories" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Applications = n

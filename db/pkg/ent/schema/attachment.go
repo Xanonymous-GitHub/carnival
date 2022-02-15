@@ -58,7 +58,7 @@ func (Attachment) Fields() []ent.Field {
 		field.UUID("application_id", uuid.UUID{}).
 			Annotations(entproto.Field(2)),
 
-		field.Int32("ticket_id").
+		field.Int("ticket_id").
 			Optional().
 			Nillable().
 			Annotations(entproto.Field(3)),
@@ -90,14 +90,15 @@ func (Attachment) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("applications", Application.Type).
 			Ref("attachments").
+			Field("application_id").
 			Unique().
 			Required().
 			Annotations(entproto.Field(8)),
 
 		edge.From("tickets", Ticket.Type).
 			Ref("attachments").
+			Field("ticket_id").
 			Unique().
-			Required().
 			Annotations(entproto.Field(9)),
 	}
 }

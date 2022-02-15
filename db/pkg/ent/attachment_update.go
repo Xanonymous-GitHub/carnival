@@ -37,23 +37,16 @@ func (au *AttachmentUpdate) SetApplicationID(u uuid.UUID) *AttachmentUpdate {
 }
 
 // SetTicketID sets the "ticket_id" field.
-func (au *AttachmentUpdate) SetTicketID(i int32) *AttachmentUpdate {
-	au.mutation.ResetTicketID()
+func (au *AttachmentUpdate) SetTicketID(i int) *AttachmentUpdate {
 	au.mutation.SetTicketID(i)
 	return au
 }
 
 // SetNillableTicketID sets the "ticket_id" field if the given value is not nil.
-func (au *AttachmentUpdate) SetNillableTicketID(i *int32) *AttachmentUpdate {
+func (au *AttachmentUpdate) SetNillableTicketID(i *int) *AttachmentUpdate {
 	if i != nil {
 		au.SetTicketID(*i)
 	}
-	return au
-}
-
-// AddTicketID adds i to the "ticket_id" field.
-func (au *AttachmentUpdate) AddTicketID(i int32) *AttachmentUpdate {
-	au.mutation.AddTicketID(i)
 	return au
 }
 
@@ -95,6 +88,14 @@ func (au *AttachmentUpdate) SetApplications(a *Application) *AttachmentUpdate {
 // SetTicketsID sets the "tickets" edge to the Ticket entity by ID.
 func (au *AttachmentUpdate) SetTicketsID(id int) *AttachmentUpdate {
 	au.mutation.SetTicketsID(id)
+	return au
+}
+
+// SetNillableTicketsID sets the "tickets" edge to the Ticket entity by ID if the given value is not nil.
+func (au *AttachmentUpdate) SetNillableTicketsID(id *int) *AttachmentUpdate {
+	if id != nil {
+		au = au.SetTicketsID(*id)
+	}
 	return au
 }
 
@@ -200,9 +201,6 @@ func (au *AttachmentUpdate) check() error {
 	if _, ok := au.mutation.ApplicationsID(); au.mutation.ApplicationsCleared() && !ok {
 		return errors.New(`ent: clearing a required unique edge "Attachment.applications"`)
 	}
-	if _, ok := au.mutation.TicketsID(); au.mutation.TicketsCleared() && !ok {
-		return errors.New(`ent: clearing a required unique edge "Attachment.tickets"`)
-	}
 	return nil
 }
 
@@ -223,33 +221,6 @@ func (au *AttachmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := au.mutation.ApplicationID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: attachment.FieldApplicationID,
-		})
-	}
-	if value, ok := au.mutation.TicketID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: attachment.FieldTicketID,
-		})
-	}
-	if value, ok := au.mutation.AddedTicketID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: attachment.FieldTicketID,
-		})
-	}
-	if au.mutation.TicketIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: attachment.FieldTicketID,
-		})
 	}
 	if value, ok := au.mutation.AType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -368,23 +339,16 @@ func (auo *AttachmentUpdateOne) SetApplicationID(u uuid.UUID) *AttachmentUpdateO
 }
 
 // SetTicketID sets the "ticket_id" field.
-func (auo *AttachmentUpdateOne) SetTicketID(i int32) *AttachmentUpdateOne {
-	auo.mutation.ResetTicketID()
+func (auo *AttachmentUpdateOne) SetTicketID(i int) *AttachmentUpdateOne {
 	auo.mutation.SetTicketID(i)
 	return auo
 }
 
 // SetNillableTicketID sets the "ticket_id" field if the given value is not nil.
-func (auo *AttachmentUpdateOne) SetNillableTicketID(i *int32) *AttachmentUpdateOne {
+func (auo *AttachmentUpdateOne) SetNillableTicketID(i *int) *AttachmentUpdateOne {
 	if i != nil {
 		auo.SetTicketID(*i)
 	}
-	return auo
-}
-
-// AddTicketID adds i to the "ticket_id" field.
-func (auo *AttachmentUpdateOne) AddTicketID(i int32) *AttachmentUpdateOne {
-	auo.mutation.AddTicketID(i)
 	return auo
 }
 
@@ -426,6 +390,14 @@ func (auo *AttachmentUpdateOne) SetApplications(a *Application) *AttachmentUpdat
 // SetTicketsID sets the "tickets" edge to the Ticket entity by ID.
 func (auo *AttachmentUpdateOne) SetTicketsID(id int) *AttachmentUpdateOne {
 	auo.mutation.SetTicketsID(id)
+	return auo
+}
+
+// SetNillableTicketsID sets the "tickets" edge to the Ticket entity by ID if the given value is not nil.
+func (auo *AttachmentUpdateOne) SetNillableTicketsID(id *int) *AttachmentUpdateOne {
+	if id != nil {
+		auo = auo.SetTicketsID(*id)
+	}
 	return auo
 }
 
@@ -538,9 +510,6 @@ func (auo *AttachmentUpdateOne) check() error {
 	if _, ok := auo.mutation.ApplicationsID(); auo.mutation.ApplicationsCleared() && !ok {
 		return errors.New(`ent: clearing a required unique edge "Attachment.applications"`)
 	}
-	if _, ok := auo.mutation.TicketsID(); auo.mutation.TicketsCleared() && !ok {
-		return errors.New(`ent: clearing a required unique edge "Attachment.tickets"`)
-	}
 	return nil
 }
 
@@ -578,33 +547,6 @@ func (auo *AttachmentUpdateOne) sqlSave(ctx context.Context) (_node *Attachment,
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := auo.mutation.ApplicationID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: attachment.FieldApplicationID,
-		})
-	}
-	if value, ok := auo.mutation.TicketID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: attachment.FieldTicketID,
-		})
-	}
-	if value, ok := auo.mutation.AddedTicketID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: attachment.FieldTicketID,
-		})
-	}
-	if auo.mutation.TicketIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Column: attachment.FieldTicketID,
-		})
 	}
 	if value, ok := auo.mutation.AType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

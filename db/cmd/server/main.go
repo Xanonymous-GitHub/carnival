@@ -31,11 +31,17 @@ func main() {
 		dbPassword = cvp.GetString("dbPassword")
 		dbHost     = cvp.GetString("dbHost")
 		dbPort     = cvp.GetInt("dbPort")
+		dbName     = cvp.GetString("dbName")
 	)
 
 	serverAddress := ":" + strconv.Itoa(cvp.GetInt("dbServerPort"))
-
-	dataSourceName := fmt.Sprintf("%v:%v@tcp(%v:%v)/carnival", dbUserName, dbPassword, dbHost, dbPort)
+	dataSourceName := fmt.Sprintf(
+		"%v:%v@tcp(%v:%v)/%v?parseTime=true",
+		dbUserName,
+		dbPassword,
+		dbHost,
+		dbPort, dbName,
+	)
 
 	// Initialize an ent client.
 	client, err := ent.Open(sqlType, dataSourceName)

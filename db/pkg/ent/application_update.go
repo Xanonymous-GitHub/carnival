@@ -128,23 +128,19 @@ func (au *ApplicationUpdate) SetUpdateDtime(t time.Time) *ApplicationUpdate {
 	return au
 }
 
-// SetTicketsID sets the "tickets" edge to the Ticket entity by ID.
-func (au *ApplicationUpdate) SetTicketsID(id int) *ApplicationUpdate {
-	au.mutation.SetTicketsID(id)
+// AddTicketIDs adds the "tickets" edge to the Ticket entity by IDs.
+func (au *ApplicationUpdate) AddTicketIDs(ids ...int) *ApplicationUpdate {
+	au.mutation.AddTicketIDs(ids...)
 	return au
 }
 
-// SetNillableTicketsID sets the "tickets" edge to the Ticket entity by ID if the given value is not nil.
-func (au *ApplicationUpdate) SetNillableTicketsID(id *int) *ApplicationUpdate {
-	if id != nil {
-		au = au.SetTicketsID(*id)
+// AddTickets adds the "tickets" edges to the Ticket entity.
+func (au *ApplicationUpdate) AddTickets(t ...*Ticket) *ApplicationUpdate {
+	ids := make([]int, len(t))
+	for i := range t {
+		ids[i] = t[i].ID
 	}
-	return au
-}
-
-// SetTickets sets the "tickets" edge to the Ticket entity.
-func (au *ApplicationUpdate) SetTickets(t *Ticket) *ApplicationUpdate {
-	return au.SetTicketsID(t.ID)
+	return au.AddTicketIDs(ids...)
 }
 
 // AddAssignmentHistoryIDs adds the "assignment_histories" edge to the ApplicationAssignmentHistory entity by IDs.
@@ -197,10 +193,25 @@ func (au *ApplicationUpdate) Mutation() *ApplicationMutation {
 	return au.mutation
 }
 
-// ClearTickets clears the "tickets" edge to the Ticket entity.
+// ClearTickets clears all "tickets" edges to the Ticket entity.
 func (au *ApplicationUpdate) ClearTickets() *ApplicationUpdate {
 	au.mutation.ClearTickets()
 	return au
+}
+
+// RemoveTicketIDs removes the "tickets" edge to Ticket entities by IDs.
+func (au *ApplicationUpdate) RemoveTicketIDs(ids ...int) *ApplicationUpdate {
+	au.mutation.RemoveTicketIDs(ids...)
+	return au
+}
+
+// RemoveTickets removes "tickets" edges to Ticket entities.
+func (au *ApplicationUpdate) RemoveTickets(t ...*Ticket) *ApplicationUpdate {
+	ids := make([]int, len(t))
+	for i := range t {
+		ids[i] = t[i].ID
+	}
+	return au.RemoveTicketIDs(ids...)
 }
 
 // ClearAssignmentHistories clears all "assignment_histories" edges to the ApplicationAssignmentHistory entity.
@@ -533,7 +544,7 @@ func (au *ApplicationUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	}
 	if au.mutation.TicketsCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   application.TicketsTable,
 			Columns: []string{application.TicketsColumn},
@@ -547,9 +558,28 @@ func (au *ApplicationUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
+	if nodes := au.mutation.RemovedTicketsIDs(); len(nodes) > 0 && !au.mutation.TicketsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   application.TicketsTable,
+			Columns: []string{application.TicketsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: ticket.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
 	if nodes := au.mutation.TicketsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   application.TicketsTable,
 			Columns: []string{application.TicketsColumn},
@@ -843,23 +873,19 @@ func (auo *ApplicationUpdateOne) SetUpdateDtime(t time.Time) *ApplicationUpdateO
 	return auo
 }
 
-// SetTicketsID sets the "tickets" edge to the Ticket entity by ID.
-func (auo *ApplicationUpdateOne) SetTicketsID(id int) *ApplicationUpdateOne {
-	auo.mutation.SetTicketsID(id)
+// AddTicketIDs adds the "tickets" edge to the Ticket entity by IDs.
+func (auo *ApplicationUpdateOne) AddTicketIDs(ids ...int) *ApplicationUpdateOne {
+	auo.mutation.AddTicketIDs(ids...)
 	return auo
 }
 
-// SetNillableTicketsID sets the "tickets" edge to the Ticket entity by ID if the given value is not nil.
-func (auo *ApplicationUpdateOne) SetNillableTicketsID(id *int) *ApplicationUpdateOne {
-	if id != nil {
-		auo = auo.SetTicketsID(*id)
+// AddTickets adds the "tickets" edges to the Ticket entity.
+func (auo *ApplicationUpdateOne) AddTickets(t ...*Ticket) *ApplicationUpdateOne {
+	ids := make([]int, len(t))
+	for i := range t {
+		ids[i] = t[i].ID
 	}
-	return auo
-}
-
-// SetTickets sets the "tickets" edge to the Ticket entity.
-func (auo *ApplicationUpdateOne) SetTickets(t *Ticket) *ApplicationUpdateOne {
-	return auo.SetTicketsID(t.ID)
+	return auo.AddTicketIDs(ids...)
 }
 
 // AddAssignmentHistoryIDs adds the "assignment_histories" edge to the ApplicationAssignmentHistory entity by IDs.
@@ -912,10 +938,25 @@ func (auo *ApplicationUpdateOne) Mutation() *ApplicationMutation {
 	return auo.mutation
 }
 
-// ClearTickets clears the "tickets" edge to the Ticket entity.
+// ClearTickets clears all "tickets" edges to the Ticket entity.
 func (auo *ApplicationUpdateOne) ClearTickets() *ApplicationUpdateOne {
 	auo.mutation.ClearTickets()
 	return auo
+}
+
+// RemoveTicketIDs removes the "tickets" edge to Ticket entities by IDs.
+func (auo *ApplicationUpdateOne) RemoveTicketIDs(ids ...int) *ApplicationUpdateOne {
+	auo.mutation.RemoveTicketIDs(ids...)
+	return auo
+}
+
+// RemoveTickets removes "tickets" edges to Ticket entities.
+func (auo *ApplicationUpdateOne) RemoveTickets(t ...*Ticket) *ApplicationUpdateOne {
+	ids := make([]int, len(t))
+	for i := range t {
+		ids[i] = t[i].ID
+	}
+	return auo.RemoveTicketIDs(ids...)
 }
 
 // ClearAssignmentHistories clears all "assignment_histories" edges to the ApplicationAssignmentHistory entity.
@@ -1272,7 +1313,7 @@ func (auo *ApplicationUpdateOne) sqlSave(ctx context.Context) (_node *Applicatio
 	}
 	if auo.mutation.TicketsCleared() {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   application.TicketsTable,
 			Columns: []string{application.TicketsColumn},
@@ -1286,9 +1327,28 @@ func (auo *ApplicationUpdateOne) sqlSave(ctx context.Context) (_node *Applicatio
 		}
 		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
 	}
+	if nodes := auo.mutation.RemovedTicketsIDs(); len(nodes) > 0 && !auo.mutation.TicketsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   application.TicketsTable,
+			Columns: []string{application.TicketsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: ticket.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
 	if nodes := auo.mutation.TicketsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   application.TicketsTable,
 			Columns: []string{application.TicketsColumn},

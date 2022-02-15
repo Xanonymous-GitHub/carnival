@@ -85,7 +85,7 @@ func (aq *ApplicationQuery) QueryTickets() *TicketQuery {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(application.Table, application.FieldID, selector),
 			sqlgraph.To(ticket.Table, ticket.FieldID),
-			sqlgraph.Edge(sqlgraph.O2O, false, application.TicketsTable, application.TicketsColumn),
+			sqlgraph.Edge(sqlgraph.O2M, false, application.TicketsTable, application.TicketsColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(aq.driver.Dialect(), step)
 		return fromU, nil
@@ -492,8 +492,8 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 		for i := range nodes {
 			fks = append(fks, nodes[i].ID)
 			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.Tickets = []*Ticket{}
 		}
-		query.withFKs = true
 		query.Where(predicate.Ticket(func(s *sql.Selector) {
 			s.Where(sql.InValues(application.TicketsColumn, fks...))
 		}))
@@ -502,15 +502,12 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.application_tickets
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "application_tickets" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ApplicationID
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_tickets" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v for node %v`, fk, n.ID)
 			}
-			node.Edges.Tickets = n
+			node.Edges.Tickets = append(node.Edges.Tickets, n)
 		}
 	}
 
@@ -522,7 +519,6 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.AssignmentHistories = []*ApplicationAssignmentHistory{}
 		}
-		query.withFKs = true
 		query.Where(predicate.ApplicationAssignmentHistory(func(s *sql.Selector) {
 			s.Where(sql.InValues(application.AssignmentHistoriesColumn, fks...))
 		}))
@@ -531,13 +527,10 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.application_assignment_histories
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "application_assignment_histories" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ApplicationID
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_assignment_histories" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.AssignmentHistories = append(node.Edges.AssignmentHistories, n)
 		}
@@ -551,7 +544,6 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.StatusHistories = []*ApplicationStatusHistory{}
 		}
-		query.withFKs = true
 		query.Where(predicate.ApplicationStatusHistory(func(s *sql.Selector) {
 			s.Where(sql.InValues(application.StatusHistoriesColumn, fks...))
 		}))
@@ -560,13 +552,10 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.application_status_histories
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "application_status_histories" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ApplicationID
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_status_histories" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.StatusHistories = append(node.Edges.StatusHistories, n)
 		}
@@ -580,7 +569,6 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			nodeids[nodes[i].ID] = nodes[i]
 			nodes[i].Edges.Attachments = []*Attachment{}
 		}
-		query.withFKs = true
 		query.Where(predicate.Attachment(func(s *sql.Selector) {
 			s.Where(sql.InValues(application.AttachmentsColumn, fks...))
 		}))
@@ -589,13 +577,10 @@ func (aq *ApplicationQuery) sqlAll(ctx context.Context) ([]*Application, error) 
 			return nil, err
 		}
 		for _, n := range neighbors {
-			fk := n.application_attachments
-			if fk == nil {
-				return nil, fmt.Errorf(`foreign-key "application_attachments" is nil for node %v`, n.ID)
-			}
-			node, ok := nodeids[*fk]
+			fk := n.ApplicationID
+			node, ok := nodeids[fk]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_attachments" returned %v for node %v`, *fk, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v for node %v`, fk, n.ID)
 			}
 			node.Edges.Attachments = append(node.Edges.Attachments, n)
 		}

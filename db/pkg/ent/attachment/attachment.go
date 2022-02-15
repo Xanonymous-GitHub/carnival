@@ -40,14 +40,14 @@ const (
 	// It exists in this package in order to avoid circular dependency with the "application" package.
 	ApplicationsInverseTable = "applications"
 	// ApplicationsColumn is the table column denoting the applications relation/edge.
-	ApplicationsColumn = "application_attachments"
+	ApplicationsColumn = "application_id"
 	// TicketsTable is the table that holds the tickets relation/edge.
 	TicketsTable = "attachments"
 	// TicketsInverseTable is the table name for the Ticket entity.
 	// It exists in this package in order to avoid circular dependency with the "ticket" package.
 	TicketsInverseTable = "tickets"
 	// TicketsColumn is the table column denoting the tickets relation/edge.
-	TicketsColumn = "ticket_attachments"
+	TicketsColumn = "ticket_id"
 )
 
 // Columns holds all SQL columns for attachment fields.
@@ -61,22 +61,10 @@ var Columns = []string{
 	FieldCreatedDtime,
 }
 
-// ForeignKeys holds the SQL foreign-keys that are owned by the "attachments"
-// table and are not defined as standalone fields in the schema.
-var ForeignKeys = []string{
-	"application_attachments",
-	"ticket_attachments",
-}
-
 // ValidColumn reports if the column name is valid (part of the table columns).
 func ValidColumn(column string) bool {
 	for i := range Columns {
 		if column == Columns[i] {
-			return true
-		}
-	}
-	for i := range ForeignKeys {
-		if column == ForeignKeys[i] {
 			return true
 		}
 	}

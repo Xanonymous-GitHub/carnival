@@ -48,7 +48,7 @@ message Application {
 
   google.protobuf.Timestamp update_dtime = 18;
 
-  Ticket tickets = 19;
+  repeated Ticket tickets = 19;
 
   repeated ApplicationAssignmentHistory assignment_histories = 20;
 

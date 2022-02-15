@@ -219,34 +219,6 @@ func ApplicationIDNotIn(vs ...uuid.UUID) predicate.Ticket {
 	})
 }
 
-// ApplicationIDGT applies the GT predicate on the "application_id" field.
-func ApplicationIDGT(v uuid.UUID) predicate.Ticket {
-	return predicate.Ticket(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDGTE applies the GTE predicate on the "application_id" field.
-func ApplicationIDGTE(v uuid.UUID) predicate.Ticket {
-	return predicate.Ticket(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLT applies the LT predicate on the "application_id" field.
-func ApplicationIDLT(v uuid.UUID) predicate.Ticket {
-	return predicate.Ticket(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLTE applies the LTE predicate on the "application_id" field.
-func ApplicationIDLTE(v uuid.UUID) predicate.Ticket {
-	return predicate.Ticket(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldApplicationID), v))
-	})
-}
-
 // StatusEQ applies the EQ predicate on the "status" field.
 func StatusEQ(v Status) predicate.Ticket {
 	return predicate.Ticket(func(s *sql.Selector) {
@@ -1271,7 +1243,7 @@ func HasApplications() predicate.Ticket {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(ApplicationsTable, ApplicationFieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, ApplicationsTable, ApplicationsColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, ApplicationsTable, ApplicationsColumn),
 		)
 		sqlgraph.HasNeighbors(s, step)
 	})
@@ -1283,7 +1255,7 @@ func HasApplicationsWith(preds ...predicate.Application) predicate.Ticket {
 		step := sqlgraph.NewStep(
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(ApplicationsInverseTable, ApplicationFieldID),
-			sqlgraph.Edge(sqlgraph.O2O, true, ApplicationsTable, ApplicationsColumn),
+			sqlgraph.Edge(sqlgraph.M2O, true, ApplicationsTable, ApplicationsColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

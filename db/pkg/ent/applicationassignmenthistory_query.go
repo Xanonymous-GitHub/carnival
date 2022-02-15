@@ -28,7 +28,6 @@ type ApplicationAssignmentHistoryQuery struct {
 	predicates []predicate.ApplicationAssignmentHistory
 	// eager-loading edges.
 	withApplications *ApplicationQuery
-	withFKs          bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -350,18 +349,11 @@ func (aahq *ApplicationAssignmentHistoryQuery) prepareQuery(ctx context.Context)
 func (aahq *ApplicationAssignmentHistoryQuery) sqlAll(ctx context.Context) ([]*ApplicationAssignmentHistory, error) {
 	var (
 		nodes       = []*ApplicationAssignmentHistory{}
-		withFKs     = aahq.withFKs
 		_spec       = aahq.querySpec()
 		loadedTypes = [1]bool{
 			aahq.withApplications != nil,
 		}
 	)
-	if aahq.withApplications != nil {
-		withFKs = true
-	}
-	if withFKs {
-		_spec.Node.Columns = append(_spec.Node.Columns, applicationassignmenthistory.ForeignKeys...)
-	}
 	_spec.ScanValues = func(columns []string) ([]interface{}, error) {
 		node := &ApplicationAssignmentHistory{config: aahq.config}
 		nodes = append(nodes, node)
@@ -386,10 +378,7 @@ func (aahq *ApplicationAssignmentHistoryQuery) sqlAll(ctx context.Context) ([]*A
 		ids := make([]uuid.UUID, 0, len(nodes))
 		nodeids := make(map[uuid.UUID][]*ApplicationAssignmentHistory)
 		for i := range nodes {
-			if nodes[i].application_assignment_histories == nil {
-				continue
-			}
-			fk := *nodes[i].application_assignment_histories
+			fk := nodes[i].ApplicationID
 			if _, ok := nodeids[fk]; !ok {
 				ids = append(ids, fk)
 			}
@@ -403,7 +392,7 @@ func (aahq *ApplicationAssignmentHistoryQuery) sqlAll(ctx context.Context) ([]*A
 		for _, n := range neighbors {
 			nodes, ok := nodeids[n.ID]
 			if !ok {
-				return nil, fmt.Errorf(`unexpected foreign-key "application_assignment_histories" returned %v`, n.ID)
+				return nil, fmt.Errorf(`unexpected foreign-key "application_id" returned %v`, n.ID)
 			}
 			for i := range nodes {
 				nodes[i].Edges.Applications = n

@@ -30,13 +30,13 @@ func (ac *AttachmentCreate) SetApplicationID(u uuid.UUID) *AttachmentCreate {
 }
 
 // SetTicketID sets the "ticket_id" field.
-func (ac *AttachmentCreate) SetTicketID(i int32) *AttachmentCreate {
+func (ac *AttachmentCreate) SetTicketID(i int) *AttachmentCreate {
 	ac.mutation.SetTicketID(i)
 	return ac
 }
 
 // SetNillableTicketID sets the "ticket_id" field if the given value is not nil.
-func (ac *AttachmentCreate) SetNillableTicketID(i *int32) *AttachmentCreate {
+func (ac *AttachmentCreate) SetNillableTicketID(i *int) *AttachmentCreate {
 	if i != nil {
 		ac.SetTicketID(*i)
 	}
@@ -89,6 +89,14 @@ func (ac *AttachmentCreate) SetApplications(a *Application) *AttachmentCreate {
 // SetTicketsID sets the "tickets" edge to the Ticket entity by ID.
 func (ac *AttachmentCreate) SetTicketsID(id int) *AttachmentCreate {
 	ac.mutation.SetTicketsID(id)
+	return ac
+}
+
+// SetNillableTicketsID sets the "tickets" edge to the Ticket entity by ID if the given value is not nil.
+func (ac *AttachmentCreate) SetNillableTicketsID(id *int) *AttachmentCreate {
+	if id != nil {
+		ac = ac.SetTicketsID(*id)
+	}
 	return ac
 }
 
@@ -209,9 +217,6 @@ func (ac *AttachmentCreate) check() error {
 	if _, ok := ac.mutation.ApplicationsID(); !ok {
 		return &ValidationError{Name: "applications", err: errors.New(`ent: missing required edge "Attachment.applications"`)}
 	}
-	if _, ok := ac.mutation.TicketsID(); !ok {
-		return &ValidationError{Name: "tickets", err: errors.New(`ent: missing required edge "Attachment.tickets"`)}
-	}
 	return nil
 }
 
@@ -239,22 +244,6 @@ func (ac *AttachmentCreate) createSpec() (*Attachment, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := ac.mutation.ApplicationID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: attachment.FieldApplicationID,
-		})
-		_node.ApplicationID = value
-	}
-	if value, ok := ac.mutation.TicketID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt32,
-			Value:  value,
-			Column: attachment.FieldTicketID,
-		})
-		_node.TicketID = &value
-	}
 	if value, ok := ac.mutation.AType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
@@ -304,7 +293,7 @@ func (ac *AttachmentCreate) createSpec() (*Attachment, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.application_attachments = &nodes[0]
+		_node.ApplicationID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := ac.mutation.TicketsIDs(); len(nodes) > 0 {
@@ -324,7 +313,7 @@ func (ac *AttachmentCreate) createSpec() (*Attachment, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.ticket_attachments = &nodes[0]
+		_node.TicketID = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

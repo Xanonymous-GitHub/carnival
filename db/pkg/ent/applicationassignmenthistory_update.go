@@ -165,13 +165,6 @@ func (aahu *ApplicationAssignmentHistoryUpdate) sqlSave(ctx context.Context) (n 
 			}
 		}
 	}
-	if value, ok := aahu.mutation.ApplicationID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: applicationassignmenthistory.FieldApplicationID,
-		})
-	}
 	if value, ok := aahu.mutation.Assigner(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -399,13 +392,6 @@ func (aahuo *ApplicationAssignmentHistoryUpdateOne) sqlSave(ctx context.Context)
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := aahuo.mutation.ApplicationID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: applicationassignmenthistory.FieldApplicationID,
-		})
 	}
 	if value, ok := aahuo.mutation.Assigner(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

@@ -105,6 +105,7 @@ func (Ticket) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("applications", Application.Type).
 			Ref("tickets").
+			Field("application_id").
 			Unique().
 			Required().
 			Annotations(entproto.Field(14)),

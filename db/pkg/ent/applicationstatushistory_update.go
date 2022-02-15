@@ -154,13 +154,6 @@ func (ashu *ApplicationStatusHistoryUpdate) sqlSave(ctx context.Context) (n int,
 			}
 		}
 	}
-	if value, ok := ashu.mutation.ApplicationID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: applicationstatushistory.FieldApplicationID,
-		})
-	}
 	if value, ok := ashu.mutation.Status(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
@@ -370,13 +363,6 @@ func (ashuo *ApplicationStatusHistoryUpdateOne) sqlSave(ctx context.Context) (_n
 				ps[i](selector)
 			}
 		}
-	}
-	if value, ok := ashuo.mutation.ApplicationID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: applicationstatushistory.FieldApplicationID,
-		})
 	}
 	if value, ok := ashuo.mutation.Status(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

@@ -431,8 +431,11 @@
                     "example": "online_store"
                   },
                   "tickets": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
                   },
                   "update_dtime": {
                     "type": "string",
@@ -915,8 +918,11 @@
                     "example": "online_store"
                   },
                   "tickets": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
                   },
                   "update_dtime": {
                     "type": "string",
@@ -1141,8 +1147,11 @@
                     "example": "online_store"
                   },
                   "tickets": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
                   },
                   "update_dtime": {
                     "type": "string",
@@ -1360,8 +1369,11 @@
                     "example": "online_store"
                   },
                   "tickets": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
                   },
                   "update_dtime": {
                     "type": "string",
@@ -1589,8 +1601,7 @@
                   "applications",
                   "created_dtime",
                   "obs_hash",
-                  "obs_oid",
-                  "tickets"
+                  "obs_oid"
                 ],
                 "properties": {
                   "a_type": {
@@ -1762,12 +1773,12 @@
     },
     "/applications/{id}/tickets": {
       "get": {
-        "summary": "Find the attached Ticket",
-        "description": "Find the attached Ticket of the Application with the given ID",
+        "summary": "List attached Tickets",
+        "description": "List attached Tickets.",
         "tags": [
           "Application"
         ],
-        "operationId": "readApplicationTickets",
+        "operationId": "listApplicationTickets",
         "parameters": [
           {
             "name": "id",
@@ -1781,11 +1792,14 @@
         ],
         "responses": {
           "200": {
-            "description": "Ticket attached to Application with requested ID was found",
+            "description": "result Applications list",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Application_TicketsRead"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Application_TicketsList"
+                  }
                 }
               }
             }
@@ -1915,39 +1929,6 @@
             "$ref": "#/components/responses/500"
           }
         }
-      },
-      "delete": {
-        "summary": "Delete the attached Tickets",
-        "description": "Delete the attached Tickets of the Application with the given ID",
-        "tags": [
-          "Application"
-        ],
-        "operationId": "deleteApplicationTickets",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Application",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Tickets with requested ID was deleted"
-          },
-          "400": {
-            "$ref": "#/components/responses/400"
-          },
-          "404": {
-            "$ref": "#/components/responses/404"
-          },
-          "500": {
-            "$ref": "#/components/responses/500"
-          }
-        }
       }
     },
     "/attachments": {
@@ -2022,8 +2003,7 @@
                   "applications",
                   "created_dtime",
                   "obs_hash",
-                  "obs_oid",
-                  "tickets"
+                  "obs_oid"
                 ],
                 "properties": {
                   "a_type": {
@@ -2185,8 +2165,7 @@
                   "application_id",
                   "applications",
                   "obs_hash",
-                  "obs_oid",
-                  "tickets"
+                  "obs_oid"
                 ],
                 "properties": {
                   "a_type": {
@@ -2399,8 +2378,11 @@
                     "example": "online_store"
                   },
                   "tickets": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
                   },
                   "update_dtime": {
                     "type": "string",
@@ -3425,8 +3407,11 @@
                     "example": "online_store"
                   },
                   "tickets": {
-                    "type": "integer",
-                    "format": "int32"
+                    "type": "array",
+                    "items": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
                   },
                   "update_dtime": {
                     "type": "string",
@@ -3570,8 +3555,7 @@
                   "applications",
                   "created_dtime",
                   "obs_hash",
-                  "obs_oid",
-                  "tickets"
+                  "obs_oid"
                 ],
                 "properties": {
                   "a_type": {
@@ -3724,7 +3708,10 @@
             "example": "online_store"
           },
           "tickets": {
-            "$ref": "#/components/schemas/Ticket"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Ticket"
+            }
           },
           "update_dtime": {
             "type": "string",
@@ -4907,7 +4894,7 @@
           }
         }
       },
-      "Application_TicketsRead": {
+      "Application_TicketsList": {
         "type": "object",
         "required": [
           "application_id",

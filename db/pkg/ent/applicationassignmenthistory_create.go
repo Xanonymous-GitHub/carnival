@@ -196,14 +196,6 @@ func (aahc *ApplicationAssignmentHistoryCreate) createSpec() (*ApplicationAssign
 			},
 		}
 	)
-	if value, ok := aahc.mutation.ApplicationID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeUUID,
-			Value:  value,
-			Column: applicationassignmenthistory.FieldApplicationID,
-		})
-		_node.ApplicationID = value
-	}
 	if value, ok := aahc.mutation.Assigner(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -245,7 +237,7 @@ func (aahc *ApplicationAssignmentHistoryCreate) createSpec() (*ApplicationAssign
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
-		_node.application_assignment_histories = &nodes[0]
+		_node.ApplicationID = nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

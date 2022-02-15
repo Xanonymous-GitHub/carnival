@@ -40,6 +40,7 @@ func (ApplicationStatusHistory) Edges() []ent.Edge {
 	return []ent.Edge{
 		edge.From("applications", Application.Type).
 			Ref("status_histories").
+			Field("application_id").
 			Unique().
 			Required().
 			Annotations(entproto.Field(5)),

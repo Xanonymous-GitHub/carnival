@@ -102,7 +102,7 @@ func ApplicationID(v uuid.UUID) predicate.Attachment {
 }
 
 // TicketID applies equality check predicate on the "ticket_id" field. It's identical to TicketIDEQ.
-func TicketID(v int32) predicate.Attachment {
+func TicketID(v int) predicate.Attachment {
 	return predicate.Attachment(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTicketID), v))
 	})
@@ -177,50 +177,22 @@ func ApplicationIDNotIn(vs ...uuid.UUID) predicate.Attachment {
 	})
 }
 
-// ApplicationIDGT applies the GT predicate on the "application_id" field.
-func ApplicationIDGT(v uuid.UUID) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDGTE applies the GTE predicate on the "application_id" field.
-func ApplicationIDGTE(v uuid.UUID) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLT applies the LT predicate on the "application_id" field.
-func ApplicationIDLT(v uuid.UUID) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldApplicationID), v))
-	})
-}
-
-// ApplicationIDLTE applies the LTE predicate on the "application_id" field.
-func ApplicationIDLTE(v uuid.UUID) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldApplicationID), v))
-	})
-}
-
 // TicketIDEQ applies the EQ predicate on the "ticket_id" field.
-func TicketIDEQ(v int32) predicate.Attachment {
+func TicketIDEQ(v int) predicate.Attachment {
 	return predicate.Attachment(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldTicketID), v))
 	})
 }
 
 // TicketIDNEQ applies the NEQ predicate on the "ticket_id" field.
-func TicketIDNEQ(v int32) predicate.Attachment {
+func TicketIDNEQ(v int) predicate.Attachment {
 	return predicate.Attachment(func(s *sql.Selector) {
 		s.Where(sql.NEQ(s.C(FieldTicketID), v))
 	})
 }
 
 // TicketIDIn applies the In predicate on the "ticket_id" field.
-func TicketIDIn(vs ...int32) predicate.Attachment {
+func TicketIDIn(vs ...int) predicate.Attachment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -237,7 +209,7 @@ func TicketIDIn(vs ...int32) predicate.Attachment {
 }
 
 // TicketIDNotIn applies the NotIn predicate on the "ticket_id" field.
-func TicketIDNotIn(vs ...int32) predicate.Attachment {
+func TicketIDNotIn(vs ...int) predicate.Attachment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -250,34 +222,6 @@ func TicketIDNotIn(vs ...int32) predicate.Attachment {
 			return
 		}
 		s.Where(sql.NotIn(s.C(FieldTicketID), v...))
-	})
-}
-
-// TicketIDGT applies the GT predicate on the "ticket_id" field.
-func TicketIDGT(v int32) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldTicketID), v))
-	})
-}
-
-// TicketIDGTE applies the GTE predicate on the "ticket_id" field.
-func TicketIDGTE(v int32) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldTicketID), v))
-	})
-}
-
-// TicketIDLT applies the LT predicate on the "ticket_id" field.
-func TicketIDLT(v int32) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldTicketID), v))
-	})
-}
-
-// TicketIDLTE applies the LTE predicate on the "ticket_id" field.
-func TicketIDLTE(v int32) predicate.Attachment {
-	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldTicketID), v))
 	})
 }
 

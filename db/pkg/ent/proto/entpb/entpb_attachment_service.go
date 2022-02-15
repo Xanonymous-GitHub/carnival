@@ -68,7 +68,7 @@ func toProtoAttachment(e *ent.Attachment) (*Attachment, error) {
 	obsoid := e.ObsOid
 	v.ObsOid = obsoid
 	if e.TicketID != nil {
-		ticketid := wrapperspb.Int32(*e.TicketID)
+		ticketid := wrapperspb.Int32(int32(*e.TicketID))
 		v.TicketId = ticketid
 	}
 	if edg := e.Edges.Applications; edg != nil {
@@ -107,7 +107,7 @@ func (svc *AttachmentService) Create(ctx context.Context, req *CreateAttachmentR
 	attachmentObsOid := attachment.GetObsOid()
 	m.SetObsOid(attachmentObsOid)
 	if attachment.GetTicketId() != nil {
-		attachmentTicketID := int32(attachment.GetTicketId().GetValue())
+		attachmentTicketID := int(attachment.GetTicketId().GetValue())
 		m.SetTicketID(attachmentTicketID)
 	}
 	var attachmentApplications uuid.UUID
@@ -187,7 +187,7 @@ func (svc *AttachmentService) Update(ctx context.Context, req *UpdateAttachmentR
 	attachmentObsOid := attachment.GetObsOid()
 	m.SetObsOid(attachmentObsOid)
 	if attachment.GetTicketId() != nil {
-		attachmentTicketID := int32(attachment.GetTicketId().GetValue())
+		attachmentTicketID := int(attachment.GetTicketId().GetValue())
 		m.SetTicketID(attachmentTicketID)
 	}
 	var attachmentApplications uuid.UUID

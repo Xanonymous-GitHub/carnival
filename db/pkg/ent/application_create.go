@@ -149,23 +149,19 @@ func (ac *ApplicationCreate) SetNillableID(u *uuid.UUID) *ApplicationCreate {
 	return ac
 }
 
-// SetTicketsID sets the "tickets" edge to the Ticket entity by ID.
-func (ac *ApplicationCreate) SetTicketsID(id int) *ApplicationCreate {
-	ac.mutation.SetTicketsID(id)
+// AddTicketIDs adds the "tickets" edge to the Ticket entity by IDs.
+func (ac *ApplicationCreate) AddTicketIDs(ids ...int) *ApplicationCreate {
+	ac.mutation.AddTicketIDs(ids...)
 	return ac
 }
 
-// SetNillableTicketsID sets the "tickets" edge to the Ticket entity by ID if the given value is not nil.
-func (ac *ApplicationCreate) SetNillableTicketsID(id *int) *ApplicationCreate {
-	if id != nil {
-		ac = ac.SetTicketsID(*id)
+// AddTickets adds the "tickets" edges to the Ticket entity.
+func (ac *ApplicationCreate) AddTickets(t ...*Ticket) *ApplicationCreate {
+	ids := make([]int, len(t))
+	for i := range t {
+		ids[i] = t[i].ID
 	}
-	return ac
-}
-
-// SetTickets sets the "tickets" edge to the Ticket entity.
-func (ac *ApplicationCreate) SetTickets(t *Ticket) *ApplicationCreate {
-	return ac.SetTicketsID(t.ID)
+	return ac.AddTicketIDs(ids...)
 }
 
 // AddAssignmentHistoryIDs adds the "assignment_histories" edge to the ApplicationAssignmentHistory entity by IDs.
@@ -591,7 +587,7 @@ func (ac *ApplicationCreate) createSpec() (*Application, *sqlgraph.CreateSpec) {
 	}
 	if nodes := ac.mutation.TicketsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
-			Rel:     sqlgraph.O2O,
+			Rel:     sqlgraph.O2M,
 			Inverse: false,
 			Table:   application.TicketsTable,
 			Columns: []string{application.TicketsColumn},
