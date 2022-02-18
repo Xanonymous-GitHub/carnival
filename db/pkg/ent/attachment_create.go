@@ -43,9 +43,9 @@ func (ac *AttachmentCreate) SetNillableTicketID(i *int) *AttachmentCreate {
 	return ac
 }
 
-// SetAType sets the "a_type" field.
-func (ac *AttachmentCreate) SetAType(at attachment.AType) *AttachmentCreate {
-	ac.mutation.SetAType(at)
+// SetAttachmentType sets the "attachment_type" field.
+func (ac *AttachmentCreate) SetAttachmentType(at attachment.AttachmentType) *AttachmentCreate {
+	ac.mutation.SetAttachmentType(at)
 	return ac
 }
 
@@ -187,12 +187,12 @@ func (ac *AttachmentCreate) check() error {
 	if _, ok := ac.mutation.ApplicationID(); !ok {
 		return &ValidationError{Name: "application_id", err: errors.New(`ent: missing required field "Attachment.application_id"`)}
 	}
-	if _, ok := ac.mutation.AType(); !ok {
-		return &ValidationError{Name: "a_type", err: errors.New(`ent: missing required field "Attachment.a_type"`)}
+	if _, ok := ac.mutation.AttachmentType(); !ok {
+		return &ValidationError{Name: "attachment_type", err: errors.New(`ent: missing required field "Attachment.attachment_type"`)}
 	}
-	if v, ok := ac.mutation.AType(); ok {
-		if err := attachment.ATypeValidator(v); err != nil {
-			return &ValidationError{Name: "a_type", err: fmt.Errorf(`ent: validator failed for field "Attachment.a_type": %w`, err)}
+	if v, ok := ac.mutation.AttachmentType(); ok {
+		if err := attachment.AttachmentTypeValidator(v); err != nil {
+			return &ValidationError{Name: "attachment_type", err: fmt.Errorf(`ent: validator failed for field "Attachment.attachment_type": %w`, err)}
 		}
 	}
 	if _, ok := ac.mutation.ObsOid(); !ok {
@@ -244,13 +244,13 @@ func (ac *AttachmentCreate) createSpec() (*Attachment, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := ac.mutation.AType(); ok {
+	if value, ok := ac.mutation.AttachmentType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: attachment.FieldAType,
+			Column: attachment.FieldAttachmentType,
 		})
-		_node.AType = value
+		_node.AttachmentType = value
 	}
 	if value, ok := ac.mutation.ObsOid(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

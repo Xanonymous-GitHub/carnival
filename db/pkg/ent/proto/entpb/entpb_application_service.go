@@ -63,6 +63,20 @@ func toEntApplication_BotActiveStatus(e Application_BotActiveStatus) application
 	return ""
 }
 
+func toProtoApplication_BotSuspendReason(e application.BotSuspendReason) Application_BotSuspendReason {
+	if v, ok := Application_BotSuspendReason_value[strings.ToUpper(string(e))]; ok {
+		return Application_BotSuspendReason(v)
+	}
+	return Application_BotSuspendReason(0)
+}
+
+func toEntApplication_BotSuspendReason(e Application_BotSuspendReason) application.BotSuspendReason {
+	if v, ok := Application_BotSuspendReason_name[int32(e)]; ok {
+		return application.BotSuspendReason(strings.ToLower(v))
+	}
+	return ""
+}
+
 func toProtoApplication_StoreType(e application.StoreType) Application_StoreType {
 	if v, ok := Application_StoreType_value[strings.ToUpper(string(e))]; ok {
 		return Application_StoreType(v)
@@ -80,12 +94,14 @@ func toEntApplication_StoreType(e Application_StoreType) application.StoreType {
 // toProtoApplication transforms the ent type to the pb type
 func toProtoApplication(e *ent.Application) (*Application, error) {
 	v := &Application{}
+	applicantbizid := e.ApplicantBizID
+	v.ApplicantBizId = applicantbizid
 	applicantemail := e.ApplicantEmail
 	v.ApplicantEmail = applicantemail
+	applicantmid := e.ApplicantMid
+	v.ApplicantMid = applicantmid
 	applicantname := e.ApplicantName
 	v.ApplicantName = applicantname
-	applicationmid := e.ApplicationMid
-	v.ApplicationMid = applicationmid
 	applicationstatus := toProtoApplication_ApplicationStatus(e.ApplicationStatus)
 	v.ApplicationStatus = applicationstatus
 	assignee := e.Assignee
@@ -100,6 +116,8 @@ func toProtoApplication(e *ent.Application) (*Application, error) {
 	v.BotDisplayName = botdisplayname
 	botmid := e.BotMid
 	v.BotMid = botmid
+	botsuspendreason := toProtoApplication_BotSuspendReason(e.BotSuspendReason)
+	v.BotSuspendReason = botsuspendreason
 	createddtime := timestamppb.New(e.CreatedDtime)
 	v.CreatedDtime = createddtime
 	id, err := e.ID.MarshalBinary()
@@ -115,8 +133,8 @@ func toProtoApplication(e *ent.Application) (*Application, error) {
 	v.ReviewComment = reviewcomment
 	storetype := toProtoApplication_StoreType(e.StoreType)
 	v.StoreType = storetype
-	updatedtime := timestamppb.New(e.UpdateDtime)
-	v.UpdateDtime = updatedtime
+	updateddtime := timestamppb.New(e.UpdatedDtime)
+	v.UpdatedDtime = updateddtime
 	websiteurl := e.WebsiteURL
 	v.WebsiteUrl = websiteurl
 	for _, edg := range e.Edges.AssignmentHistories {
@@ -150,12 +168,14 @@ func toProtoApplication(e *ent.Application) (*Application, error) {
 func (svc *ApplicationService) Create(ctx context.Context, req *CreateApplicationRequest) (*Application, error) {
 	application := req.GetApplication()
 	m := svc.client.Application.Create()
+	applicationApplicantBizID := application.GetApplicantBizId()
+	m.SetApplicantBizID(applicationApplicantBizID)
 	applicationApplicantEmail := application.GetApplicantEmail()
 	m.SetApplicantEmail(applicationApplicantEmail)
+	applicationApplicantMid := application.GetApplicantMid()
+	m.SetApplicantMid(applicationApplicantMid)
 	applicationApplicantName := application.GetApplicantName()
 	m.SetApplicantName(applicationApplicantName)
-	applicationApplicationMid := application.GetApplicationMid()
-	m.SetApplicationMid(applicationApplicationMid)
 	applicationApplicationStatus := toEntApplication_ApplicationStatus(application.GetApplicationStatus())
 	m.SetApplicationStatus(applicationApplicationStatus)
 	applicationAssignee := application.GetAssignee()
@@ -170,6 +190,8 @@ func (svc *ApplicationService) Create(ctx context.Context, req *CreateApplicatio
 	m.SetBotDisplayName(applicationBotDisplayName)
 	applicationBotMid := application.GetBotMid()
 	m.SetBotMid(applicationBotMid)
+	applicationBotSuspendReason := toEntApplication_BotSuspendReason(application.GetBotSuspendReason())
+	m.SetBotSuspendReason(applicationBotSuspendReason)
 	applicationCreatedDtime := runtime.ExtractTime(application.GetCreatedDtime())
 	m.SetCreatedDtime(applicationCreatedDtime)
 	applicationPremiumID := application.GetPremiumId()
@@ -180,8 +202,8 @@ func (svc *ApplicationService) Create(ctx context.Context, req *CreateApplicatio
 	m.SetReviewComment(applicationReviewComment)
 	applicationStoreType := toEntApplication_StoreType(application.GetStoreType())
 	m.SetStoreType(applicationStoreType)
-	applicationUpdateDtime := runtime.ExtractTime(application.GetUpdateDtime())
-	m.SetUpdateDtime(applicationUpdateDtime)
+	applicationUpdatedDtime := runtime.ExtractTime(application.GetUpdatedDtime())
+	m.SetUpdatedDtime(applicationUpdatedDtime)
 	applicationWebsiteURL := application.GetWebsiteUrl()
 	m.SetWebsiteURL(applicationWebsiteURL)
 	for _, item := range application.GetAssignmentHistories() {
@@ -270,12 +292,14 @@ func (svc *ApplicationService) Update(ctx context.Context, req *UpdateApplicatio
 		return nil, status.Errorf(codes.InvalidArgument, "invalid argument: %s", err)
 	}
 	m := svc.client.Application.UpdateOneID(applicationID)
+	applicationApplicantBizID := application.GetApplicantBizId()
+	m.SetApplicantBizID(applicationApplicantBizID)
 	applicationApplicantEmail := application.GetApplicantEmail()
 	m.SetApplicantEmail(applicationApplicantEmail)
+	applicationApplicantMid := application.GetApplicantMid()
+	m.SetApplicantMid(applicationApplicantMid)
 	applicationApplicantName := application.GetApplicantName()
 	m.SetApplicantName(applicationApplicantName)
-	applicationApplicationMid := application.GetApplicationMid()
-	m.SetApplicationMid(applicationApplicationMid)
 	applicationApplicationStatus := toEntApplication_ApplicationStatus(application.GetApplicationStatus())
 	m.SetApplicationStatus(applicationApplicationStatus)
 	applicationAssignee := application.GetAssignee()
@@ -290,6 +314,8 @@ func (svc *ApplicationService) Update(ctx context.Context, req *UpdateApplicatio
 	m.SetBotDisplayName(applicationBotDisplayName)
 	applicationBotMid := application.GetBotMid()
 	m.SetBotMid(applicationBotMid)
+	applicationBotSuspendReason := toEntApplication_BotSuspendReason(application.GetBotSuspendReason())
+	m.SetBotSuspendReason(applicationBotSuspendReason)
 	applicationPremiumID := application.GetPremiumId()
 	m.SetPremiumID(applicationPremiumID)
 	applicationRemark := application.GetRemark()
@@ -298,8 +324,8 @@ func (svc *ApplicationService) Update(ctx context.Context, req *UpdateApplicatio
 	m.SetReviewComment(applicationReviewComment)
 	applicationStoreType := toEntApplication_StoreType(application.GetStoreType())
 	m.SetStoreType(applicationStoreType)
-	applicationUpdateDtime := runtime.ExtractTime(application.GetUpdateDtime())
-	m.SetUpdateDtime(applicationUpdateDtime)
+	applicationUpdatedDtime := runtime.ExtractTime(application.GetUpdatedDtime())
+	m.SetUpdatedDtime(applicationUpdatedDtime)
 	applicationWebsiteURL := application.GetWebsiteUrl()
 	m.SetWebsiteURL(applicationWebsiteURL)
 	for _, item := range application.GetAssignmentHistories() {

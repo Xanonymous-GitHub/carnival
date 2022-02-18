@@ -129,17 +129,24 @@ func ApplicantName(v string) predicate.Application {
 	})
 }
 
+// ApplicantBizID applies equality check predicate on the "applicant_biz_id" field. It's identical to ApplicantBizIDEQ.
+func ApplicantBizID(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantMid applies equality check predicate on the "applicant_mid" field. It's identical to ApplicantMidEQ.
+func ApplicantMid(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldApplicantMid), v))
+	})
+}
+
 // ApplicantEmail applies equality check predicate on the "applicant_email" field. It's identical to ApplicantEmailEQ.
 func ApplicantEmail(v string) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldApplicantEmail), v))
-	})
-}
-
-// ApplicationMid applies equality check predicate on the "application_mid" field. It's identical to ApplicationMidEQ.
-func ApplicationMid(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldApplicationMid), v))
 	})
 }
 
@@ -185,10 +192,10 @@ func CreatedDtime(v time.Time) predicate.Application {
 	})
 }
 
-// UpdateDtime applies equality check predicate on the "update_dtime" field. It's identical to UpdateDtimeEQ.
-func UpdateDtime(v time.Time) predicate.Application {
+// UpdatedDtime applies equality check predicate on the "updated_dtime" field. It's identical to UpdatedDtimeEQ.
+func UpdatedDtime(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUpdateDtime), v))
+		s.Where(sql.EQ(s.C(FieldUpdatedDtime), v))
 	})
 }
 
@@ -684,6 +691,54 @@ func BotActiveStatusNotIn(vs ...BotActiveStatus) predicate.Application {
 	})
 }
 
+// BotSuspendReasonEQ applies the EQ predicate on the "bot_suspend_reason" field.
+func BotSuspendReasonEQ(v BotSuspendReason) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldBotSuspendReason), v))
+	})
+}
+
+// BotSuspendReasonNEQ applies the NEQ predicate on the "bot_suspend_reason" field.
+func BotSuspendReasonNEQ(v BotSuspendReason) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldBotSuspendReason), v))
+	})
+}
+
+// BotSuspendReasonIn applies the In predicate on the "bot_suspend_reason" field.
+func BotSuspendReasonIn(vs ...BotSuspendReason) predicate.Application {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Application(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldBotSuspendReason), v...))
+	})
+}
+
+// BotSuspendReasonNotIn applies the NotIn predicate on the "bot_suspend_reason" field.
+func BotSuspendReasonNotIn(vs ...BotSuspendReason) predicate.Application {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Application(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldBotSuspendReason), v...))
+	})
+}
+
 // ApplicantNameEQ applies the EQ predicate on the "applicant_name" field.
 func ApplicantNameEQ(v string) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
@@ -795,6 +850,228 @@ func ApplicantNameContainsFold(v string) predicate.Application {
 	})
 }
 
+// ApplicantBizIDEQ applies the EQ predicate on the "applicant_biz_id" field.
+func ApplicantBizIDEQ(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDNEQ applies the NEQ predicate on the "applicant_biz_id" field.
+func ApplicantBizIDNEQ(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDIn applies the In predicate on the "applicant_biz_id" field.
+func ApplicantBizIDIn(vs ...string) predicate.Application {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Application(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldApplicantBizID), v...))
+	})
+}
+
+// ApplicantBizIDNotIn applies the NotIn predicate on the "applicant_biz_id" field.
+func ApplicantBizIDNotIn(vs ...string) predicate.Application {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Application(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldApplicantBizID), v...))
+	})
+}
+
+// ApplicantBizIDGT applies the GT predicate on the "applicant_biz_id" field.
+func ApplicantBizIDGT(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDGTE applies the GTE predicate on the "applicant_biz_id" field.
+func ApplicantBizIDGTE(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDLT applies the LT predicate on the "applicant_biz_id" field.
+func ApplicantBizIDLT(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDLTE applies the LTE predicate on the "applicant_biz_id" field.
+func ApplicantBizIDLTE(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDContains applies the Contains predicate on the "applicant_biz_id" field.
+func ApplicantBizIDContains(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDHasPrefix applies the HasPrefix predicate on the "applicant_biz_id" field.
+func ApplicantBizIDHasPrefix(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDHasSuffix applies the HasSuffix predicate on the "applicant_biz_id" field.
+func ApplicantBizIDHasSuffix(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDEqualFold applies the EqualFold predicate on the "applicant_biz_id" field.
+func ApplicantBizIDEqualFold(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantBizIDContainsFold applies the ContainsFold predicate on the "applicant_biz_id" field.
+func ApplicantBizIDContainsFold(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldApplicantBizID), v))
+	})
+}
+
+// ApplicantMidEQ applies the EQ predicate on the "applicant_mid" field.
+func ApplicantMidEQ(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidNEQ applies the NEQ predicate on the "applicant_mid" field.
+func ApplicantMidNEQ(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidIn applies the In predicate on the "applicant_mid" field.
+func ApplicantMidIn(vs ...string) predicate.Application {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Application(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldApplicantMid), v...))
+	})
+}
+
+// ApplicantMidNotIn applies the NotIn predicate on the "applicant_mid" field.
+func ApplicantMidNotIn(vs ...string) predicate.Application {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Application(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldApplicantMid), v...))
+	})
+}
+
+// ApplicantMidGT applies the GT predicate on the "applicant_mid" field.
+func ApplicantMidGT(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidGTE applies the GTE predicate on the "applicant_mid" field.
+func ApplicantMidGTE(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidLT applies the LT predicate on the "applicant_mid" field.
+func ApplicantMidLT(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidLTE applies the LTE predicate on the "applicant_mid" field.
+func ApplicantMidLTE(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidContains applies the Contains predicate on the "applicant_mid" field.
+func ApplicantMidContains(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidHasPrefix applies the HasPrefix predicate on the "applicant_mid" field.
+func ApplicantMidHasPrefix(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidHasSuffix applies the HasSuffix predicate on the "applicant_mid" field.
+func ApplicantMidHasSuffix(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidEqualFold applies the EqualFold predicate on the "applicant_mid" field.
+func ApplicantMidEqualFold(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldApplicantMid), v))
+	})
+}
+
+// ApplicantMidContainsFold applies the ContainsFold predicate on the "applicant_mid" field.
+func ApplicantMidContainsFold(v string) predicate.Application {
+	return predicate.Application(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldApplicantMid), v))
+	})
+}
+
 // ApplicantEmailEQ applies the EQ predicate on the "applicant_email" field.
 func ApplicantEmailEQ(v string) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
@@ -903,117 +1180,6 @@ func ApplicantEmailEqualFold(v string) predicate.Application {
 func ApplicantEmailContainsFold(v string) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldApplicantEmail), v))
-	})
-}
-
-// ApplicationMidEQ applies the EQ predicate on the "application_mid" field.
-func ApplicationMidEQ(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidNEQ applies the NEQ predicate on the "application_mid" field.
-func ApplicationMidNEQ(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidIn applies the In predicate on the "application_mid" field.
-func ApplicationMidIn(vs ...string) predicate.Application {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Application(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldApplicationMid), v...))
-	})
-}
-
-// ApplicationMidNotIn applies the NotIn predicate on the "application_mid" field.
-func ApplicationMidNotIn(vs ...string) predicate.Application {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Application(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldApplicationMid), v...))
-	})
-}
-
-// ApplicationMidGT applies the GT predicate on the "application_mid" field.
-func ApplicationMidGT(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidGTE applies the GTE predicate on the "application_mid" field.
-func ApplicationMidGTE(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidLT applies the LT predicate on the "application_mid" field.
-func ApplicationMidLT(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidLTE applies the LTE predicate on the "application_mid" field.
-func ApplicationMidLTE(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidContains applies the Contains predicate on the "application_mid" field.
-func ApplicationMidContains(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidHasPrefix applies the HasPrefix predicate on the "application_mid" field.
-func ApplicationMidHasPrefix(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidHasSuffix applies the HasSuffix predicate on the "application_mid" field.
-func ApplicationMidHasSuffix(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidEqualFold applies the EqualFold predicate on the "application_mid" field.
-func ApplicationMidEqualFold(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldApplicationMid), v))
-	})
-}
-
-// ApplicationMidContainsFold applies the ContainsFold predicate on the "application_mid" field.
-func ApplicationMidContainsFold(v string) predicate.Application {
-	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldApplicationMid), v))
 	})
 }
 
@@ -1744,22 +1910,22 @@ func CreatedDtimeLTE(v time.Time) predicate.Application {
 	})
 }
 
-// UpdateDtimeEQ applies the EQ predicate on the "update_dtime" field.
-func UpdateDtimeEQ(v time.Time) predicate.Application {
+// UpdatedDtimeEQ applies the EQ predicate on the "updated_dtime" field.
+func UpdatedDtimeEQ(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldUpdateDtime), v))
+		s.Where(sql.EQ(s.C(FieldUpdatedDtime), v))
 	})
 }
 
-// UpdateDtimeNEQ applies the NEQ predicate on the "update_dtime" field.
-func UpdateDtimeNEQ(v time.Time) predicate.Application {
+// UpdatedDtimeNEQ applies the NEQ predicate on the "updated_dtime" field.
+func UpdatedDtimeNEQ(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldUpdateDtime), v))
+		s.Where(sql.NEQ(s.C(FieldUpdatedDtime), v))
 	})
 }
 
-// UpdateDtimeIn applies the In predicate on the "update_dtime" field.
-func UpdateDtimeIn(vs ...time.Time) predicate.Application {
+// UpdatedDtimeIn applies the In predicate on the "updated_dtime" field.
+func UpdatedDtimeIn(vs ...time.Time) predicate.Application {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1771,12 +1937,12 @@ func UpdateDtimeIn(vs ...time.Time) predicate.Application {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldUpdateDtime), v...))
+		s.Where(sql.In(s.C(FieldUpdatedDtime), v...))
 	})
 }
 
-// UpdateDtimeNotIn applies the NotIn predicate on the "update_dtime" field.
-func UpdateDtimeNotIn(vs ...time.Time) predicate.Application {
+// UpdatedDtimeNotIn applies the NotIn predicate on the "updated_dtime" field.
+func UpdatedDtimeNotIn(vs ...time.Time) predicate.Application {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -1788,35 +1954,35 @@ func UpdateDtimeNotIn(vs ...time.Time) predicate.Application {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldUpdateDtime), v...))
+		s.Where(sql.NotIn(s.C(FieldUpdatedDtime), v...))
 	})
 }
 
-// UpdateDtimeGT applies the GT predicate on the "update_dtime" field.
-func UpdateDtimeGT(v time.Time) predicate.Application {
+// UpdatedDtimeGT applies the GT predicate on the "updated_dtime" field.
+func UpdatedDtimeGT(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldUpdateDtime), v))
+		s.Where(sql.GT(s.C(FieldUpdatedDtime), v))
 	})
 }
 
-// UpdateDtimeGTE applies the GTE predicate on the "update_dtime" field.
-func UpdateDtimeGTE(v time.Time) predicate.Application {
+// UpdatedDtimeGTE applies the GTE predicate on the "updated_dtime" field.
+func UpdatedDtimeGTE(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldUpdateDtime), v))
+		s.Where(sql.GTE(s.C(FieldUpdatedDtime), v))
 	})
 }
 
-// UpdateDtimeLT applies the LT predicate on the "update_dtime" field.
-func UpdateDtimeLT(v time.Time) predicate.Application {
+// UpdatedDtimeLT applies the LT predicate on the "updated_dtime" field.
+func UpdatedDtimeLT(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldUpdateDtime), v))
+		s.Where(sql.LT(s.C(FieldUpdatedDtime), v))
 	})
 }
 
-// UpdateDtimeLTE applies the LTE predicate on the "update_dtime" field.
-func UpdateDtimeLTE(v time.Time) predicate.Application {
+// UpdatedDtimeLTE applies the LTE predicate on the "updated_dtime" field.
+func UpdatedDtimeLTE(v time.Time) predicate.Application {
 	return predicate.Application(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldUpdateDtime), v))
+		s.Where(sql.LTE(s.C(FieldUpdatedDtime), v))
 	})
 }
 

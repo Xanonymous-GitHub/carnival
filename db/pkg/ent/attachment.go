@@ -23,8 +23,8 @@ type Attachment struct {
 	ApplicationID uuid.UUID `json:"application_id,omitempty"`
 	// TicketID holds the value of the "ticket_id" field.
 	TicketID *int `json:"ticket_id,omitempty"`
-	// AType holds the value of the "a_type" field.
-	AType attachment.AType `json:"a_type,omitempty"`
+	// AttachmentType holds the value of the "attachment_type" field.
+	AttachmentType attachment.AttachmentType `json:"attachment_type,omitempty"`
 	// ObsOid holds the value of the "obs_oid" field.
 	ObsOid string `json:"obs_oid,omitempty"`
 	// ObsHash holds the value of the "obs_hash" field.
@@ -82,7 +82,7 @@ func (*Attachment) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case attachment.FieldID, attachment.FieldTicketID:
 			values[i] = new(sql.NullInt64)
-		case attachment.FieldAType, attachment.FieldObsOid, attachment.FieldObsHash:
+		case attachment.FieldAttachmentType, attachment.FieldObsOid, attachment.FieldObsHash:
 			values[i] = new(sql.NullString)
 		case attachment.FieldCreatedDtime:
 			values[i] = new(sql.NullTime)
@@ -122,11 +122,11 @@ func (a *Attachment) assignValues(columns []string, values []interface{}) error 
 				a.TicketID = new(int)
 				*a.TicketID = int(value.Int64)
 			}
-		case attachment.FieldAType:
+		case attachment.FieldAttachmentType:
 			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field a_type", values[i])
+				return fmt.Errorf("unexpected type %T for field attachment_type", values[i])
 			} else if value.Valid {
-				a.AType = attachment.AType(value.String)
+				a.AttachmentType = attachment.AttachmentType(value.String)
 			}
 		case attachment.FieldObsOid:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -190,8 +190,8 @@ func (a *Attachment) String() string {
 		builder.WriteString(", ticket_id=")
 		builder.WriteString(fmt.Sprintf("%v", *v))
 	}
-	builder.WriteString(", a_type=")
-	builder.WriteString(fmt.Sprintf("%v", a.AType))
+	builder.WriteString(", attachment_type=")
+	builder.WriteString(fmt.Sprintf("%v", a.AttachmentType))
 	builder.WriteString(", obs_oid=")
 	builder.WriteString(a.ObsOid)
 	builder.WriteString(", obs_hash=")

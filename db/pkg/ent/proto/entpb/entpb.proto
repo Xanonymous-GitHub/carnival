@@ -24,37 +24,41 @@ message Application {
 
   BotActiveStatus bot_active_status = 6;
 
-  string applicant_name = 7;
+  BotSuspendReason bot_suspend_reason = 7;
 
-  string applicant_email = 8;
+  string applicant_name = 8;
 
-  string application_mid = 9;
+  string applicant_biz_id = 9;
 
-  string remark = 10;
+  string applicant_mid = 10;
 
-  StoreType store_type = 11;
+  string applicant_email = 11;
 
-  string website_url = 12;
+  string remark = 12;
 
-  ApplicationStatus application_status = 13;
+  StoreType store_type = 13;
 
-  string review_comment = 14;
+  string website_url = 14;
 
-  string assigner = 15;
+  ApplicationStatus application_status = 15;
 
-  string assignee = 16;
+  string review_comment = 16;
 
-  google.protobuf.Timestamp created_dtime = 17;
+  string assigner = 17;
 
-  google.protobuf.Timestamp update_dtime = 18;
+  string assignee = 18;
 
-  repeated Ticket tickets = 19;
+  google.protobuf.Timestamp created_dtime = 19;
 
-  repeated ApplicationAssignmentHistory assignment_histories = 20;
+  google.protobuf.Timestamp updated_dtime = 20;
 
-  repeated ApplicationStatusHistory status_histories = 21;
+  repeated Ticket tickets = 21;
 
-  repeated Attachment attachments = 22;
+  repeated ApplicationAssignmentHistory assignment_histories = 22;
+
+  repeated ApplicationStatusHistory status_histories = 23;
+
+  repeated Attachment attachments = 24;
 
   enum BotActiveStatus {
     BOT_ACTIVE_STATUS_UNSPECIFIED = 0;
@@ -64,6 +68,18 @@ message Application {
     SUSPEND = 2;
 
     DELETE = 3;
+  }
+
+  enum BotSuspendReason {
+    BOT_SUSPEND_REASON_UNSPECIFIED = 0;
+
+    USER_RESIGN = 1;
+
+    FORCE_RESIGN = 2;
+
+    PENALTY = 3;
+
+    UNPAID = 4;
   }
 
   enum StoreType {
@@ -292,7 +308,7 @@ message Attachment {
 
   google.protobuf.Int32Value ticket_id = 3;
 
-  AType a_type = 4;
+  AttachmentType attachment_type = 4;
 
   string obs_oid = 5;
 
@@ -304,8 +320,8 @@ message Attachment {
 
   Ticket tickets = 9;
 
-  enum AType {
-    A_TYPE_UNSPECIFIED = 0;
+  enum AttachmentType {
+    ATTACHMENT_TYPE_UNSPECIFIED = 0;
 
     BIZ_CERT = 1;
 

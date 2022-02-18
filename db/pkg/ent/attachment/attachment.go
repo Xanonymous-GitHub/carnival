@@ -16,8 +16,8 @@ const (
 	FieldApplicationID = "application_id"
 	// FieldTicketID holds the string denoting the ticket_id field in the database.
 	FieldTicketID = "ticket_id"
-	// FieldAType holds the string denoting the a_type field in the database.
-	FieldAType = "a_type"
+	// FieldAttachmentType holds the string denoting the attachment_type field in the database.
+	FieldAttachmentType = "attachment_type"
 	// FieldObsOid holds the string denoting the obs_oid field in the database.
 	FieldObsOid = "obs_oid"
 	// FieldObsHash holds the string denoting the obs_hash field in the database.
@@ -55,7 +55,7 @@ var Columns = []string{
 	FieldID,
 	FieldApplicationID,
 	FieldTicketID,
-	FieldAType,
+	FieldAttachmentType,
 	FieldObsOid,
 	FieldObsHash,
 	FieldCreatedDtime,
@@ -80,29 +80,29 @@ var (
 	DefaultCreatedDtime func() time.Time
 )
 
-// AType defines the type for the "a_type" enum field.
-type AType string
+// AttachmentType defines the type for the "attachment_type" enum field.
+type AttachmentType string
 
-// AType values.
+// AttachmentType values.
 const (
-	ATypeBizCert         AType = "biz_cert"
-	ATypeStoreAppearance AType = "store_appearance"
-	ATypeIDDocument      AType = "id_document"
-	ATypeOther           AType = "other"
-	ATypeSupplement      AType = "supplement"
-	ATypeReference       AType = "reference"
+	AttachmentTypeBizCert         AttachmentType = "biz_cert"
+	AttachmentTypeStoreAppearance AttachmentType = "store_appearance"
+	AttachmentTypeIDDocument      AttachmentType = "id_document"
+	AttachmentTypeOther           AttachmentType = "other"
+	AttachmentTypeSupplement      AttachmentType = "supplement"
+	AttachmentTypeReference       AttachmentType = "reference"
 )
 
-func (a_type AType) String() string {
-	return string(a_type)
+func (at AttachmentType) String() string {
+	return string(at)
 }
 
-// ATypeValidator is a validator for the "a_type" field enum values. It is called by the builders before save.
-func ATypeValidator(a_type AType) error {
-	switch a_type {
-	case ATypeBizCert, ATypeStoreAppearance, ATypeIDDocument, ATypeOther, ATypeSupplement, ATypeReference:
+// AttachmentTypeValidator is a validator for the "attachment_type" field enum values. It is called by the builders before save.
+func AttachmentTypeValidator(at AttachmentType) error {
+	switch at {
+	case AttachmentTypeBizCert, AttachmentTypeStoreAppearance, AttachmentTypeIDDocument, AttachmentTypeOther, AttachmentTypeSupplement, AttachmentTypeReference:
 		return nil
 	default:
-		return fmt.Errorf("attachment: invalid enum value for a_type field: %q", a_type)
+		return fmt.Errorf("attachment: invalid enum value for attachment_type field: %q", at)
 	}
 }

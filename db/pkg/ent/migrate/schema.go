@@ -16,18 +16,20 @@ var (
 		{Name: "bot_display_name", Type: field.TypeString, Size: 32},
 		{Name: "bot_mid", Type: field.TypeString, Unique: true, Size: 64},
 		{Name: "bot_active_status", Type: field.TypeEnum, Enums: []string{"active", "suspend", "delete"}},
+		{Name: "bot_suspend_reason", Type: field.TypeEnum, Enums: []string{"user_resign", "force_resign", "penalty", "unpaid"}},
 		{Name: "applicant_name", Type: field.TypeString, Size: 16},
+		{Name: "applicant_biz_id", Type: field.TypeString, Size: 64},
+		{Name: "applicant_mid", Type: field.TypeString, Size: 64},
 		{Name: "applicant_email", Type: field.TypeString, Size: 64},
-		{Name: "application_mid", Type: field.TypeString, Size: 64},
-		{Name: "remark", Type: field.TypeString, Size: 256},
+		{Name: "remark", Type: field.TypeString, Size: 64},
 		{Name: "store_type", Type: field.TypeEnum, Enums: []string{"online_store", "physical_store"}},
 		{Name: "website_url", Type: field.TypeString, Size: 2147483647},
 		{Name: "application_status", Type: field.TypeEnum, Enums: []string{"wip", "reviewing", "verified", "rejected", "waiting", "replied", "revoked", "canceling"}},
-		{Name: "review_comment", Type: field.TypeString, Size: 256},
+		{Name: "review_comment", Type: field.TypeString, Size: 2147483647},
 		{Name: "assigner", Type: field.TypeString, Size: 32},
 		{Name: "assignee", Type: field.TypeString, Size: 32},
 		{Name: "created_dtime", Type: field.TypeTime},
-		{Name: "update_dtime", Type: field.TypeTime},
+		{Name: "updated_dtime", Type: field.TypeTime},
 	}
 	// ApplicationsTable holds the schema information for the "applications" table.
 	ApplicationsTable = &schema.Table{
@@ -81,7 +83,7 @@ var (
 	// AttachmentsColumns holds the columns for the "attachments" table.
 	AttachmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "a_type", Type: field.TypeEnum, Enums: []string{"biz_cert", "store_appearance", "id_document", "other", "supplement", "reference"}},
+		{Name: "attachment_type", Type: field.TypeEnum, Enums: []string{"biz_cert", "store_appearance", "id_document", "other", "supplement", "reference"}},
 		{Name: "obs_oid", Type: field.TypeString, Size: 32},
 		{Name: "obs_hash", Type: field.TypeString, Size: 128},
 		{Name: "created_dtime", Type: field.TypeTime},

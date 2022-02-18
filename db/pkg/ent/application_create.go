@@ -55,21 +55,33 @@ func (ac *ApplicationCreate) SetBotActiveStatus(aas application.BotActiveStatus)
 	return ac
 }
 
+// SetBotSuspendReason sets the "bot_suspend_reason" field.
+func (ac *ApplicationCreate) SetBotSuspendReason(asr application.BotSuspendReason) *ApplicationCreate {
+	ac.mutation.SetBotSuspendReason(asr)
+	return ac
+}
+
 // SetApplicantName sets the "applicant_name" field.
 func (ac *ApplicationCreate) SetApplicantName(s string) *ApplicationCreate {
 	ac.mutation.SetApplicantName(s)
 	return ac
 }
 
-// SetApplicantEmail sets the "applicant_email" field.
-func (ac *ApplicationCreate) SetApplicantEmail(s string) *ApplicationCreate {
-	ac.mutation.SetApplicantEmail(s)
+// SetApplicantBizID sets the "applicant_biz_id" field.
+func (ac *ApplicationCreate) SetApplicantBizID(s string) *ApplicationCreate {
+	ac.mutation.SetApplicantBizID(s)
 	return ac
 }
 
-// SetApplicationMid sets the "application_mid" field.
-func (ac *ApplicationCreate) SetApplicationMid(s string) *ApplicationCreate {
-	ac.mutation.SetApplicationMid(s)
+// SetApplicantMid sets the "applicant_mid" field.
+func (ac *ApplicationCreate) SetApplicantMid(s string) *ApplicationCreate {
+	ac.mutation.SetApplicantMid(s)
+	return ac
+}
+
+// SetApplicantEmail sets the "applicant_email" field.
+func (ac *ApplicationCreate) SetApplicantEmail(s string) *ApplicationCreate {
+	ac.mutation.SetApplicantEmail(s)
 	return ac
 }
 
@@ -129,9 +141,9 @@ func (ac *ApplicationCreate) SetNillableCreatedDtime(t *time.Time) *ApplicationC
 	return ac
 }
 
-// SetUpdateDtime sets the "update_dtime" field.
-func (ac *ApplicationCreate) SetUpdateDtime(t time.Time) *ApplicationCreate {
-	ac.mutation.SetUpdateDtime(t)
+// SetUpdatedDtime sets the "updated_dtime" field.
+func (ac *ApplicationCreate) SetUpdatedDtime(t time.Time) *ApplicationCreate {
+	ac.mutation.SetUpdatedDtime(t)
 	return ac
 }
 
@@ -332,6 +344,14 @@ func (ac *ApplicationCreate) check() error {
 			return &ValidationError{Name: "bot_active_status", err: fmt.Errorf(`ent: validator failed for field "Application.bot_active_status": %w`, err)}
 		}
 	}
+	if _, ok := ac.mutation.BotSuspendReason(); !ok {
+		return &ValidationError{Name: "bot_suspend_reason", err: errors.New(`ent: missing required field "Application.bot_suspend_reason"`)}
+	}
+	if v, ok := ac.mutation.BotSuspendReason(); ok {
+		if err := application.BotSuspendReasonValidator(v); err != nil {
+			return &ValidationError{Name: "bot_suspend_reason", err: fmt.Errorf(`ent: validator failed for field "Application.bot_suspend_reason": %w`, err)}
+		}
+	}
 	if _, ok := ac.mutation.ApplicantName(); !ok {
 		return &ValidationError{Name: "applicant_name", err: errors.New(`ent: missing required field "Application.applicant_name"`)}
 	}
@@ -340,20 +360,28 @@ func (ac *ApplicationCreate) check() error {
 			return &ValidationError{Name: "applicant_name", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_name": %w`, err)}
 		}
 	}
+	if _, ok := ac.mutation.ApplicantBizID(); !ok {
+		return &ValidationError{Name: "applicant_biz_id", err: errors.New(`ent: missing required field "Application.applicant_biz_id"`)}
+	}
+	if v, ok := ac.mutation.ApplicantBizID(); ok {
+		if err := application.ApplicantBizIDValidator(v); err != nil {
+			return &ValidationError{Name: "applicant_biz_id", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_biz_id": %w`, err)}
+		}
+	}
+	if _, ok := ac.mutation.ApplicantMid(); !ok {
+		return &ValidationError{Name: "applicant_mid", err: errors.New(`ent: missing required field "Application.applicant_mid"`)}
+	}
+	if v, ok := ac.mutation.ApplicantMid(); ok {
+		if err := application.ApplicantMidValidator(v); err != nil {
+			return &ValidationError{Name: "applicant_mid", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_mid": %w`, err)}
+		}
+	}
 	if _, ok := ac.mutation.ApplicantEmail(); !ok {
 		return &ValidationError{Name: "applicant_email", err: errors.New(`ent: missing required field "Application.applicant_email"`)}
 	}
 	if v, ok := ac.mutation.ApplicantEmail(); ok {
 		if err := application.ApplicantEmailValidator(v); err != nil {
 			return &ValidationError{Name: "applicant_email", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_email": %w`, err)}
-		}
-	}
-	if _, ok := ac.mutation.ApplicationMid(); !ok {
-		return &ValidationError{Name: "application_mid", err: errors.New(`ent: missing required field "Application.application_mid"`)}
-	}
-	if v, ok := ac.mutation.ApplicationMid(); ok {
-		if err := application.ApplicationMidValidator(v); err != nil {
-			return &ValidationError{Name: "application_mid", err: fmt.Errorf(`ent: validator failed for field "Application.application_mid": %w`, err)}
 		}
 	}
 	if _, ok := ac.mutation.Remark(); !ok {
@@ -386,11 +414,6 @@ func (ac *ApplicationCreate) check() error {
 	if _, ok := ac.mutation.ReviewComment(); !ok {
 		return &ValidationError{Name: "review_comment", err: errors.New(`ent: missing required field "Application.review_comment"`)}
 	}
-	if v, ok := ac.mutation.ReviewComment(); ok {
-		if err := application.ReviewCommentValidator(v); err != nil {
-			return &ValidationError{Name: "review_comment", err: fmt.Errorf(`ent: validator failed for field "Application.review_comment": %w`, err)}
-		}
-	}
 	if _, ok := ac.mutation.Assigner(); !ok {
 		return &ValidationError{Name: "assigner", err: errors.New(`ent: missing required field "Application.assigner"`)}
 	}
@@ -410,8 +433,8 @@ func (ac *ApplicationCreate) check() error {
 	if _, ok := ac.mutation.CreatedDtime(); !ok {
 		return &ValidationError{Name: "created_dtime", err: errors.New(`ent: missing required field "Application.created_dtime"`)}
 	}
-	if _, ok := ac.mutation.UpdateDtime(); !ok {
-		return &ValidationError{Name: "update_dtime", err: errors.New(`ent: missing required field "Application.update_dtime"`)}
+	if _, ok := ac.mutation.UpdatedDtime(); !ok {
+		return &ValidationError{Name: "updated_dtime", err: errors.New(`ent: missing required field "Application.updated_dtime"`)}
 	}
 	return nil
 }
@@ -489,6 +512,14 @@ func (ac *ApplicationCreate) createSpec() (*Application, *sqlgraph.CreateSpec) {
 		})
 		_node.BotActiveStatus = value
 	}
+	if value, ok := ac.mutation.BotSuspendReason(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeEnum,
+			Value:  value,
+			Column: application.FieldBotSuspendReason,
+		})
+		_node.BotSuspendReason = value
+	}
 	if value, ok := ac.mutation.ApplicantName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -497,6 +528,22 @@ func (ac *ApplicationCreate) createSpec() (*Application, *sqlgraph.CreateSpec) {
 		})
 		_node.ApplicantName = value
 	}
+	if value, ok := ac.mutation.ApplicantBizID(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: application.FieldApplicantBizID,
+		})
+		_node.ApplicantBizID = value
+	}
+	if value, ok := ac.mutation.ApplicantMid(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: application.FieldApplicantMid,
+		})
+		_node.ApplicantMid = value
+	}
 	if value, ok := ac.mutation.ApplicantEmail(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -504,14 +551,6 @@ func (ac *ApplicationCreate) createSpec() (*Application, *sqlgraph.CreateSpec) {
 			Column: application.FieldApplicantEmail,
 		})
 		_node.ApplicantEmail = value
-	}
-	if value, ok := ac.mutation.ApplicationMid(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: application.FieldApplicationMid,
-		})
-		_node.ApplicationMid = value
 	}
 	if value, ok := ac.mutation.Remark(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -577,13 +616,13 @@ func (ac *ApplicationCreate) createSpec() (*Application, *sqlgraph.CreateSpec) {
 		})
 		_node.CreatedDtime = value
 	}
-	if value, ok := ac.mutation.UpdateDtime(); ok {
+	if value, ok := ac.mutation.UpdatedDtime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
-			Column: application.FieldUpdateDtime,
+			Column: application.FieldUpdatedDtime,
 		})
-		_node.UpdateDtime = value
+		_node.UpdatedDtime = value
 	}
 	if nodes := ac.mutation.TicketsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

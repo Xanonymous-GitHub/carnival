@@ -6,40 +6,34 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/utils"
 	"github.com/google/uuid"
 	"time"
 )
 
-type AType string
+type AttachmentType string
 
 const (
-	BizCert         AType = "biz_cert"
-	StoreAppearance AType = "store_appearance"
-	IdDocument      AType = "id_document"
-	Other           AType = "other"
-	Supplement      AType = "supplement"
-	Reference       AType = "reference"
+	BizCert         AttachmentType = "biz_cert"
+	StoreAppearance AttachmentType = "store_appearance"
+	IdDocument      AttachmentType = "id_document"
+	Other           AttachmentType = "other"
+	Supplement      AttachmentType = "supplement"
+	Reference       AttachmentType = "reference"
 )
 
-// Values get all enum values in AType.
-// TODO(TU): extract enum values function
-func (AType) Values() (kinds []string) {
-	for _, k := range []AType{
-		BizCert, StoreAppearance, IdDocument, Other, Supplement, Reference,
-	} {
-		kinds = append(kinds, string(k))
-	}
-	return
+var attachmentType = []AttachmentType{
+	BizCert, StoreAppearance, IdDocument, Other, Supplement, Reference,
 }
 
-func (AType) ToMap() map[string]int32 {
-	r := make(map[string]int32)
-	for i, k := range []AType{
-		BizCert, StoreAppearance, IdDocument, Other, Supplement, Reference,
-	} {
-		r[string(k)] = int32(i) + 1
-	}
-	return r
+// Values get all enum values in AttachmentType.
+// TODO(TU): extract enum values function
+func (AttachmentType) Values() []string {
+	return utils.ToValuesFromEnum(attachmentType)
+}
+
+func (AttachmentType) ToMap() map[string]int32 {
+	return utils.ToMapFromEnum(attachmentType)
 }
 
 // Attachment holds the schema definition for the Attachment entity.
@@ -63,11 +57,11 @@ func (Attachment) Fields() []ent.Field {
 			Nillable().
 			Annotations(entproto.Field(3)),
 
-		field.Enum("a_type").
-			Values(new(AType).Values()...).
+		field.Enum("attachment_type").
+			Values(new(AttachmentType).Values()...).
 			Annotations(
 				entproto.Field(4),
-				entproto.Enum(new(AType).ToMap()),
+				entproto.Enum(new(AttachmentType).ToMap()),
 			),
 
 		field.String("obs_oid").

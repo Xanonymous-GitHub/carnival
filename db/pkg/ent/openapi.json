@@ -341,9 +341,10 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "applicant_biz_id",
                   "applicant_email",
+                  "applicant_mid",
                   "applicant_name",
-                  "application_mid",
                   "application_status",
                   "assignee",
                   "assigner",
@@ -351,22 +352,26 @@
                   "bot_active_status",
                   "bot_display_name",
                   "bot_mid",
+                  "bot_suspend_reason",
                   "created_dtime",
                   "premium_id",
                   "remark",
                   "review_comment",
                   "store_type",
-                  "update_dtime",
+                  "updated_dtime",
                   "website_url"
                 ],
                 "properties": {
+                  "applicant_biz_id": {
+                    "type": "string"
+                  },
                   "applicant_email": {
                     "type": "string"
                   },
-                  "applicant_name": {
+                  "applicant_mid": {
                     "type": "string"
                   },
-                  "application_mid": {
+                  "applicant_name": {
                     "type": "string"
                   },
                   "application_status": {
@@ -406,6 +411,10 @@
                   "bot_mid": {
                     "type": "string"
                   },
+                  "bot_suspend_reason": {
+                    "type": "string",
+                    "example": "user_resign"
+                  },
                   "created_dtime": {
                     "type": "string",
                     "format": "date-time"
@@ -437,7 +446,7 @@
                       "format": "int32"
                     }
                   },
-                  "update_dtime": {
+                  "updated_dtime": {
                     "type": "string",
                     "format": "date-time"
                   },
@@ -828,9 +837,10 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "applicant_biz_id",
                   "applicant_email",
+                  "applicant_mid",
                   "applicant_name",
-                  "application_mid",
                   "application_status",
                   "assignee",
                   "assigner",
@@ -838,22 +848,26 @@
                   "bot_active_status",
                   "bot_display_name",
                   "bot_mid",
+                  "bot_suspend_reason",
                   "created_dtime",
                   "premium_id",
                   "remark",
                   "review_comment",
                   "store_type",
-                  "update_dtime",
+                  "updated_dtime",
                   "website_url"
                 ],
                 "properties": {
+                  "applicant_biz_id": {
+                    "type": "string"
+                  },
                   "applicant_email": {
                     "type": "string"
                   },
-                  "applicant_name": {
+                  "applicant_mid": {
                     "type": "string"
                   },
-                  "application_mid": {
+                  "applicant_name": {
                     "type": "string"
                   },
                   "application_status": {
@@ -893,6 +907,10 @@
                   "bot_mid": {
                     "type": "string"
                   },
+                  "bot_suspend_reason": {
+                    "type": "string",
+                    "example": "user_resign"
+                  },
                   "created_dtime": {
                     "type": "string",
                     "format": "date-time"
@@ -924,7 +942,7 @@
                       "format": "int32"
                     }
                   },
-                  "update_dtime": {
+                  "updated_dtime": {
                     "type": "string",
                     "format": "date-time"
                   },
@@ -1057,9 +1075,10 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "applicant_biz_id",
                   "applicant_email",
+                  "applicant_mid",
                   "applicant_name",
-                  "application_mid",
                   "application_status",
                   "assignee",
                   "assigner",
@@ -1067,22 +1086,26 @@
                   "bot_active_status",
                   "bot_display_name",
                   "bot_mid",
+                  "bot_suspend_reason",
                   "created_dtime",
                   "premium_id",
                   "remark",
                   "review_comment",
                   "store_type",
-                  "update_dtime",
+                  "updated_dtime",
                   "website_url"
                 ],
                 "properties": {
+                  "applicant_biz_id": {
+                    "type": "string"
+                  },
                   "applicant_email": {
                     "type": "string"
                   },
-                  "applicant_name": {
+                  "applicant_mid": {
                     "type": "string"
                   },
-                  "application_mid": {
+                  "applicant_name": {
                     "type": "string"
                   },
                   "application_status": {
@@ -1122,6 +1145,10 @@
                   "bot_mid": {
                     "type": "string"
                   },
+                  "bot_suspend_reason": {
+                    "type": "string",
+                    "example": "user_resign"
+                  },
                   "created_dtime": {
                     "type": "string",
                     "format": "date-time"
@@ -1153,7 +1180,7 @@
                       "format": "int32"
                     }
                   },
-                  "update_dtime": {
+                  "updated_dtime": {
                     "type": "string",
                     "format": "date-time"
                   },
@@ -1284,9 +1311,10 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "applicant_biz_id",
                   "applicant_email",
+                  "applicant_mid",
                   "applicant_name",
-                  "application_mid",
                   "application_status",
                   "assignee",
                   "assigner",
@@ -1294,21 +1322,25 @@
                   "bot_active_status",
                   "bot_display_name",
                   "bot_mid",
+                  "bot_suspend_reason",
                   "premium_id",
                   "remark",
                   "review_comment",
                   "store_type",
-                  "update_dtime",
+                  "updated_dtime",
                   "website_url"
                 ],
                 "properties": {
+                  "applicant_biz_id": {
+                    "type": "string"
+                  },
                   "applicant_email": {
                     "type": "string"
                   },
-                  "applicant_name": {
+                  "applicant_mid": {
                     "type": "string"
                   },
-                  "application_mid": {
+                  "applicant_name": {
                     "type": "string"
                   },
                   "application_status": {
@@ -1348,6 +1380,10 @@
                   "bot_mid": {
                     "type": "string"
                   },
+                  "bot_suspend_reason": {
+                    "type": "string",
+                    "example": "user_resign"
+                  },
                   "premium_id": {
                     "type": "string"
                   },
@@ -1375,7 +1411,7 @@
                       "format": "int32"
                     }
                   },
-                  "update_dtime": {
+                  "updated_dtime": {
                     "type": "string",
                     "format": "date-time"
                   },
@@ -1596,23 +1632,23 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "a_type",
                   "application_id",
                   "applications",
+                  "attachment_type",
                   "created_dtime",
                   "obs_hash",
                   "obs_oid"
                 ],
                 "properties": {
-                  "a_type": {
-                    "type": "string",
-                    "example": "biz_cert"
-                  },
                   "application_id": {
                     "type": "string"
                   },
                   "applications": {
                     "type": "string"
+                  },
+                  "attachment_type": {
+                    "type": "string",
+                    "example": "biz_cert"
                   },
                   "created_dtime": {
                     "type": "string",
@@ -1998,23 +2034,23 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "a_type",
                   "application_id",
                   "applications",
+                  "attachment_type",
                   "created_dtime",
                   "obs_hash",
                   "obs_oid"
                 ],
                 "properties": {
-                  "a_type": {
-                    "type": "string",
-                    "example": "biz_cert"
-                  },
                   "application_id": {
                     "type": "string"
                   },
                   "applications": {
                     "type": "string"
+                  },
+                  "attachment_type": {
+                    "type": "string",
+                    "example": "biz_cert"
                   },
                   "created_dtime": {
                     "type": "string",
@@ -2161,22 +2197,22 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "a_type",
                   "application_id",
                   "applications",
+                  "attachment_type",
                   "obs_hash",
                   "obs_oid"
                 ],
                 "properties": {
-                  "a_type": {
-                    "type": "string",
-                    "example": "biz_cert"
-                  },
                   "application_id": {
                     "type": "string"
                   },
                   "applications": {
                     "type": "string"
+                  },
+                  "attachment_type": {
+                    "type": "string",
+                    "example": "biz_cert"
                   },
                   "obs_hash": {
                     "type": "string"
@@ -2288,9 +2324,10 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "applicant_biz_id",
                   "applicant_email",
+                  "applicant_mid",
                   "applicant_name",
-                  "application_mid",
                   "application_status",
                   "assignee",
                   "assigner",
@@ -2298,22 +2335,26 @@
                   "bot_active_status",
                   "bot_display_name",
                   "bot_mid",
+                  "bot_suspend_reason",
                   "created_dtime",
                   "premium_id",
                   "remark",
                   "review_comment",
                   "store_type",
-                  "update_dtime",
+                  "updated_dtime",
                   "website_url"
                 ],
                 "properties": {
+                  "applicant_biz_id": {
+                    "type": "string"
+                  },
                   "applicant_email": {
                     "type": "string"
                   },
-                  "applicant_name": {
+                  "applicant_mid": {
                     "type": "string"
                   },
-                  "application_mid": {
+                  "applicant_name": {
                     "type": "string"
                   },
                   "application_status": {
@@ -2353,6 +2394,10 @@
                   "bot_mid": {
                     "type": "string"
                   },
+                  "bot_suspend_reason": {
+                    "type": "string",
+                    "example": "user_resign"
+                  },
                   "created_dtime": {
                     "type": "string",
                     "format": "date-time"
@@ -2384,7 +2429,7 @@
                       "format": "int32"
                     }
                   },
-                  "update_dtime": {
+                  "updated_dtime": {
                     "type": "string",
                     "format": "date-time"
                   },
@@ -3317,9 +3362,10 @@
               "schema": {
                 "type": "object",
                 "required": [
+                  "applicant_biz_id",
                   "applicant_email",
+                  "applicant_mid",
                   "applicant_name",
-                  "application_mid",
                   "application_status",
                   "assignee",
                   "assigner",
@@ -3327,22 +3373,26 @@
                   "bot_active_status",
                   "bot_display_name",
                   "bot_mid",
+                  "bot_suspend_reason",
                   "created_dtime",
                   "premium_id",
                   "remark",
                   "review_comment",
                   "store_type",
-                  "update_dtime",
+                  "updated_dtime",
                   "website_url"
                 ],
                 "properties": {
+                  "applicant_biz_id": {
+                    "type": "string"
+                  },
                   "applicant_email": {
                     "type": "string"
                   },
-                  "applicant_name": {
+                  "applicant_mid": {
                     "type": "string"
                   },
-                  "application_mid": {
+                  "applicant_name": {
                     "type": "string"
                   },
                   "application_status": {
@@ -3382,6 +3432,10 @@
                   "bot_mid": {
                     "type": "string"
                   },
+                  "bot_suspend_reason": {
+                    "type": "string",
+                    "example": "user_resign"
+                  },
                   "created_dtime": {
                     "type": "string",
                     "format": "date-time"
@@ -3413,7 +3467,7 @@
                       "format": "int32"
                     }
                   },
-                  "update_dtime": {
+                  "updated_dtime": {
                     "type": "string",
                     "format": "date-time"
                   },
@@ -3550,23 +3604,23 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "a_type",
                   "application_id",
                   "applications",
+                  "attachment_type",
                   "created_dtime",
                   "obs_hash",
                   "obs_oid"
                 ],
                 "properties": {
-                  "a_type": {
-                    "type": "string",
-                    "example": "biz_cert"
-                  },
                   "application_id": {
                     "type": "string"
                   },
                   "applications": {
                     "type": "string"
+                  },
+                  "attachment_type": {
+                    "type": "string",
+                    "example": "biz_cert"
                   },
                   "created_dtime": {
                     "type": "string",
@@ -3617,9 +3671,10 @@
       "Application": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
+          "applicant_mid",
           "applicant_name",
-          "application_mid",
           "application_status",
           "assignee",
           "assigner",
@@ -3627,23 +3682,27 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
-          "applicant_name": {
+          "applicant_mid": {
             "type": "string"
           },
-          "application_mid": {
+          "applicant_name": {
             "type": "string"
           },
           "application_status": {
@@ -3681,6 +3740,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -3713,7 +3776,7 @@
               "$ref": "#/components/schemas/Ticket"
             }
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -3873,6 +3936,7 @@
       "ApplicationAssignmentHistory_ApplicationsCreate": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -3882,16 +3946,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -3921,6 +3989,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -3941,7 +4013,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -3953,6 +4025,7 @@
       "ApplicationAssignmentHistory_ApplicationsRead": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -3962,16 +4035,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4001,6 +4078,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4021,7 +4102,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4033,6 +4114,7 @@
       "ApplicationCreate": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -4042,16 +4124,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4081,6 +4167,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4101,7 +4191,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4113,6 +4203,7 @@
       "ApplicationList": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -4122,16 +4213,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4161,6 +4256,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4181,7 +4280,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4193,6 +4292,7 @@
       "ApplicationRead": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -4202,16 +4302,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4241,6 +4345,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4261,7 +4369,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4406,6 +4514,7 @@
       "ApplicationStatusHistory_ApplicationsCreate": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -4415,16 +4524,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4454,6 +4567,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4474,7 +4591,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4486,6 +4603,7 @@
       "ApplicationStatusHistory_ApplicationsRead": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -4495,16 +4613,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4534,6 +4656,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4554,7 +4680,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4566,6 +4692,7 @@
       "ApplicationUpdate": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -4575,16 +4702,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -4614,6 +4745,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -4634,7 +4769,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -4704,20 +4839,20 @@
       "Application_AttachmentsCreate": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -4742,20 +4877,20 @@
       "Application_AttachmentsList": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -4962,23 +5097,23 @@
       "Attachment": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
           },
           "applications": {
             "$ref": "#/components/schemas/Application"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -5006,20 +5141,20 @@
       "AttachmentCreate": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -5044,20 +5179,20 @@
       "AttachmentList": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -5082,20 +5217,20 @@
       "AttachmentRead": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -5120,20 +5255,20 @@
       "AttachmentUpdate": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -5158,6 +5293,7 @@
       "Attachment_ApplicationsCreate": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -5167,16 +5303,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -5206,6 +5346,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -5226,7 +5370,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -5238,6 +5382,7 @@
       "Attachment_ApplicationsRead": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -5247,16 +5392,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -5286,6 +5435,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -5306,7 +5459,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -5932,6 +6085,7 @@
       "Ticket_ApplicationsCreate": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -5941,16 +6095,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -5980,6 +6138,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -6000,7 +6162,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -6012,6 +6174,7 @@
       "Ticket_ApplicationsRead": {
         "type": "object",
         "required": [
+          "applicant_biz_id",
           "applicant_email",
           "applicant_name",
           "application_status",
@@ -6021,16 +6184,20 @@
           "bot_active_status",
           "bot_display_name",
           "bot_mid",
+          "bot_suspend_reason",
           "created_dtime",
           "id",
           "premium_id",
           "remark",
           "review_comment",
           "store_type",
-          "update_dtime",
+          "updated_dtime",
           "website_url"
         ],
         "properties": {
+          "applicant_biz_id": {
+            "type": "string"
+          },
           "applicant_email": {
             "type": "string"
           },
@@ -6060,6 +6227,10 @@
           "bot_mid": {
             "type": "string"
           },
+          "bot_suspend_reason": {
+            "type": "string",
+            "example": "user_resign"
+          },
           "created_dtime": {
             "type": "string",
             "format": "date-time"
@@ -6080,7 +6251,7 @@
             "type": "string",
             "example": "online_store"
           },
-          "update_dtime": {
+          "updated_dtime": {
             "type": "string",
             "format": "date-time"
           },
@@ -6092,20 +6263,20 @@
       "Ticket_AttachmentsCreate": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",
@@ -6130,20 +6301,20 @@
       "Ticket_AttachmentsList": {
         "type": "object",
         "required": [
-          "a_type",
           "application_id",
+          "attachment_type",
           "created_dtime",
           "id",
           "obs_hash",
           "obs_oid"
         ],
         "properties": {
-          "a_type": {
-            "type": "string",
-            "example": "biz_cert"
-          },
           "application_id": {
             "type": "string"
+          },
+          "attachment_type": {
+            "type": "string",
+            "example": "biz_cert"
           },
           "created_dtime": {
             "type": "string",

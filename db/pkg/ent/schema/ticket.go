@@ -6,6 +6,7 @@ import (
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/utils"
 	"github.com/google/uuid"
 	"time"
 )
@@ -18,21 +19,16 @@ const (
 	TkCompleted TicketStatus = "completed"
 )
 
+var ticketStatus = []TicketStatus{TkCreated, TkReplied, TkCompleted}
+
 // Values get all enum values in ApplicationStatus.
 // TODO(TU): extract enum values function
-func (TicketStatus) Values() (kinds []string) {
-	for _, k := range []TicketStatus{TkCreated, TkReplied, TkCompleted} {
-		kinds = append(kinds, string(k))
-	}
-	return
+func (TicketStatus) Values() []string {
+	return utils.ToValuesFromEnum(ticketStatus)
 }
 
 func (TicketStatus) ToMap() map[string]int32 {
-	r := make(map[string]int32)
-	for i, k := range []TicketStatus{TkCreated, TkReplied, TkCompleted} {
-		r[string(k)] = int32(i) + 1
-	}
-	return r
+	return utils.ToMapFromEnum(ticketStatus)
 }
 
 // Ticket holds the schema definition for the Ticket entity.

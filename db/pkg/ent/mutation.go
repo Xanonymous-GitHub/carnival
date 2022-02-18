@@ -49,9 +49,11 @@ type ApplicationMutation struct {
 	bot_display_name            *string
 	bot_mid                     *string
 	bot_active_status           *application.BotActiveStatus
+	bot_suspend_reason          *application.BotSuspendReason
 	applicant_name              *string
+	applicant_biz_id            *string
+	applicant_mid               *string
 	applicant_email             *string
-	application_mid             *string
 	remark                      *string
 	store_type                  *application.StoreType
 	website_url                 *string
@@ -60,7 +62,7 @@ type ApplicationMutation struct {
 	assigner                    *string
 	assignee                    *string
 	created_dtime               *time.Time
-	update_dtime                *time.Time
+	updated_dtime               *time.Time
 	clearedFields               map[string]struct{}
 	tickets                     map[int]struct{}
 	removedtickets              map[int]struct{}
@@ -363,6 +365,42 @@ func (m *ApplicationMutation) ResetBotActiveStatus() {
 	m.bot_active_status = nil
 }
 
+// SetBotSuspendReason sets the "bot_suspend_reason" field.
+func (m *ApplicationMutation) SetBotSuspendReason(asr application.BotSuspendReason) {
+	m.bot_suspend_reason = &asr
+}
+
+// BotSuspendReason returns the value of the "bot_suspend_reason" field in the mutation.
+func (m *ApplicationMutation) BotSuspendReason() (r application.BotSuspendReason, exists bool) {
+	v := m.bot_suspend_reason
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldBotSuspendReason returns the old "bot_suspend_reason" field's value of the Application entity.
+// If the Application object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApplicationMutation) OldBotSuspendReason(ctx context.Context) (v application.BotSuspendReason, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldBotSuspendReason is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldBotSuspendReason requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldBotSuspendReason: %w", err)
+	}
+	return oldValue.BotSuspendReason, nil
+}
+
+// ResetBotSuspendReason resets all changes to the "bot_suspend_reason" field.
+func (m *ApplicationMutation) ResetBotSuspendReason() {
+	m.bot_suspend_reason = nil
+}
+
 // SetApplicantName sets the "applicant_name" field.
 func (m *ApplicationMutation) SetApplicantName(s string) {
 	m.applicant_name = &s
@@ -399,6 +437,78 @@ func (m *ApplicationMutation) ResetApplicantName() {
 	m.applicant_name = nil
 }
 
+// SetApplicantBizID sets the "applicant_biz_id" field.
+func (m *ApplicationMutation) SetApplicantBizID(s string) {
+	m.applicant_biz_id = &s
+}
+
+// ApplicantBizID returns the value of the "applicant_biz_id" field in the mutation.
+func (m *ApplicationMutation) ApplicantBizID() (r string, exists bool) {
+	v := m.applicant_biz_id
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldApplicantBizID returns the old "applicant_biz_id" field's value of the Application entity.
+// If the Application object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApplicationMutation) OldApplicantBizID(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldApplicantBizID is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldApplicantBizID requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldApplicantBizID: %w", err)
+	}
+	return oldValue.ApplicantBizID, nil
+}
+
+// ResetApplicantBizID resets all changes to the "applicant_biz_id" field.
+func (m *ApplicationMutation) ResetApplicantBizID() {
+	m.applicant_biz_id = nil
+}
+
+// SetApplicantMid sets the "applicant_mid" field.
+func (m *ApplicationMutation) SetApplicantMid(s string) {
+	m.applicant_mid = &s
+}
+
+// ApplicantMid returns the value of the "applicant_mid" field in the mutation.
+func (m *ApplicationMutation) ApplicantMid() (r string, exists bool) {
+	v := m.applicant_mid
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldApplicantMid returns the old "applicant_mid" field's value of the Application entity.
+// If the Application object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *ApplicationMutation) OldApplicantMid(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldApplicantMid is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldApplicantMid requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldApplicantMid: %w", err)
+	}
+	return oldValue.ApplicantMid, nil
+}
+
+// ResetApplicantMid resets all changes to the "applicant_mid" field.
+func (m *ApplicationMutation) ResetApplicantMid() {
+	m.applicant_mid = nil
+}
+
 // SetApplicantEmail sets the "applicant_email" field.
 func (m *ApplicationMutation) SetApplicantEmail(s string) {
 	m.applicant_email = &s
@@ -433,42 +543,6 @@ func (m *ApplicationMutation) OldApplicantEmail(ctx context.Context) (v string, 
 // ResetApplicantEmail resets all changes to the "applicant_email" field.
 func (m *ApplicationMutation) ResetApplicantEmail() {
 	m.applicant_email = nil
-}
-
-// SetApplicationMid sets the "application_mid" field.
-func (m *ApplicationMutation) SetApplicationMid(s string) {
-	m.application_mid = &s
-}
-
-// ApplicationMid returns the value of the "application_mid" field in the mutation.
-func (m *ApplicationMutation) ApplicationMid() (r string, exists bool) {
-	v := m.application_mid
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldApplicationMid returns the old "application_mid" field's value of the Application entity.
-// If the Application object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApplicationMutation) OldApplicationMid(ctx context.Context) (v string, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldApplicationMid is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldApplicationMid requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldApplicationMid: %w", err)
-	}
-	return oldValue.ApplicationMid, nil
-}
-
-// ResetApplicationMid resets all changes to the "application_mid" field.
-func (m *ApplicationMutation) ResetApplicationMid() {
-	m.application_mid = nil
 }
 
 // SetRemark sets the "remark" field.
@@ -759,40 +833,40 @@ func (m *ApplicationMutation) ResetCreatedDtime() {
 	m.created_dtime = nil
 }
 
-// SetUpdateDtime sets the "update_dtime" field.
-func (m *ApplicationMutation) SetUpdateDtime(t time.Time) {
-	m.update_dtime = &t
+// SetUpdatedDtime sets the "updated_dtime" field.
+func (m *ApplicationMutation) SetUpdatedDtime(t time.Time) {
+	m.updated_dtime = &t
 }
 
-// UpdateDtime returns the value of the "update_dtime" field in the mutation.
-func (m *ApplicationMutation) UpdateDtime() (r time.Time, exists bool) {
-	v := m.update_dtime
+// UpdatedDtime returns the value of the "updated_dtime" field in the mutation.
+func (m *ApplicationMutation) UpdatedDtime() (r time.Time, exists bool) {
+	v := m.updated_dtime
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldUpdateDtime returns the old "update_dtime" field's value of the Application entity.
+// OldUpdatedDtime returns the old "updated_dtime" field's value of the Application entity.
 // If the Application object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *ApplicationMutation) OldUpdateDtime(ctx context.Context) (v time.Time, err error) {
+func (m *ApplicationMutation) OldUpdatedDtime(ctx context.Context) (v time.Time, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldUpdateDtime is only allowed on UpdateOne operations")
+		return v, errors.New("OldUpdatedDtime is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldUpdateDtime requires an ID field in the mutation")
+		return v, errors.New("OldUpdatedDtime requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldUpdateDtime: %w", err)
+		return v, fmt.Errorf("querying old value for OldUpdatedDtime: %w", err)
 	}
-	return oldValue.UpdateDtime, nil
+	return oldValue.UpdatedDtime, nil
 }
 
-// ResetUpdateDtime resets all changes to the "update_dtime" field.
-func (m *ApplicationMutation) ResetUpdateDtime() {
-	m.update_dtime = nil
+// ResetUpdatedDtime resets all changes to the "updated_dtime" field.
+func (m *ApplicationMutation) ResetUpdatedDtime() {
+	m.updated_dtime = nil
 }
 
 // AddTicketIDs adds the "tickets" edge to the Ticket entity by ids.
@@ -1030,7 +1104,7 @@ func (m *ApplicationMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *ApplicationMutation) Fields() []string {
-	fields := make([]string, 0, 17)
+	fields := make([]string, 0, 19)
 	if m.basic_id != nil {
 		fields = append(fields, application.FieldBasicID)
 	}
@@ -1046,14 +1120,20 @@ func (m *ApplicationMutation) Fields() []string {
 	if m.bot_active_status != nil {
 		fields = append(fields, application.FieldBotActiveStatus)
 	}
+	if m.bot_suspend_reason != nil {
+		fields = append(fields, application.FieldBotSuspendReason)
+	}
 	if m.applicant_name != nil {
 		fields = append(fields, application.FieldApplicantName)
 	}
+	if m.applicant_biz_id != nil {
+		fields = append(fields, application.FieldApplicantBizID)
+	}
+	if m.applicant_mid != nil {
+		fields = append(fields, application.FieldApplicantMid)
+	}
 	if m.applicant_email != nil {
 		fields = append(fields, application.FieldApplicantEmail)
-	}
-	if m.application_mid != nil {
-		fields = append(fields, application.FieldApplicationMid)
 	}
 	if m.remark != nil {
 		fields = append(fields, application.FieldRemark)
@@ -1079,8 +1159,8 @@ func (m *ApplicationMutation) Fields() []string {
 	if m.created_dtime != nil {
 		fields = append(fields, application.FieldCreatedDtime)
 	}
-	if m.update_dtime != nil {
-		fields = append(fields, application.FieldUpdateDtime)
+	if m.updated_dtime != nil {
+		fields = append(fields, application.FieldUpdatedDtime)
 	}
 	return fields
 }
@@ -1100,12 +1180,16 @@ func (m *ApplicationMutation) Field(name string) (ent.Value, bool) {
 		return m.BotMid()
 	case application.FieldBotActiveStatus:
 		return m.BotActiveStatus()
+	case application.FieldBotSuspendReason:
+		return m.BotSuspendReason()
 	case application.FieldApplicantName:
 		return m.ApplicantName()
+	case application.FieldApplicantBizID:
+		return m.ApplicantBizID()
+	case application.FieldApplicantMid:
+		return m.ApplicantMid()
 	case application.FieldApplicantEmail:
 		return m.ApplicantEmail()
-	case application.FieldApplicationMid:
-		return m.ApplicationMid()
 	case application.FieldRemark:
 		return m.Remark()
 	case application.FieldStoreType:
@@ -1122,8 +1206,8 @@ func (m *ApplicationMutation) Field(name string) (ent.Value, bool) {
 		return m.Assignee()
 	case application.FieldCreatedDtime:
 		return m.CreatedDtime()
-	case application.FieldUpdateDtime:
-		return m.UpdateDtime()
+	case application.FieldUpdatedDtime:
+		return m.UpdatedDtime()
 	}
 	return nil, false
 }
@@ -1143,12 +1227,16 @@ func (m *ApplicationMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldBotMid(ctx)
 	case application.FieldBotActiveStatus:
 		return m.OldBotActiveStatus(ctx)
+	case application.FieldBotSuspendReason:
+		return m.OldBotSuspendReason(ctx)
 	case application.FieldApplicantName:
 		return m.OldApplicantName(ctx)
+	case application.FieldApplicantBizID:
+		return m.OldApplicantBizID(ctx)
+	case application.FieldApplicantMid:
+		return m.OldApplicantMid(ctx)
 	case application.FieldApplicantEmail:
 		return m.OldApplicantEmail(ctx)
-	case application.FieldApplicationMid:
-		return m.OldApplicationMid(ctx)
 	case application.FieldRemark:
 		return m.OldRemark(ctx)
 	case application.FieldStoreType:
@@ -1165,8 +1253,8 @@ func (m *ApplicationMutation) OldField(ctx context.Context, name string) (ent.Va
 		return m.OldAssignee(ctx)
 	case application.FieldCreatedDtime:
 		return m.OldCreatedDtime(ctx)
-	case application.FieldUpdateDtime:
-		return m.OldUpdateDtime(ctx)
+	case application.FieldUpdatedDtime:
+		return m.OldUpdatedDtime(ctx)
 	}
 	return nil, fmt.Errorf("unknown Application field %s", name)
 }
@@ -1211,6 +1299,13 @@ func (m *ApplicationMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetBotActiveStatus(v)
 		return nil
+	case application.FieldBotSuspendReason:
+		v, ok := value.(application.BotSuspendReason)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetBotSuspendReason(v)
+		return nil
 	case application.FieldApplicantName:
 		v, ok := value.(string)
 		if !ok {
@@ -1218,19 +1313,26 @@ func (m *ApplicationMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetApplicantName(v)
 		return nil
+	case application.FieldApplicantBizID:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetApplicantBizID(v)
+		return nil
+	case application.FieldApplicantMid:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetApplicantMid(v)
+		return nil
 	case application.FieldApplicantEmail:
 		v, ok := value.(string)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetApplicantEmail(v)
-		return nil
-	case application.FieldApplicationMid:
-		v, ok := value.(string)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetApplicationMid(v)
 		return nil
 	case application.FieldRemark:
 		v, ok := value.(string)
@@ -1288,12 +1390,12 @@ func (m *ApplicationMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetCreatedDtime(v)
 		return nil
-	case application.FieldUpdateDtime:
+	case application.FieldUpdatedDtime:
 		v, ok := value.(time.Time)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetUpdateDtime(v)
+		m.SetUpdatedDtime(v)
 		return nil
 	}
 	return fmt.Errorf("unknown Application field %s", name)
@@ -1359,14 +1461,20 @@ func (m *ApplicationMutation) ResetField(name string) error {
 	case application.FieldBotActiveStatus:
 		m.ResetBotActiveStatus()
 		return nil
+	case application.FieldBotSuspendReason:
+		m.ResetBotSuspendReason()
+		return nil
 	case application.FieldApplicantName:
 		m.ResetApplicantName()
 		return nil
+	case application.FieldApplicantBizID:
+		m.ResetApplicantBizID()
+		return nil
+	case application.FieldApplicantMid:
+		m.ResetApplicantMid()
+		return nil
 	case application.FieldApplicantEmail:
 		m.ResetApplicantEmail()
-		return nil
-	case application.FieldApplicationMid:
-		m.ResetApplicationMid()
 		return nil
 	case application.FieldRemark:
 		m.ResetRemark()
@@ -1392,8 +1500,8 @@ func (m *ApplicationMutation) ResetField(name string) error {
 	case application.FieldCreatedDtime:
 		m.ResetCreatedDtime()
 		return nil
-	case application.FieldUpdateDtime:
-		m.ResetUpdateDtime()
+	case application.FieldUpdatedDtime:
+		m.ResetUpdatedDtime()
 		return nil
 	}
 	return fmt.Errorf("unknown Application field %s", name)
@@ -2595,7 +2703,7 @@ type AttachmentMutation struct {
 	op                  Op
 	typ                 string
 	id                  *int
-	a_type              *attachment.AType
+	attachment_type     *attachment.AttachmentType
 	obs_oid             *string
 	obs_hash            *string
 	created_dtime       *time.Time
@@ -2792,40 +2900,40 @@ func (m *AttachmentMutation) ResetTicketID() {
 	delete(m.clearedFields, attachment.FieldTicketID)
 }
 
-// SetAType sets the "a_type" field.
-func (m *AttachmentMutation) SetAType(at attachment.AType) {
-	m.a_type = &at
+// SetAttachmentType sets the "attachment_type" field.
+func (m *AttachmentMutation) SetAttachmentType(at attachment.AttachmentType) {
+	m.attachment_type = &at
 }
 
-// AType returns the value of the "a_type" field in the mutation.
-func (m *AttachmentMutation) AType() (r attachment.AType, exists bool) {
-	v := m.a_type
+// AttachmentType returns the value of the "attachment_type" field in the mutation.
+func (m *AttachmentMutation) AttachmentType() (r attachment.AttachmentType, exists bool) {
+	v := m.attachment_type
 	if v == nil {
 		return
 	}
 	return *v, true
 }
 
-// OldAType returns the old "a_type" field's value of the Attachment entity.
+// OldAttachmentType returns the old "attachment_type" field's value of the Attachment entity.
 // If the Attachment object wasn't provided to the builder, the object is fetched from the database.
 // An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *AttachmentMutation) OldAType(ctx context.Context) (v attachment.AType, err error) {
+func (m *AttachmentMutation) OldAttachmentType(ctx context.Context) (v attachment.AttachmentType, err error) {
 	if !m.op.Is(OpUpdateOne) {
-		return v, errors.New("OldAType is only allowed on UpdateOne operations")
+		return v, errors.New("OldAttachmentType is only allowed on UpdateOne operations")
 	}
 	if m.id == nil || m.oldValue == nil {
-		return v, errors.New("OldAType requires an ID field in the mutation")
+		return v, errors.New("OldAttachmentType requires an ID field in the mutation")
 	}
 	oldValue, err := m.oldValue(ctx)
 	if err != nil {
-		return v, fmt.Errorf("querying old value for OldAType: %w", err)
+		return v, fmt.Errorf("querying old value for OldAttachmentType: %w", err)
 	}
-	return oldValue.AType, nil
+	return oldValue.AttachmentType, nil
 }
 
-// ResetAType resets all changes to the "a_type" field.
-func (m *AttachmentMutation) ResetAType() {
-	m.a_type = nil
+// ResetAttachmentType resets all changes to the "attachment_type" field.
+func (m *AttachmentMutation) ResetAttachmentType() {
+	m.attachment_type = nil
 }
 
 // SetObsOid sets the "obs_oid" field.
@@ -3040,8 +3148,8 @@ func (m *AttachmentMutation) Fields() []string {
 	if m.tickets != nil {
 		fields = append(fields, attachment.FieldTicketID)
 	}
-	if m.a_type != nil {
-		fields = append(fields, attachment.FieldAType)
+	if m.attachment_type != nil {
+		fields = append(fields, attachment.FieldAttachmentType)
 	}
 	if m.obs_oid != nil {
 		fields = append(fields, attachment.FieldObsOid)
@@ -3064,8 +3172,8 @@ func (m *AttachmentMutation) Field(name string) (ent.Value, bool) {
 		return m.ApplicationID()
 	case attachment.FieldTicketID:
 		return m.TicketID()
-	case attachment.FieldAType:
-		return m.AType()
+	case attachment.FieldAttachmentType:
+		return m.AttachmentType()
 	case attachment.FieldObsOid:
 		return m.ObsOid()
 	case attachment.FieldObsHash:
@@ -3085,8 +3193,8 @@ func (m *AttachmentMutation) OldField(ctx context.Context, name string) (ent.Val
 		return m.OldApplicationID(ctx)
 	case attachment.FieldTicketID:
 		return m.OldTicketID(ctx)
-	case attachment.FieldAType:
-		return m.OldAType(ctx)
+	case attachment.FieldAttachmentType:
+		return m.OldAttachmentType(ctx)
 	case attachment.FieldObsOid:
 		return m.OldObsOid(ctx)
 	case attachment.FieldObsHash:
@@ -3116,12 +3224,12 @@ func (m *AttachmentMutation) SetField(name string, value ent.Value) error {
 		}
 		m.SetTicketID(v)
 		return nil
-	case attachment.FieldAType:
-		v, ok := value.(attachment.AType)
+	case attachment.FieldAttachmentType:
+		v, ok := value.(attachment.AttachmentType)
 		if !ok {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
-		m.SetAType(v)
+		m.SetAttachmentType(v)
 		return nil
 	case attachment.FieldObsOid:
 		v, ok := value.(string)
@@ -3211,8 +3319,8 @@ func (m *AttachmentMutation) ResetField(name string) error {
 	case attachment.FieldTicketID:
 		m.ResetTicketID()
 		return nil
-	case attachment.FieldAType:
-		m.ResetAType()
+	case attachment.FieldAttachmentType:
+		m.ResetAttachmentType()
 		return nil
 	case attachment.FieldObsOid:
 		m.ResetObsOid()

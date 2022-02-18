@@ -35,16 +35,16 @@ func NewAttachmentService(client *ent.Client) *AttachmentService {
 	}
 }
 
-func toProtoAttachment_AType(e attachment.AType) Attachment_AType {
-	if v, ok := Attachment_AType_value[strings.ToUpper(string(e))]; ok {
-		return Attachment_AType(v)
+func toProtoAttachment_AttachmentType(e attachment.AttachmentType) Attachment_AttachmentType {
+	if v, ok := Attachment_AttachmentType_value[strings.ToUpper(string(e))]; ok {
+		return Attachment_AttachmentType(v)
 	}
-	return Attachment_AType(0)
+	return Attachment_AttachmentType(0)
 }
 
-func toEntAttachment_AType(e Attachment_AType) attachment.AType {
-	if v, ok := Attachment_AType_name[int32(e)]; ok {
-		return attachment.AType(strings.ToLower(v))
+func toEntAttachment_AttachmentType(e Attachment_AttachmentType) attachment.AttachmentType {
+	if v, ok := Attachment_AttachmentType_name[int32(e)]; ok {
+		return attachment.AttachmentType(strings.ToLower(v))
 	}
 	return ""
 }
@@ -52,13 +52,13 @@ func toEntAttachment_AType(e Attachment_AType) attachment.AType {
 // toProtoAttachment transforms the ent type to the pb type
 func toProtoAttachment(e *ent.Attachment) (*Attachment, error) {
 	v := &Attachment{}
-	atype := toProtoAttachment_AType(e.AType)
-	v.AType = atype
 	applicationid, err := e.ApplicationID.MarshalBinary()
 	if err != nil {
 		return nil, err
 	}
 	v.ApplicationId = applicationid
+	attachmenttype := toProtoAttachment_AttachmentType(e.AttachmentType)
+	v.AttachmentType = attachmenttype
 	createddtime := timestamppb.New(e.CreatedDtime)
 	v.CreatedDtime = createddtime
 	id := int32(e.ID)
@@ -93,13 +93,13 @@ func toProtoAttachment(e *ent.Attachment) (*Attachment, error) {
 func (svc *AttachmentService) Create(ctx context.Context, req *CreateAttachmentRequest) (*Attachment, error) {
 	attachment := req.GetAttachment()
 	m := svc.client.Attachment.Create()
-	attachmentAType := toEntAttachment_AType(attachment.GetAType())
-	m.SetAType(attachmentAType)
 	var attachmentApplicationID uuid.UUID
 	if err := (&attachmentApplicationID).UnmarshalBinary(attachment.GetApplicationId()); err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid argument: %s", err)
 	}
 	m.SetApplicationID(attachmentApplicationID)
+	attachmentAttachmentType := toEntAttachment_AttachmentType(attachment.GetAttachmentType())
+	m.SetAttachmentType(attachmentAttachmentType)
 	attachmentCreatedDtime := runtime.ExtractTime(attachment.GetCreatedDtime())
 	m.SetCreatedDtime(attachmentCreatedDtime)
 	attachmentObsHash := attachment.GetObsHash()
@@ -175,13 +175,13 @@ func (svc *AttachmentService) Update(ctx context.Context, req *UpdateAttachmentR
 	attachment := req.GetAttachment()
 	attachmentID := int(attachment.GetId())
 	m := svc.client.Attachment.UpdateOneID(attachmentID)
-	attachmentAType := toEntAttachment_AType(attachment.GetAType())
-	m.SetAType(attachmentAType)
 	var attachmentApplicationID uuid.UUID
 	if err := (&attachmentApplicationID).UnmarshalBinary(attachment.GetApplicationId()); err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "invalid argument: %s", err)
 	}
 	m.SetApplicationID(attachmentApplicationID)
+	attachmentAttachmentType := toEntAttachment_AttachmentType(attachment.GetAttachmentType())
+	m.SetAttachmentType(attachmentAttachmentType)
 	attachmentObsHash := attachment.GetObsHash()
 	m.SetObsHash(attachmentObsHash)
 	attachmentObsOid := attachment.GetObsOid()

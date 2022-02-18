@@ -5,6 +5,7 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema"
 	"entgo.io/ent/schema/field"
+	"github.com/Xanonymous-GitHub/carnival/db/pkg/ent/utils"
 	"time"
 )
 
@@ -15,21 +16,16 @@ const (
 	OavReviewer IIMSRole = "oav_reviewer"
 )
 
+var iimsRole = []IIMSRole{OavAdmin, OavReviewer}
+
 // Values get all enum values in IIMSRole.
 // TODO(TU): extract enum values function
-func (IIMSRole) Values() (kinds []string) {
-	for _, k := range []IIMSRole{OavAdmin, OavReviewer} {
-		kinds = append(kinds, string(k))
-	}
-	return
+func (IIMSRole) Values() []string {
+	return utils.ToValuesFromEnum(iimsRole)
 }
 
 func (IIMSRole) ToMap() map[string]int32 {
-	r := make(map[string]int32)
-	for i, k := range []IIMSRole{OavAdmin, OavReviewer} {
-		r[string(k)] = int32(i) + 1
-	}
-	return r
+	return utils.ToMapFromEnum(iimsRole)
 }
 
 // Reviewer holds the schema definition for the Reviewer entity.

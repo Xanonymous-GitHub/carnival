@@ -27,12 +27,16 @@ type Application struct {
 	BotMid string `json:"bot_mid,omitempty"`
 	// BotActiveStatus holds the value of the "bot_active_status" field.
 	BotActiveStatus application.BotActiveStatus `json:"bot_active_status,omitempty"`
+	// BotSuspendReason holds the value of the "bot_suspend_reason" field.
+	BotSuspendReason application.BotSuspendReason `json:"bot_suspend_reason,omitempty"`
 	// ApplicantName holds the value of the "applicant_name" field.
 	ApplicantName string `json:"applicant_name,omitempty"`
+	// ApplicantBizID holds the value of the "applicant_biz_id" field.
+	ApplicantBizID string `json:"applicant_biz_id,omitempty"`
+	// ApplicantMid holds the value of the "applicant_mid" field.
+	ApplicantMid string `json:"-"`
 	// ApplicantEmail holds the value of the "applicant_email" field.
 	ApplicantEmail string `json:"applicant_email,omitempty"`
-	// ApplicationMid holds the value of the "application_mid" field.
-	ApplicationMid string `json:"-"`
 	// Remark holds the value of the "remark" field.
 	Remark string `json:"remark,omitempty"`
 	// StoreType holds the value of the "store_type" field.
@@ -49,8 +53,8 @@ type Application struct {
 	Assignee string `json:"assignee,omitempty"`
 	// CreatedDtime holds the value of the "created_dtime" field.
 	CreatedDtime time.Time `json:"created_dtime,omitempty"`
-	// UpdateDtime holds the value of the "update_dtime" field.
-	UpdateDtime time.Time `json:"update_dtime,omitempty"`
+	// UpdatedDtime holds the value of the "updated_dtime" field.
+	UpdatedDtime time.Time `json:"updated_dtime,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the ApplicationQuery when eager-loading is set.
 	Edges ApplicationEdges `json:"edges"`
@@ -112,9 +116,9 @@ func (*Application) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case application.FieldBasicID, application.FieldPremiumID, application.FieldBotDisplayName, application.FieldBotMid, application.FieldBotActiveStatus, application.FieldApplicantName, application.FieldApplicantEmail, application.FieldApplicationMid, application.FieldRemark, application.FieldStoreType, application.FieldWebsiteURL, application.FieldApplicationStatus, application.FieldReviewComment, application.FieldAssigner, application.FieldAssignee:
+		case application.FieldBasicID, application.FieldPremiumID, application.FieldBotDisplayName, application.FieldBotMid, application.FieldBotActiveStatus, application.FieldBotSuspendReason, application.FieldApplicantName, application.FieldApplicantBizID, application.FieldApplicantMid, application.FieldApplicantEmail, application.FieldRemark, application.FieldStoreType, application.FieldWebsiteURL, application.FieldApplicationStatus, application.FieldReviewComment, application.FieldAssigner, application.FieldAssignee:
 			values[i] = new(sql.NullString)
-		case application.FieldCreatedDtime, application.FieldUpdateDtime:
+		case application.FieldCreatedDtime, application.FieldUpdatedDtime:
 			values[i] = new(sql.NullTime)
 		case application.FieldID:
 			values[i] = new(uuid.UUID)
@@ -169,23 +173,35 @@ func (a *Application) assignValues(columns []string, values []interface{}) error
 			} else if value.Valid {
 				a.BotActiveStatus = application.BotActiveStatus(value.String)
 			}
+		case application.FieldBotSuspendReason:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field bot_suspend_reason", values[i])
+			} else if value.Valid {
+				a.BotSuspendReason = application.BotSuspendReason(value.String)
+			}
 		case application.FieldApplicantName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field applicant_name", values[i])
 			} else if value.Valid {
 				a.ApplicantName = value.String
 			}
+		case application.FieldApplicantBizID:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field applicant_biz_id", values[i])
+			} else if value.Valid {
+				a.ApplicantBizID = value.String
+			}
+		case application.FieldApplicantMid:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field applicant_mid", values[i])
+			} else if value.Valid {
+				a.ApplicantMid = value.String
+			}
 		case application.FieldApplicantEmail:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field applicant_email", values[i])
 			} else if value.Valid {
 				a.ApplicantEmail = value.String
-			}
-		case application.FieldApplicationMid:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field application_mid", values[i])
-			} else if value.Valid {
-				a.ApplicationMid = value.String
 			}
 		case application.FieldRemark:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -235,11 +251,11 @@ func (a *Application) assignValues(columns []string, values []interface{}) error
 			} else if value.Valid {
 				a.CreatedDtime = value.Time
 			}
-		case application.FieldUpdateDtime:
+		case application.FieldUpdatedDtime:
 			if value, ok := values[i].(*sql.NullTime); !ok {
-				return fmt.Errorf("unexpected type %T for field update_dtime", values[i])
+				return fmt.Errorf("unexpected type %T for field updated_dtime", values[i])
 			} else if value.Valid {
-				a.UpdateDtime = value.Time
+				a.UpdatedDtime = value.Time
 			}
 		}
 	}
@@ -299,11 +315,15 @@ func (a *Application) String() string {
 	builder.WriteString(a.BotMid)
 	builder.WriteString(", bot_active_status=")
 	builder.WriteString(fmt.Sprintf("%v", a.BotActiveStatus))
+	builder.WriteString(", bot_suspend_reason=")
+	builder.WriteString(fmt.Sprintf("%v", a.BotSuspendReason))
 	builder.WriteString(", applicant_name=")
 	builder.WriteString(a.ApplicantName)
+	builder.WriteString(", applicant_biz_id=")
+	builder.WriteString(a.ApplicantBizID)
+	builder.WriteString(", applicant_mid=<sensitive>")
 	builder.WriteString(", applicant_email=")
 	builder.WriteString(a.ApplicantEmail)
-	builder.WriteString(", application_mid=<sensitive>")
 	builder.WriteString(", remark=")
 	builder.WriteString(a.Remark)
 	builder.WriteString(", store_type=")
@@ -320,8 +340,8 @@ func (a *Application) String() string {
 	builder.WriteString(a.Assignee)
 	builder.WriteString(", created_dtime=")
 	builder.WriteString(a.CreatedDtime.Format(time.ANSIC))
-	builder.WriteString(", update_dtime=")
-	builder.WriteString(a.UpdateDtime.Format(time.ANSIC))
+	builder.WriteString(", updated_dtime=")
+	builder.WriteString(a.UpdatedDtime.Format(time.ANSIC))
 	builder.WriteByte(')')
 	return builder.String()
 }

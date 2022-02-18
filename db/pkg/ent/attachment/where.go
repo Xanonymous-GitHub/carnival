@@ -239,22 +239,22 @@ func TicketIDNotNil() predicate.Attachment {
 	})
 }
 
-// ATypeEQ applies the EQ predicate on the "a_type" field.
-func ATypeEQ(v AType) predicate.Attachment {
+// AttachmentTypeEQ applies the EQ predicate on the "attachment_type" field.
+func AttachmentTypeEQ(v AttachmentType) predicate.Attachment {
 	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldAType), v))
+		s.Where(sql.EQ(s.C(FieldAttachmentType), v))
 	})
 }
 
-// ATypeNEQ applies the NEQ predicate on the "a_type" field.
-func ATypeNEQ(v AType) predicate.Attachment {
+// AttachmentTypeNEQ applies the NEQ predicate on the "attachment_type" field.
+func AttachmentTypeNEQ(v AttachmentType) predicate.Attachment {
 	return predicate.Attachment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldAType), v))
+		s.Where(sql.NEQ(s.C(FieldAttachmentType), v))
 	})
 }
 
-// ATypeIn applies the In predicate on the "a_type" field.
-func ATypeIn(vs ...AType) predicate.Attachment {
+// AttachmentTypeIn applies the In predicate on the "attachment_type" field.
+func AttachmentTypeIn(vs ...AttachmentType) predicate.Attachment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -266,12 +266,12 @@ func ATypeIn(vs ...AType) predicate.Attachment {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldAType), v...))
+		s.Where(sql.In(s.C(FieldAttachmentType), v...))
 	})
 }
 
-// ATypeNotIn applies the NotIn predicate on the "a_type" field.
-func ATypeNotIn(vs ...AType) predicate.Attachment {
+// AttachmentTypeNotIn applies the NotIn predicate on the "attachment_type" field.
+func AttachmentTypeNotIn(vs ...AttachmentType) predicate.Attachment {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -283,7 +283,7 @@ func ATypeNotIn(vs ...AType) predicate.Attachment {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldAType), v...))
+		s.Where(sql.NotIn(s.C(FieldAttachmentType), v...))
 	})
 }
 

@@ -56,9 +56,9 @@ func (au *AttachmentUpdate) ClearTicketID() *AttachmentUpdate {
 	return au
 }
 
-// SetAType sets the "a_type" field.
-func (au *AttachmentUpdate) SetAType(at attachment.AType) *AttachmentUpdate {
-	au.mutation.SetAType(at)
+// SetAttachmentType sets the "attachment_type" field.
+func (au *AttachmentUpdate) SetAttachmentType(at attachment.AttachmentType) *AttachmentUpdate {
+	au.mutation.SetAttachmentType(at)
 	return au
 }
 
@@ -183,9 +183,9 @@ func (au *AttachmentUpdate) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (au *AttachmentUpdate) check() error {
-	if v, ok := au.mutation.AType(); ok {
-		if err := attachment.ATypeValidator(v); err != nil {
-			return &ValidationError{Name: "a_type", err: fmt.Errorf(`ent: validator failed for field "Attachment.a_type": %w`, err)}
+	if v, ok := au.mutation.AttachmentType(); ok {
+		if err := attachment.AttachmentTypeValidator(v); err != nil {
+			return &ValidationError{Name: "attachment_type", err: fmt.Errorf(`ent: validator failed for field "Attachment.attachment_type": %w`, err)}
 		}
 	}
 	if v, ok := au.mutation.ObsOid(); ok {
@@ -222,11 +222,11 @@ func (au *AttachmentUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := au.mutation.AType(); ok {
+	if value, ok := au.mutation.AttachmentType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: attachment.FieldAType,
+			Column: attachment.FieldAttachmentType,
 		})
 	}
 	if value, ok := au.mutation.ObsOid(); ok {
@@ -358,9 +358,9 @@ func (auo *AttachmentUpdateOne) ClearTicketID() *AttachmentUpdateOne {
 	return auo
 }
 
-// SetAType sets the "a_type" field.
-func (auo *AttachmentUpdateOne) SetAType(at attachment.AType) *AttachmentUpdateOne {
-	auo.mutation.SetAType(at)
+// SetAttachmentType sets the "attachment_type" field.
+func (auo *AttachmentUpdateOne) SetAttachmentType(at attachment.AttachmentType) *AttachmentUpdateOne {
+	auo.mutation.SetAttachmentType(at)
 	return auo
 }
 
@@ -492,9 +492,9 @@ func (auo *AttachmentUpdateOne) ExecX(ctx context.Context) {
 
 // check runs all checks and user-defined validators on the builder.
 func (auo *AttachmentUpdateOne) check() error {
-	if v, ok := auo.mutation.AType(); ok {
-		if err := attachment.ATypeValidator(v); err != nil {
-			return &ValidationError{Name: "a_type", err: fmt.Errorf(`ent: validator failed for field "Attachment.a_type": %w`, err)}
+	if v, ok := auo.mutation.AttachmentType(); ok {
+		if err := attachment.AttachmentTypeValidator(v); err != nil {
+			return &ValidationError{Name: "attachment_type", err: fmt.Errorf(`ent: validator failed for field "Attachment.attachment_type": %w`, err)}
 		}
 	}
 	if v, ok := auo.mutation.ObsOid(); ok {
@@ -548,11 +548,11 @@ func (auo *AttachmentUpdateOne) sqlSave(ctx context.Context) (_node *Attachment,
 			}
 		}
 	}
-	if value, ok := auo.mutation.AType(); ok {
+	if value, ok := auo.mutation.AttachmentType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Value:  value,
-			Column: attachment.FieldAType,
+			Column: attachment.FieldAttachmentType,
 		})
 	}
 	if value, ok := auo.mutation.ObsOid(); ok {

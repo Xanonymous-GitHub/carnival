@@ -24,12 +24,16 @@ const (
 	FieldBotMid = "bot_mid"
 	// FieldBotActiveStatus holds the string denoting the bot_active_status field in the database.
 	FieldBotActiveStatus = "bot_active_status"
+	// FieldBotSuspendReason holds the string denoting the bot_suspend_reason field in the database.
+	FieldBotSuspendReason = "bot_suspend_reason"
 	// FieldApplicantName holds the string denoting the applicant_name field in the database.
 	FieldApplicantName = "applicant_name"
+	// FieldApplicantBizID holds the string denoting the applicant_biz_id field in the database.
+	FieldApplicantBizID = "applicant_biz_id"
+	// FieldApplicantMid holds the string denoting the applicant_mid field in the database.
+	FieldApplicantMid = "applicant_mid"
 	// FieldApplicantEmail holds the string denoting the applicant_email field in the database.
 	FieldApplicantEmail = "applicant_email"
-	// FieldApplicationMid holds the string denoting the application_mid field in the database.
-	FieldApplicationMid = "application_mid"
 	// FieldRemark holds the string denoting the remark field in the database.
 	FieldRemark = "remark"
 	// FieldStoreType holds the string denoting the store_type field in the database.
@@ -46,8 +50,8 @@ const (
 	FieldAssignee = "assignee"
 	// FieldCreatedDtime holds the string denoting the created_dtime field in the database.
 	FieldCreatedDtime = "created_dtime"
-	// FieldUpdateDtime holds the string denoting the update_dtime field in the database.
-	FieldUpdateDtime = "update_dtime"
+	// FieldUpdatedDtime holds the string denoting the updated_dtime field in the database.
+	FieldUpdatedDtime = "updated_dtime"
 	// EdgeTickets holds the string denoting the tickets edge name in mutations.
 	EdgeTickets = "tickets"
 	// EdgeAssignmentHistories holds the string denoting the assignment_histories edge name in mutations.
@@ -104,9 +108,11 @@ var Columns = []string{
 	FieldBotDisplayName,
 	FieldBotMid,
 	FieldBotActiveStatus,
+	FieldBotSuspendReason,
 	FieldApplicantName,
+	FieldApplicantBizID,
+	FieldApplicantMid,
 	FieldApplicantEmail,
-	FieldApplicationMid,
 	FieldRemark,
 	FieldStoreType,
 	FieldWebsiteURL,
@@ -115,7 +121,7 @@ var Columns = []string{
 	FieldAssigner,
 	FieldAssignee,
 	FieldCreatedDtime,
-	FieldUpdateDtime,
+	FieldUpdatedDtime,
 }
 
 // ValidColumn reports if the column name is valid (part of the table columns).
@@ -139,14 +145,14 @@ var (
 	BotMidValidator func(string) error
 	// ApplicantNameValidator is a validator for the "applicant_name" field. It is called by the builders before save.
 	ApplicantNameValidator func(string) error
+	// ApplicantBizIDValidator is a validator for the "applicant_biz_id" field. It is called by the builders before save.
+	ApplicantBizIDValidator func(string) error
+	// ApplicantMidValidator is a validator for the "applicant_mid" field. It is called by the builders before save.
+	ApplicantMidValidator func(string) error
 	// ApplicantEmailValidator is a validator for the "applicant_email" field. It is called by the builders before save.
 	ApplicantEmailValidator func(string) error
-	// ApplicationMidValidator is a validator for the "application_mid" field. It is called by the builders before save.
-	ApplicationMidValidator func(string) error
 	// RemarkValidator is a validator for the "remark" field. It is called by the builders before save.
 	RemarkValidator func(string) error
-	// ReviewCommentValidator is a validator for the "review_comment" field. It is called by the builders before save.
-	ReviewCommentValidator func(string) error
 	// AssignerValidator is a validator for the "assigner" field. It is called by the builders before save.
 	AssignerValidator func(string) error
 	// AssigneeValidator is a validator for the "assignee" field. It is called by the builders before save.
@@ -178,6 +184,31 @@ func BotActiveStatusValidator(bas BotActiveStatus) error {
 		return nil
 	default:
 		return fmt.Errorf("application: invalid enum value for bot_active_status field: %q", bas)
+	}
+}
+
+// BotSuspendReason defines the type for the "bot_suspend_reason" enum field.
+type BotSuspendReason string
+
+// BotSuspendReason values.
+const (
+	BotSuspendReasonUserResign  BotSuspendReason = "user_resign"
+	BotSuspendReasonForceResign BotSuspendReason = "force_resign"
+	BotSuspendReasonPenalty     BotSuspendReason = "penalty"
+	BotSuspendReasonUnpaid      BotSuspendReason = "unpaid"
+)
+
+func (bsr BotSuspendReason) String() string {
+	return string(bsr)
+}
+
+// BotSuspendReasonValidator is a validator for the "bot_suspend_reason" field enum values. It is called by the builders before save.
+func BotSuspendReasonValidator(bsr BotSuspendReason) error {
+	switch bsr {
+	case BotSuspendReasonUserResign, BotSuspendReasonForceResign, BotSuspendReasonPenalty, BotSuspendReasonUnpaid:
+		return nil
+	default:
+		return fmt.Errorf("application: invalid enum value for bot_suspend_reason field: %q", bsr)
 	}
 }
 

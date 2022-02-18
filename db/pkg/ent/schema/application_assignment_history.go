@@ -25,6 +25,7 @@ func (ApplicationAssignmentHistory) Fields() []ent.Field {
 	return []ent.Field{
 		field.UUID("application_id", uuid.UUID{}).
 			Annotations(entproto.Field(2)),
+
 		field.String("assigner").
 			MaxLen(assignerSizeLimit).
 			Annotations(entproto.Field(3)),

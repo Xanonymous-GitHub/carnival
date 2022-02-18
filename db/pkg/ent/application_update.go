@@ -62,21 +62,33 @@ func (au *ApplicationUpdate) SetBotActiveStatus(aas application.BotActiveStatus)
 	return au
 }
 
+// SetBotSuspendReason sets the "bot_suspend_reason" field.
+func (au *ApplicationUpdate) SetBotSuspendReason(asr application.BotSuspendReason) *ApplicationUpdate {
+	au.mutation.SetBotSuspendReason(asr)
+	return au
+}
+
 // SetApplicantName sets the "applicant_name" field.
 func (au *ApplicationUpdate) SetApplicantName(s string) *ApplicationUpdate {
 	au.mutation.SetApplicantName(s)
 	return au
 }
 
-// SetApplicantEmail sets the "applicant_email" field.
-func (au *ApplicationUpdate) SetApplicantEmail(s string) *ApplicationUpdate {
-	au.mutation.SetApplicantEmail(s)
+// SetApplicantBizID sets the "applicant_biz_id" field.
+func (au *ApplicationUpdate) SetApplicantBizID(s string) *ApplicationUpdate {
+	au.mutation.SetApplicantBizID(s)
 	return au
 }
 
-// SetApplicationMid sets the "application_mid" field.
-func (au *ApplicationUpdate) SetApplicationMid(s string) *ApplicationUpdate {
-	au.mutation.SetApplicationMid(s)
+// SetApplicantMid sets the "applicant_mid" field.
+func (au *ApplicationUpdate) SetApplicantMid(s string) *ApplicationUpdate {
+	au.mutation.SetApplicantMid(s)
+	return au
+}
+
+// SetApplicantEmail sets the "applicant_email" field.
+func (au *ApplicationUpdate) SetApplicantEmail(s string) *ApplicationUpdate {
+	au.mutation.SetApplicantEmail(s)
 	return au
 }
 
@@ -122,9 +134,9 @@ func (au *ApplicationUpdate) SetAssignee(s string) *ApplicationUpdate {
 	return au
 }
 
-// SetUpdateDtime sets the "update_dtime" field.
-func (au *ApplicationUpdate) SetUpdateDtime(t time.Time) *ApplicationUpdate {
-	au.mutation.SetUpdateDtime(t)
+// SetUpdatedDtime sets the "updated_dtime" field.
+func (au *ApplicationUpdate) SetUpdatedDtime(t time.Time) *ApplicationUpdate {
+	au.mutation.SetUpdatedDtime(t)
 	return au
 }
 
@@ -364,19 +376,29 @@ func (au *ApplicationUpdate) check() error {
 			return &ValidationError{Name: "bot_active_status", err: fmt.Errorf(`ent: validator failed for field "Application.bot_active_status": %w`, err)}
 		}
 	}
+	if v, ok := au.mutation.BotSuspendReason(); ok {
+		if err := application.BotSuspendReasonValidator(v); err != nil {
+			return &ValidationError{Name: "bot_suspend_reason", err: fmt.Errorf(`ent: validator failed for field "Application.bot_suspend_reason": %w`, err)}
+		}
+	}
 	if v, ok := au.mutation.ApplicantName(); ok {
 		if err := application.ApplicantNameValidator(v); err != nil {
 			return &ValidationError{Name: "applicant_name", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_name": %w`, err)}
 		}
 	}
+	if v, ok := au.mutation.ApplicantBizID(); ok {
+		if err := application.ApplicantBizIDValidator(v); err != nil {
+			return &ValidationError{Name: "applicant_biz_id", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_biz_id": %w`, err)}
+		}
+	}
+	if v, ok := au.mutation.ApplicantMid(); ok {
+		if err := application.ApplicantMidValidator(v); err != nil {
+			return &ValidationError{Name: "applicant_mid", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_mid": %w`, err)}
+		}
+	}
 	if v, ok := au.mutation.ApplicantEmail(); ok {
 		if err := application.ApplicantEmailValidator(v); err != nil {
 			return &ValidationError{Name: "applicant_email", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_email": %w`, err)}
-		}
-	}
-	if v, ok := au.mutation.ApplicationMid(); ok {
-		if err := application.ApplicationMidValidator(v); err != nil {
-			return &ValidationError{Name: "application_mid", err: fmt.Errorf(`ent: validator failed for field "Application.application_mid": %w`, err)}
 		}
 	}
 	if v, ok := au.mutation.Remark(); ok {
@@ -392,11 +414,6 @@ func (au *ApplicationUpdate) check() error {
 	if v, ok := au.mutation.ApplicationStatus(); ok {
 		if err := application.ApplicationStatusValidator(v); err != nil {
 			return &ValidationError{Name: "application_status", err: fmt.Errorf(`ent: validator failed for field "Application.application_status": %w`, err)}
-		}
-	}
-	if v, ok := au.mutation.ReviewComment(); ok {
-		if err := application.ReviewCommentValidator(v); err != nil {
-			return &ValidationError{Name: "review_comment", err: fmt.Errorf(`ent: validator failed for field "Application.review_comment": %w`, err)}
 		}
 	}
 	if v, ok := au.mutation.Assigner(); ok {
@@ -465,6 +482,13 @@ func (au *ApplicationUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: application.FieldBotActiveStatus,
 		})
 	}
+	if value, ok := au.mutation.BotSuspendReason(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeEnum,
+			Value:  value,
+			Column: application.FieldBotSuspendReason,
+		})
+	}
 	if value, ok := au.mutation.ApplicantName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -472,18 +496,25 @@ func (au *ApplicationUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: application.FieldApplicantName,
 		})
 	}
+	if value, ok := au.mutation.ApplicantBizID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: application.FieldApplicantBizID,
+		})
+	}
+	if value, ok := au.mutation.ApplicantMid(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: application.FieldApplicantMid,
+		})
+	}
 	if value, ok := au.mutation.ApplicantEmail(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: application.FieldApplicantEmail,
-		})
-	}
-	if value, ok := au.mutation.ApplicationMid(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: application.FieldApplicationMid,
 		})
 	}
 	if value, ok := au.mutation.Remark(); ok {
@@ -535,11 +566,11 @@ func (au *ApplicationUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: application.FieldAssignee,
 		})
 	}
-	if value, ok := au.mutation.UpdateDtime(); ok {
+	if value, ok := au.mutation.UpdatedDtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
-			Column: application.FieldUpdateDtime,
+			Column: application.FieldUpdatedDtime,
 		})
 	}
 	if au.mutation.TicketsCleared() {
@@ -807,21 +838,33 @@ func (auo *ApplicationUpdateOne) SetBotActiveStatus(aas application.BotActiveSta
 	return auo
 }
 
+// SetBotSuspendReason sets the "bot_suspend_reason" field.
+func (auo *ApplicationUpdateOne) SetBotSuspendReason(asr application.BotSuspendReason) *ApplicationUpdateOne {
+	auo.mutation.SetBotSuspendReason(asr)
+	return auo
+}
+
 // SetApplicantName sets the "applicant_name" field.
 func (auo *ApplicationUpdateOne) SetApplicantName(s string) *ApplicationUpdateOne {
 	auo.mutation.SetApplicantName(s)
 	return auo
 }
 
-// SetApplicantEmail sets the "applicant_email" field.
-func (auo *ApplicationUpdateOne) SetApplicantEmail(s string) *ApplicationUpdateOne {
-	auo.mutation.SetApplicantEmail(s)
+// SetApplicantBizID sets the "applicant_biz_id" field.
+func (auo *ApplicationUpdateOne) SetApplicantBizID(s string) *ApplicationUpdateOne {
+	auo.mutation.SetApplicantBizID(s)
 	return auo
 }
 
-// SetApplicationMid sets the "application_mid" field.
-func (auo *ApplicationUpdateOne) SetApplicationMid(s string) *ApplicationUpdateOne {
-	auo.mutation.SetApplicationMid(s)
+// SetApplicantMid sets the "applicant_mid" field.
+func (auo *ApplicationUpdateOne) SetApplicantMid(s string) *ApplicationUpdateOne {
+	auo.mutation.SetApplicantMid(s)
+	return auo
+}
+
+// SetApplicantEmail sets the "applicant_email" field.
+func (auo *ApplicationUpdateOne) SetApplicantEmail(s string) *ApplicationUpdateOne {
+	auo.mutation.SetApplicantEmail(s)
 	return auo
 }
 
@@ -867,9 +910,9 @@ func (auo *ApplicationUpdateOne) SetAssignee(s string) *ApplicationUpdateOne {
 	return auo
 }
 
-// SetUpdateDtime sets the "update_dtime" field.
-func (auo *ApplicationUpdateOne) SetUpdateDtime(t time.Time) *ApplicationUpdateOne {
-	auo.mutation.SetUpdateDtime(t)
+// SetUpdatedDtime sets the "updated_dtime" field.
+func (auo *ApplicationUpdateOne) SetUpdatedDtime(t time.Time) *ApplicationUpdateOne {
+	auo.mutation.SetUpdatedDtime(t)
 	return auo
 }
 
@@ -1116,19 +1159,29 @@ func (auo *ApplicationUpdateOne) check() error {
 			return &ValidationError{Name: "bot_active_status", err: fmt.Errorf(`ent: validator failed for field "Application.bot_active_status": %w`, err)}
 		}
 	}
+	if v, ok := auo.mutation.BotSuspendReason(); ok {
+		if err := application.BotSuspendReasonValidator(v); err != nil {
+			return &ValidationError{Name: "bot_suspend_reason", err: fmt.Errorf(`ent: validator failed for field "Application.bot_suspend_reason": %w`, err)}
+		}
+	}
 	if v, ok := auo.mutation.ApplicantName(); ok {
 		if err := application.ApplicantNameValidator(v); err != nil {
 			return &ValidationError{Name: "applicant_name", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_name": %w`, err)}
 		}
 	}
+	if v, ok := auo.mutation.ApplicantBizID(); ok {
+		if err := application.ApplicantBizIDValidator(v); err != nil {
+			return &ValidationError{Name: "applicant_biz_id", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_biz_id": %w`, err)}
+		}
+	}
+	if v, ok := auo.mutation.ApplicantMid(); ok {
+		if err := application.ApplicantMidValidator(v); err != nil {
+			return &ValidationError{Name: "applicant_mid", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_mid": %w`, err)}
+		}
+	}
 	if v, ok := auo.mutation.ApplicantEmail(); ok {
 		if err := application.ApplicantEmailValidator(v); err != nil {
 			return &ValidationError{Name: "applicant_email", err: fmt.Errorf(`ent: validator failed for field "Application.applicant_email": %w`, err)}
-		}
-	}
-	if v, ok := auo.mutation.ApplicationMid(); ok {
-		if err := application.ApplicationMidValidator(v); err != nil {
-			return &ValidationError{Name: "application_mid", err: fmt.Errorf(`ent: validator failed for field "Application.application_mid": %w`, err)}
 		}
 	}
 	if v, ok := auo.mutation.Remark(); ok {
@@ -1144,11 +1197,6 @@ func (auo *ApplicationUpdateOne) check() error {
 	if v, ok := auo.mutation.ApplicationStatus(); ok {
 		if err := application.ApplicationStatusValidator(v); err != nil {
 			return &ValidationError{Name: "application_status", err: fmt.Errorf(`ent: validator failed for field "Application.application_status": %w`, err)}
-		}
-	}
-	if v, ok := auo.mutation.ReviewComment(); ok {
-		if err := application.ReviewCommentValidator(v); err != nil {
-			return &ValidationError{Name: "review_comment", err: fmt.Errorf(`ent: validator failed for field "Application.review_comment": %w`, err)}
 		}
 	}
 	if v, ok := auo.mutation.Assigner(); ok {
@@ -1234,6 +1282,13 @@ func (auo *ApplicationUpdateOne) sqlSave(ctx context.Context) (_node *Applicatio
 			Column: application.FieldBotActiveStatus,
 		})
 	}
+	if value, ok := auo.mutation.BotSuspendReason(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeEnum,
+			Value:  value,
+			Column: application.FieldBotSuspendReason,
+		})
+	}
 	if value, ok := auo.mutation.ApplicantName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -1241,18 +1296,25 @@ func (auo *ApplicationUpdateOne) sqlSave(ctx context.Context) (_node *Applicatio
 			Column: application.FieldApplicantName,
 		})
 	}
+	if value, ok := auo.mutation.ApplicantBizID(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: application.FieldApplicantBizID,
+		})
+	}
+	if value, ok := auo.mutation.ApplicantMid(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: application.FieldApplicantMid,
+		})
+	}
 	if value, ok := auo.mutation.ApplicantEmail(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
 			Column: application.FieldApplicantEmail,
-		})
-	}
-	if value, ok := auo.mutation.ApplicationMid(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: application.FieldApplicationMid,
 		})
 	}
 	if value, ok := auo.mutation.Remark(); ok {
@@ -1304,11 +1366,11 @@ func (auo *ApplicationUpdateOne) sqlSave(ctx context.Context) (_node *Applicatio
 			Column: application.FieldAssignee,
 		})
 	}
-	if value, ok := auo.mutation.UpdateDtime(); ok {
+	if value, ok := auo.mutation.UpdatedDtime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Value:  value,
-			Column: application.FieldUpdateDtime,
+			Column: application.FieldUpdatedDtime,
 		})
 	}
 	if auo.mutation.TicketsCleared() {

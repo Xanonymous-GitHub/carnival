@@ -38,35 +38,35 @@ func init() {
 	// application.BotMidValidator is a validator for the "bot_mid" field. It is called by the builders before save.
 	application.BotMidValidator = applicationDescBotMid.Validators[0].(func(string) error)
 	// applicationDescApplicantName is the schema descriptor for applicant_name field.
-	applicationDescApplicantName := applicationFields[6].Descriptor()
+	applicationDescApplicantName := applicationFields[7].Descriptor()
 	// application.ApplicantNameValidator is a validator for the "applicant_name" field. It is called by the builders before save.
 	application.ApplicantNameValidator = applicationDescApplicantName.Validators[0].(func(string) error)
+	// applicationDescApplicantBizID is the schema descriptor for applicant_biz_id field.
+	applicationDescApplicantBizID := applicationFields[8].Descriptor()
+	// application.ApplicantBizIDValidator is a validator for the "applicant_biz_id" field. It is called by the builders before save.
+	application.ApplicantBizIDValidator = applicationDescApplicantBizID.Validators[0].(func(string) error)
+	// applicationDescApplicantMid is the schema descriptor for applicant_mid field.
+	applicationDescApplicantMid := applicationFields[9].Descriptor()
+	// application.ApplicantMidValidator is a validator for the "applicant_mid" field. It is called by the builders before save.
+	application.ApplicantMidValidator = applicationDescApplicantMid.Validators[0].(func(string) error)
 	// applicationDescApplicantEmail is the schema descriptor for applicant_email field.
-	applicationDescApplicantEmail := applicationFields[7].Descriptor()
+	applicationDescApplicantEmail := applicationFields[10].Descriptor()
 	// application.ApplicantEmailValidator is a validator for the "applicant_email" field. It is called by the builders before save.
 	application.ApplicantEmailValidator = applicationDescApplicantEmail.Validators[0].(func(string) error)
-	// applicationDescApplicationMid is the schema descriptor for application_mid field.
-	applicationDescApplicationMid := applicationFields[8].Descriptor()
-	// application.ApplicationMidValidator is a validator for the "application_mid" field. It is called by the builders before save.
-	application.ApplicationMidValidator = applicationDescApplicationMid.Validators[0].(func(string) error)
 	// applicationDescRemark is the schema descriptor for remark field.
-	applicationDescRemark := applicationFields[9].Descriptor()
+	applicationDescRemark := applicationFields[11].Descriptor()
 	// application.RemarkValidator is a validator for the "remark" field. It is called by the builders before save.
 	application.RemarkValidator = applicationDescRemark.Validators[0].(func(string) error)
-	// applicationDescReviewComment is the schema descriptor for review_comment field.
-	applicationDescReviewComment := applicationFields[13].Descriptor()
-	// application.ReviewCommentValidator is a validator for the "review_comment" field. It is called by the builders before save.
-	application.ReviewCommentValidator = applicationDescReviewComment.Validators[0].(func(string) error)
 	// applicationDescAssigner is the schema descriptor for assigner field.
-	applicationDescAssigner := applicationFields[14].Descriptor()
+	applicationDescAssigner := applicationFields[16].Descriptor()
 	// application.AssignerValidator is a validator for the "assigner" field. It is called by the builders before save.
 	application.AssignerValidator = applicationDescAssigner.Validators[0].(func(string) error)
 	// applicationDescAssignee is the schema descriptor for assignee field.
-	applicationDescAssignee := applicationFields[15].Descriptor()
+	applicationDescAssignee := applicationFields[17].Descriptor()
 	// application.AssigneeValidator is a validator for the "assignee" field. It is called by the builders before save.
 	application.AssigneeValidator = applicationDescAssignee.Validators[0].(func(string) error)
 	// applicationDescCreatedDtime is the schema descriptor for created_dtime field.
-	applicationDescCreatedDtime := applicationFields[16].Descriptor()
+	applicationDescCreatedDtime := applicationFields[18].Descriptor()
 	// application.DefaultCreatedDtime holds the default value on creation for the created_dtime field.
 	application.DefaultCreatedDtime = applicationDescCreatedDtime.Default.(func() time.Time)
 	// applicationDescID is the schema descriptor for id field.
