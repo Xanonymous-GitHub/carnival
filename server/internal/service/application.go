@@ -22,3 +22,12 @@ func CreateApplication(ctx context.Context, client entpb.ApplicationServiceClien
 	log.Printf("application created, id=%d: %v", get.Id, get)
 	return nil
 }
+
+func GetApplication(ctx context.Context, client entpb.ApplicationServiceClient, id string) (*entpb.Application, error) {
+	application, err := client.Get(ctx, &entpb.GetApplicationRequest{Id: []byte(id)})
+	if err != nil {
+		LogGrpcErr(err, client)
+		return nil, err
+	}
+	return application, nil
+}
